@@ -2,7 +2,7 @@
 #include "GL/glew.h"
 #include "GLFW/glfw3.h"
 
-GLFWwindow* initializeWindow(){
+GLFWwindow *initializeWindow() {
     glfwInit();
 
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -10,7 +10,7 @@ GLFWwindow* initializeWindow(){
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 
-    GLFWwindow *window = glfwCreateWindow(800, 600, "Comp371 - Lab 01", NULL, NULL);
+    GLFWwindow *window = glfwCreateWindow(800, 600, "Comp371 - Assignment 1", NULL, NULL);
     if (window == NULL) {
         std::cerr << "Failed to create GLFW window" << std::endl;
         glfwTerminate();
