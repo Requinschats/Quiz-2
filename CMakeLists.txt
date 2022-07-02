@@ -22,7 +22,7 @@ set(EXEC A1)
 
 file(GLOB SRC src/*.cpp)
 
-add_executable(${EXEC} ${SRC} src/initialization/initialization.cpp src/initialization/initialization.h)
+add_executable(${EXEC} ${SRC} src/initialization/initialization.cpp src/initialization/initialization.h src/Axis/Axis.cpp src/Axis/Axis.h)
 
 target_link_libraries(${EXEC} OpenGL::GL glew_s glfw glm)
 

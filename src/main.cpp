@@ -6,6 +6,7 @@
 #include <GLFW/glfw3.h>
 #include "glm/vec3.hpp"
 #include "./initialization/initialization.h"
+#include "Axis/Axis.h"
 
 const char *getVertexShaderSource() {
     return
@@ -75,12 +76,12 @@ int compileAndLinkShaders() {
     return shaderProgram;
 }
 
-void initializeVertexArrayObject(GLuint* vertexArrayObject) {
+void initializeVertexArrayObject(GLuint *vertexArrayObject) {
     glGenVertexArrays(1, vertexArrayObject);
     glBindVertexArray(*vertexArrayObject);
 }
 
-void initializeVertexBufferObject(GLuint* vertexBufferObject) {
+void initializeVertexBufferObject(GLuint *vertexBufferObject) {
     glGenBuffers(1, vertexBufferObject);
     glBindBuffer(GL_ARRAY_BUFFER, *vertexBufferObject);
 }
@@ -103,11 +104,11 @@ int createVertexArrayObject() {
 
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertexArray), vertexArray, GL_STATIC_DRAW);
 
-    glVertexAttribPointer(0,3,GL_FLOAT,GL_FALSE,2 * sizeof(glm::vec3),(void *) 0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 2 * sizeof(glm::vec3), (void *) 0);
     glEnableVertexAttribArray(0);
 
 
-    glVertexAttribPointer(1,3,GL_FLOAT,GL_FALSE,2 * sizeof(glm::vec3),(void *) sizeof(glm::vec3));
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 2 * sizeof(glm::vec3), (void *) sizeof(glm::vec3));
     glEnableVertexAttribArray(1);
 
     glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -130,11 +131,12 @@ int main(int argc, char *argv[]) {
         glClear(GL_COLOR_BUFFER_BIT);
 
         glUseProgram(shaderProgram);
-        glBindVertexArray(vao);
-
-        glDrawArrays(GL_TRIANGLES, 0, 3);
-        glBindVertexArray(0);
-
+//        glBindVertexArray(vao);
+//
+//        glDrawArrays(GL_TRIANGLES, 0, 3);
+//        glBindVertexArray(0);
+        Axis *axis = new Axis();
+//        axis->Draw();
 
         glfwSwapBuffers(window);
 
