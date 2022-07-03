@@ -124,7 +124,7 @@ int main(int argc, char *argv[]) {
 
     int shaderProgram = compileAndLinkShaders();
 
-    int vao = createVertexArrayObject();
+//    int vao = createVertexArrayObject();
 
 
     while (!glfwWindowShouldClose(window)) {
@@ -136,7 +136,7 @@ int main(int argc, char *argv[]) {
 //        glDrawArrays(GL_TRIANGLES, 0, 3);
 //        glBindVertexArray(0);
         Axis *axis = new Axis();
-//        axis->Draw();
+        axis->Draw();
 
         glfwSwapBuffers(window);
 

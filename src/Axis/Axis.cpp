@@ -45,15 +45,15 @@ Axis::Axis() {
 
 Axis::~Axis() {}
 
-//void Axis::Draw() {
-//    glBindVertexArray(this->axisVAO_);
-//
-//    glEnable(GL_LINE_SMOOTH);
-//    glLineWidth(4.0f);
-//    glDrawArrays(GL_LINES, 0, 3 * 2);
-//    glDrawArrays(GL_LINES, 6, 3 * 2);
-//    glDrawArrays(GL_LINES, 12, 3 * 2);
-//    glLineWidth(0.5f);
-//
-//    glBindVertexArray(0);
-//}
+void Axis::Draw() {
+    glBindVertexArray(this->axisVAO_);
+
+    glEnable(GL_LINE_SMOOTH);
+    glLineWidth(4.0f);
+    glDrawArrays(GL_LINES, 0, 3 * 2);
+    glDrawArrays(GL_LINES, 6, 3 * 2);
+    glDrawArrays(GL_LINES, 12, 3 * 2);
+    glLineWidth(0.5f);
+
+    glBindVertexArray(0);
+}

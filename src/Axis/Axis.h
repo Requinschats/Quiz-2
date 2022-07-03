@@ -5,7 +5,8 @@ public:
     Axis();
 
     ~Axis();
-//    void Draw();
+
+    void Draw();
 
 private:
     GLuint axisVAO_;
