@@ -53,7 +53,7 @@ void Axis::Draw() {
     glDrawArrays(GL_LINES, 0, 3 * 2);
     glDrawArrays(GL_LINES, 6, 3 * 2);
     glDrawArrays(GL_LINES, 12, 3 * 2);
-    glLineWidth(0.5f);
+    glLineWidth(5.5f);
 
     glBindVertexArray(0);
 }
