@@ -20,9 +20,9 @@ include(BuildGLM)
 
 set(EXEC A1)
 
-file(GLOB SRC src/*.cpp)
+file(GLOB SRC src/*.cpp src/*/*.cpp src/*/*.h)
 
-add_executable(${EXEC} ${SRC} src/initialization/initialization.cpp src/initialization/initialization.h src/Axis/Axis.cpp src/Axis/Axis.h)
+add_executable(${EXEC} ${SRC} src/inputs/inputs.cpp src/inputs/inputs.h)
 
 target_link_libraries(${EXEC} OpenGL::GL glew_s glfw glm)
 
