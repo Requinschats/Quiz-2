@@ -16,12 +16,13 @@ const char *getVertexShaderSource() {
             "layout (location = 1) in vec3 aColor;"
             ""
             "uniform mat4 worldMatrix;"
+            "uniform mat4 viewMatrix = mat4(1.0f);"
             ""
             "out vec3 vertexColor;"
             "void main()"
             "{"
             "   vertexColor = aColor;"
-            "   gl_Position = worldMatrix * vec4(aPos.x, aPos.y, aPos.z, 1.0);"
+            "   gl_Position = viewMatrix * worldMatrix * vec4(aPos.x, aPos.y, aPos.z, 1.0);"
             "}";
 }
 
@@ -112,7 +113,7 @@ int main(int argc, char *argv[]) {
 
         glfwPollEvents();
 
-        handleInputs(window);
+        handleInputs(window, shaderProgram);
     }
 
     glfwTerminate();
