@@ -90,11 +90,10 @@ int main(int argc, char *argv[]) {
     GLFWwindow *window = initializeWindow();
 
     int shaderProgram = compileAndLinkShaders();
-
+    glEnable(GL_CULL_FACE);
 
     while (!glfwWindowShouldClose(window)) {
         glClear(GL_COLOR_BUFFER_BIT);
-
         glUseProgram(shaderProgram);
 
         // rotate frame
