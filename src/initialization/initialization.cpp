@@ -3,6 +3,7 @@
 #include "GLFW/glfw3.h"
 #include "glm/glm.hpp"
 #include "glm/ext/matrix_clip_space.hpp"
+#include "glm/ext/matrix_transform.hpp"
 
 GLFWwindow *initializeWindow() {
     glfwInit();
@@ -37,4 +38,17 @@ void setInitialDistance(int *shaderProgram) {
     GLuint projectionMatrixLocation = glGetUniformLocation(*shaderProgram, "projectionMatrix");
     glUniformMatrix4fv(projectionMatrixLocation, 1, GL_FALSE, &projectionMatrix[0][0]);
 
+}
+
+float angle = 0;
+float rotationSpeed = 50.0f;  // 180 degrees per second
+float lastFrameTime = glfwGetTime();
+
+void rotateFrame(int shaderProgram) {
+    float dt = glfwGetTime() - lastFrameTime;
+    lastFrameTime += dt;
+    angle = (angle + rotationSpeed * dt);
+    glm::mat4 rotationMatrix = glm::rotate(glm::mat4(1.0f), glm::radians(angle), glm::vec3(0.0f, 1.0f, 0.0f));
+    GLuint worldMatrixLocation = glGetUniformLocation(shaderProgram, "worldMatrix");
+    glUniformMatrix4fv(worldMatrixLocation, 1, GL_FALSE, &rotationMatrix[0][0]);
 }
