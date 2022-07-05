@@ -27,7 +27,6 @@ const GLfloat vertices[] =
 
 Axis::Axis() {
     GLuint VertexBufferObject;
-
     glGenVertexArrays(1, &this->axisVAO_);
     glGenBuffers(1, &VertexBufferObject);
 
@@ -49,7 +48,7 @@ void Axis::Draw() {
     glBindVertexArray(this->axisVAO_);
 
     glEnable(GL_LINE_SMOOTH);
-    glLineWidth(4.0f);
+    glLineWidth(5.5f);
     glDrawArrays(GL_LINES, 0, 3 * 2);
     glDrawArrays(GL_LINES, 6, 3 * 2);
     glDrawArrays(GL_LINES, 12, 3 * 2);

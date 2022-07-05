@@ -1,6 +1,8 @@
 #include <iostream>
 #include "GL/glew.h"
 #include "GLFW/glfw3.h"
+#include "glm/glm.hpp"
+#include "glm/ext/matrix_clip_space.hpp"
 
 GLFWwindow *initializeWindow() {
     glfwInit();
@@ -25,4 +27,14 @@ GLFWwindow *initializeWindow() {
         return NULL;
     }
     return window;
+}
+
+void setInitialDistance(int *shaderProgram) {
+    glm::mat4 projectionMatrix = glm::ortho(-15.0f, 15.0f,    // left/right
+                                            -15.0f, 15.0f,    // bottom/top
+                                            -100.0f, 100.0f);  // near/far (near == 0 is ok for ortho)
+
+    GLuint projectionMatrixLocation = glGetUniformLocation(*shaderProgram, "projectionMatrix");
+    glUniformMatrix4fv(projectionMatrixLocation, 1, GL_FALSE, &projectionMatrix[0][0]);
+
 }

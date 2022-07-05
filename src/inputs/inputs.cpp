@@ -26,7 +26,7 @@ void handleInputs(GLFWwindow *window, int shaderProgram) {
         glUniformMatrix4fv(viewMatrixLocation, 1, GL_FALSE, &viewMatrix[0][0]);
     }
     // Projection Transform
-    if (glfwGetKey(window, GLFW_KEY_ENTER) == GLFW_PRESS) {
+    if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) {
         glm::mat4 projectionMatrix = glm::perspective(glm::radians(45.0f),  // field of view in degrees
                                                       800.0f / 600.0f,      // aspect ratio
                                                       0.01f, 100.0f);       // near and far (near > 0)
@@ -35,9 +35,9 @@ void handleInputs(GLFWwindow *window, int shaderProgram) {
         glUniformMatrix4fv(projectionMatrixLocation, 1, GL_FALSE, &projectionMatrix[0][0]);
     }
 
-    if (glfwGetKey(window, GLFW_KEY_BACKSPACE) == GLFW_PRESS) {
-        glm::mat4 projectionMatrix = glm::ortho(-4.0f, 4.0f,    // left/right
-                                                -3.0f, 3.0f,    // bottom/top
+    if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS) {
+        glm::mat4 projectionMatrix = glm::ortho(-15.0f, 15.0f,    // left/right
+                                                -15.0f, 15.0f,    // bottom/top
                                                 -100.0f, 100.0f);  // near/far (near == 0 is ok for ortho)
 
         GLuint projectionMatrixLocation = glGetUniformLocation(shaderProgram, "projectionMatrix");

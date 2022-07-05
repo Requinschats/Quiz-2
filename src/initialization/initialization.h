@@ -5,6 +5,8 @@
 
 #include "GLFW/glfw3.h"
 
-GLFWwindow* initializeWindow();
+GLFWwindow *initializeWindow();
+
+void setInitialDistance(int *shaderProgram);
 
 #endif //A1_INITIALIZATION_H
