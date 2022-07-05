@@ -1,18 +1,5 @@
 #include "Cube.h"
 
-GLuint VertexBuffer, VertexArray, ElementBuffer, ShaderProgram;
-
-//GLfloat vertices[] = {
-//        -0.5, 0.5, 0.5, 1.0, 0.0, 0.0,    // Front Top Left		- Red	- 0
-//        0.5, 0.5, 0.5, 0.0, 1.0, 0.0,    // Front Top Right		- Green	- 1
-//        0.5, -0.5, 0.5, 0.0, 0.0, 1.0,    // Front Bottom Right		- Blue	- 2
-//        -0.5, -0.5, 0.5, 0.0, 1.0, 1.0,    // Front Bottom Left		- Cyan	- 3
-//        -0.5, 0.5, -0.5, 1.0, 0.0, 1.0,    // Back Top Left		- Pink	- 4
-//        0.5, 0.5, -0.5, 1.0, 1.0, 0.0,    // Back Top Right		- Yellow- 5
-//        0.5, -0.5, -0.5, 0.1, 0.1, 0.1,    // Back Bottom Right		- White - 6
-//        -0.5, -0.5, -0.5, 1.0, 1.0, 1.0,    // Back Bottom Left		- Gray  - 7
-//};
-
 static const GLfloat g_color_buffer_data[] = {
         0.583f, 0.771f, 0.014f,
         0.609f, 0.115f, 0.436f,
@@ -97,8 +84,6 @@ Cube::Cube() {
 
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *) 0);
-//    glEnableVertexAttribArray(1);
-//    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *) (3 * sizeof(float)));
 
     //color buffer
     GLuint colorbuffer;
@@ -107,16 +92,8 @@ Cube::Cube() {
     glBufferData(GL_ARRAY_BUFFER, sizeof(g_color_buffer_data), g_color_buffer_data, GL_STATIC_DRAW);
     glEnableVertexAttribArray(1);
     glBindBuffer(GL_ARRAY_BUFFER, colorbuffer);
-    glVertexAttribPointer(
-            1,                                // attribute. No particular reason for 1, but must match the layout in the shader.
-            3,                                // size
-            GL_FLOAT,                         // type
-            GL_FALSE,                         // normalized?
-            0,                                // stride
-            (void *) 0                          // array buffer offset
-    );
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void *) 0);
 
-    //element buffer
     GLuint indexBufferObject;
     glGenBuffers(1, &indexBufferObject);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBufferObject);
