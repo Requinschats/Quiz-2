@@ -9,4 +9,6 @@ GLFWwindow *initializeWindow();
 
 void setInitialDistance(int *shaderProgram);
 
+void rotateFrame(int shaderProgram);
+
 #endif //A1_INITIALIZATION_H

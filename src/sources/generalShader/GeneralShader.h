@@ -1,0 +1,3 @@
+char *getFragmentShaderSource();
+
+char *getVertexShaderSource();
