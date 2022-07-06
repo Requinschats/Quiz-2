@@ -5,6 +5,8 @@
 #include "glm/ext/matrix_clip_space.hpp"
 #include "glm/ext/matrix_transform.hpp"
 
+using namespace glm;
+
 GLFWwindow *initializeWindow() {
     glfwInit();
 
@@ -30,25 +32,28 @@ GLFWwindow *initializeWindow() {
     return window;
 }
 
-void setInitialDistance(int *shaderProgram) {
-    glm::mat4 projectionMatrix = glm::ortho(-15.0f, 15.0f,    // left/right
-                                            -15.0f, 15.0f,    // bottom/top
-                                            -100.0f, 100.0f);  // near/far (near == 0 is ok for ortho)
+glm::mat4 setInitialProjectionMatrix(int *shaderProgram) {
+    glm::mat4 projectionMatrix = glm::perspective(glm::radians(80.0f),  // field of view in degrees
+                                                  800.0f / 600.0f,      // aspect ratio
+                                                  0.01f, 100.0f);       // near and far (near > 0)
 
     GLuint projectionMatrixLocation = glGetUniformLocation(*shaderProgram, "projectionMatrix");
     glUniformMatrix4fv(projectionMatrixLocation, 1, GL_FALSE, &projectionMatrix[0][0]);
-
+    return projectionMatrix;
 }
 
-float angle = 0;
-float rotationSpeed = 50.0f;  // 180 degrees per second
-float lastFrameTime = glfwGetTime();
 
-void rotateFrame(int shaderProgram) {
-    float dt = glfwGetTime() - lastFrameTime;
-    lastFrameTime += dt;
-    angle = (angle + rotationSpeed * dt);
-    glm::mat4 rotationMatrix = glm::rotate(glm::mat4(1.0f), glm::radians(angle), glm::vec3(0.0f, 1.0f, 0.0f));
+void setDefaultWorldMatrix(int shaderProgram) {
+    mat4 defaultWorldMatrix =
+            translate(mat4(1.0f), vec3(0.0f, -0.01f, 0.0f)) * scale(mat4(1.0f), vec3(1.0f, 1.0f, 1.0f));
     GLuint worldMatrixLocation = glGetUniformLocation(shaderProgram, "worldMatrix");
-    glUniformMatrix4fv(worldMatrixLocation, 1, GL_FALSE, &rotationMatrix[0][0]);
+    glUniformMatrix4fv(worldMatrixLocation, 1, GL_FALSE, &defaultWorldMatrix[0][0]);
+}
+
+void setCameraPosition(int *shaderProgram, vec3 *cameraPosition, vec3 *cameraLookAt, vec3 *cameraUp) {
+    mat4 viewMatrix = lookAt(*cameraPosition,
+                             *cameraPosition + *cameraLookAt,  // center
+                             *cameraUp); // up
+    GLuint viewMatrixLocation = glGetUniformLocation(*shaderProgram, "viewMatrix");
+    glUniformMatrix4fv(viewMatrixLocation, 1, GL_FALSE, &viewMatrix[0][0]);
 }
