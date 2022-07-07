@@ -21,6 +21,7 @@ int main(int argc, char *argv[]) {
 
     int shaderProgram = compileAndLinkShaders(getVertexShaderSource(), getFragmentShaderSource());
     glUseProgram(shaderProgram);
+    glEnable(GL_DEPTH_TEST);
 //    glEnable(GL_CULL_FACE);
 
     vec3 cameraPosition(-5.6f, 10.0f, 10.0f);
@@ -38,7 +39,7 @@ int main(int argc, char *argv[]) {
         lastFrameTime += dt;
 
 
-        glClear(GL_COLOR_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         setDefaultWorldMatrix(shaderProgram);
 
