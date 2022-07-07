@@ -23,8 +23,8 @@ int main(int argc, char *argv[]) {
     glUseProgram(shaderProgram);
 //    glEnable(GL_CULL_FACE);
 
-    vec3 cameraPosition(0.6f, 1.0f, 10.0f);
-    vec3 cameraLookAt(0.0f, 0.0f, -1.0f);
+    vec3 cameraPosition(-5.6f, 10.0f, 10.0f);
+    vec3 cameraLookAt(0.5f, -0.5f, -1.0f);
     vec3 cameraUp(0.0f, 1.0f, 0.0f);
 
     glm::mat4 initialProjectionMatrix = setInitialProjectionMatrix(&shaderProgram);
