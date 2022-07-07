@@ -11,6 +11,7 @@
 #include "Shaders/shaders.h"
 #include "sources/generalShader/GeneralShader.h"
 #include "TranslateMatrix/TranslateMatrix.h"
+#include "Olaf/Olaf.h"
 
 using namespace glm;
 
@@ -41,13 +42,8 @@ int main(int argc, char *argv[]) {
 
         setDefaultWorldMatrix(shaderProgram);
 
-        Axis *axis = new Axis();
-        axis->Draw();
-
-        TranslateMatrix *translateMatrix = new TranslateMatrix(1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f);
-        translateMatrix->bindTranslationMatrix(&shaderProgram);
-        Cube *cube = new Cube();
-        cube->Draw();
+        (new Axis())->Draw();
+        (new Olaf(&shaderProgram))->Draw();
 
         glfwSwapBuffers(window);
 
