@@ -108,7 +108,7 @@ Cube::Cube() {
 
 Cube::~Cube() {}
 
-void Cube::Draw(int *shaderProgram) {
+void Cube::Draw() {
     glBindVertexArray(this->cubeVAO_);
     glLineWidth(4.0f);
     glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);

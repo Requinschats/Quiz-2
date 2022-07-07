@@ -1,5 +1,4 @@
 #include "GL/glew.h"
-#include "../TranslateMatrix/TranslateMatrix.h"
 
 class Cube {
 public:
@@ -7,9 +6,8 @@ public:
 
     ~Cube();
 
-    void Draw(int *shaderProgram);
+    void Draw();
 
 private:
     GLuint cubeVAO_;
-    GLuint cubeEAO_;
 };
