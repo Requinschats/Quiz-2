@@ -22,7 +22,7 @@ int main(int argc, char *argv[]) {
     int shaderProgram = compileAndLinkShaders(getVertexShaderSource(), getFragmentShaderSource());
     glUseProgram(shaderProgram);
     glEnable(GL_DEPTH_TEST);
-//    glEnable(GL_CULL_FACE);
+    glEnable(GL_CULL_FACE);
 
     vec3 cameraPosition(-5.6f, 10.0f, 10.0f);
     vec3 cameraLookAt(0.5f, -0.5f, -1.0f);

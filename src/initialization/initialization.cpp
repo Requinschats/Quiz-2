@@ -15,7 +15,7 @@ GLFWwindow *initializeWindow() {
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 
-    GLFWwindow *window = glfwCreateWindow(800, 600, "Comp371 - Assignment 1", NULL, NULL);
+    GLFWwindow *window = glfwCreateWindow(1024, 768, "Comp371 - Assignment 1", NULL, NULL);
     if (window == NULL) {
         std::cerr << "Failed to create GLFW window" << std::endl;
         glfwTerminate();

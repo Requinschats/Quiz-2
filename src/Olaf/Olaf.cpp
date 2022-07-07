@@ -91,7 +91,24 @@ void Olaf::Draw() {
     headTranslateMatrix->bindTranslationMatrix(this->shaderProgram);
     cube->Draw();
 
+    //nose
+    Cube *noseCube = new Cube(255.0f, 160.0f, 122.0f);
+    float noseWidth = 0.25f;
+    float noseHeight = 0.25f;
+    float noseZPosition = olafZPosition + 0.5f;
+    float noseYPosition = headYPosition + 0.20f;
+//    float nose1XPosition = olafXPosition - 0.75f;
+    TranslateMatrix *noseTranslateMatrix = new TranslateMatrix(olafXPosition,
+                                                               noseYPosition,
+                                                               noseZPosition,
+                                                               noseWidth,
+                                                               noseHeight,
+                                                               bodyDepth);
+    noseTranslateMatrix->bindTranslationMatrix(this->shaderProgram);
+    noseCube->Draw();
+
     //eyes
+    Cube *eyesCube = new Cube(100.0f, 100.0f, 100.0f);
     float eyeWidth = 0.25f;
     float eyeHeight = 0.25f;
     float eyeZPosition = olafZPosition + 0.5f;
@@ -106,7 +123,7 @@ void Olaf::Draw() {
                                                                eyeHeight,
                                                                bodyDepth);
     eye1TranslateMatrix->bindTranslationMatrix(this->shaderProgram);
-    cube->Draw();
+    eyesCube->Draw();
 
     //eye 2
     float eye2XPosition = olafXPosition + 0.75f;
@@ -117,5 +134,35 @@ void Olaf::Draw() {
                                                                eyeHeight,
                                                                bodyDepth);
     eye2TranslateMatrix->bindTranslationMatrix(this->shaderProgram);
-    cube->Draw();
+    eyesCube->Draw();
+
+    //hair
+    Cube *hairCube = new Cube(250.0f, 240.0f, 190.5f);
+    float hairWidth = 0.05f;
+    float hairHeight = 1.0f;
+    float hairYPosition = headYPosition + 2.0f;
+    TranslateMatrix *hairTranslateMatrix = new TranslateMatrix(olafXPosition,
+                                                               hairYPosition,
+                                                               olafZPosition,
+                                                               hairWidth,
+                                                               hairHeight,
+                                                               bodyDepth);
+    hairTranslateMatrix->bindTranslationMatrix(this->shaderProgram);
+    hairCube->Draw();
+    TranslateMatrix *hairTranslateMatrix2 = new TranslateMatrix(olafXPosition + 0.5,
+                                                                hairYPosition,
+                                                                olafZPosition,
+                                                                hairWidth,
+                                                                hairHeight,
+                                                                bodyDepth);
+    hairTranslateMatrix2->bindTranslationMatrix(this->shaderProgram);
+    hairCube->Draw();
+    TranslateMatrix *hairTranslateMatrix3 = new TranslateMatrix(olafXPosition - 0.5,
+                                                                hairYPosition,
+                                                                olafZPosition,
+                                                                hairWidth,
+                                                                hairHeight,
+                                                                bodyDepth);
+    hairTranslateMatrix3->bindTranslationMatrix(this->shaderProgram);
+    hairCube->Draw();
 }
