@@ -44,10 +44,34 @@ int main(int argc, char *argv[]) {
         Axis *axis = new Axis();
         axis->Draw();
 
-        TranslateMatrix *translateMatrix = new TranslateMatrix(1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f);
-        translateMatrix->bindTranslationMatrix(&shaderProgram);
         Cube *cube = new Cube();
+        float legSize = 0.5f;
+        float olafZPosition = -10.0f;
+        float olafXPosition = 2.0f;
+
+        //leg 1
+        TranslateMatrix *leg1TranslateMatrix = new TranslateMatrix(1.0f, 1.0f, olafZPosition, legSize, legSize,
+                                                                   legSize);
+        leg1TranslateMatrix->bindTranslationMatrix(&shaderProgram);
         cube->Draw();
+
+        //leg 2
+        TranslateMatrix *leg2TranslateMatrix = new TranslateMatrix(3.0f, 1.0f, olafZPosition, legSize, legSize,
+                                                                   legSize);
+        leg2TranslateMatrix->bindTranslationMatrix(&shaderProgram);
+        cube->Draw();
+
+        //body
+        float bodyWidth = 2.0f;
+        float bodyDepth = 0.5f;
+        float bodyHeight = 3.0f;
+        TranslateMatrix *bodyTranslateMatrix = new TranslateMatrix(olafXPosition, bodyHeight, olafZPosition, bodyWidth,
+                                                                   bodyWidth,
+                                                                   bodyDepth);
+        bodyTranslateMatrix->bindTranslationMatrix(&shaderProgram);
+        cube->Draw();
+
+        //neck
 
         glfwSwapBuffers(window);
 
