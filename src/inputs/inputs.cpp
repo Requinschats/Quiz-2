@@ -22,12 +22,16 @@ void handleInputs(GLFWwindow *window, int shaderProgram, vec3 *cameraPosition, v
     if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS) {
         cameraPosition->x += cameraSpeed * dt;
     }
-
     if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) {
         cameraPosition->z -= cameraSpeed * dt;
     }
-
     if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS) {
         cameraPosition->z += cameraSpeed * dt;
+    }
+    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
+        cameraPosition->y += cameraSpeed * dt;
+    }
+    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
+        cameraPosition->y -= cameraSpeed * dt;
     }
 }
