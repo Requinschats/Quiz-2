@@ -7,7 +7,7 @@ public:
 
     ~Cube();
 
-    void Draw(int *shaderProgram, TranslateMatrix translateMatrix);
+    void Draw(int *shaderProgram);
 
 private:
     GLuint cubeVAO_;

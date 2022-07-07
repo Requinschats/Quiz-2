@@ -1,4 +1,4 @@
-struct Scale {
+struct Size {
     float x;
     float y;
     float z;
@@ -16,13 +16,13 @@ public:
     TranslateMatrix(float x_position,
                     float y_position,
                     float z_position,
-                    float x_scale,
-                    float y_scale,
-                    float z_scale);
+                    float x_size,
+                    float y_size,
+                    float z_size);
 
-    void bindTranslationMatrix();
+    void bindTranslationMatrix(int *shaderProgram);
 
     Position position;
-    Scale scale;
+    Size size;
 
 };

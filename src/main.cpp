@@ -45,8 +45,9 @@ int main(int argc, char *argv[]) {
         axis->Draw();
 
         TranslateMatrix *translateMatrix = new TranslateMatrix(1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f);
+        translateMatrix->bindTranslationMatrix(&shaderProgram);
         Cube *cube = new Cube();
-        cube->Draw(&shaderProgram, *translateMatrix);
+        cube->Draw(&shaderProgram);
 
         glfwSwapBuffers(window);
 
