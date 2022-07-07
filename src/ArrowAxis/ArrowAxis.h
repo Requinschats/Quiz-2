@@ -7,5 +7,5 @@ public:
     void Draw();
 
 private:
-    GLuint axisVAO_;
+    GLuint arrowAxisVAO_;
 };
