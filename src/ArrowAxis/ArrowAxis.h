@@ -1,10 +1,8 @@
 #include "GL/glew.h"
 
-class Axis {
+class ArrowAxis {
 public:
-    Axis();
-
-    ~Axis();
+    ArrowAxis();
 
     void Draw();
 
