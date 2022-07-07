@@ -20,10 +20,10 @@ include(BuildGLM)
 
 set(EXEC A1)
 
-file(GLOB SRC src/*.cpp src/*/*.cpp src/*/*.h)
 
-add_executable(${EXEC} ${SRC} src/inputs/inputs.cpp src/inputs/inputs.h src/Cube/Cube.cpp src/Cube/Cube.h src/Shaders/shaders.cpp src/Shaders/shaders.h src/sources/generalShader/GeneralShader.cpp src/sources/generalShader/GeneralShader.h)
+file(GLOB SRC src/*.cpp src/*/*.cpp src/*/*.h src/sources/*/*.cpp src/sources/*/*.h)
 
+add_executable(${EXEC} ${SRC})
 target_link_libraries(${EXEC} OpenGL::GL glew_s glfw glm)
 
 list(APPEND BIN ${EXEC})

@@ -10,7 +10,7 @@
 #include "Cube/Cube.h"
 #include "Shaders/shaders.h"
 #include "sources/generalShader/GeneralShader.h"
-#include "glm/ext/matrix_transform.hpp"
+#include "TranslateMatrix/TranslateMatrix.h"
 
 using namespace glm;
 
@@ -44,6 +44,8 @@ int main(int argc, char *argv[]) {
         Axis *axis = new Axis();
         axis->Draw();
 
+        TranslateMatrix *translateMatrix = new TranslateMatrix(1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f);
+        translateMatrix->bindTranslationMatrix(&shaderProgram);
         Cube *cube = new Cube();
         cube->Draw();
 

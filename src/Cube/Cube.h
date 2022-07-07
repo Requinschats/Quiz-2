@@ -10,5 +10,4 @@ public:
 
 private:
     GLuint cubeVAO_;
-    GLuint cubeEAO_;
 };

@@ -1,4 +1,7 @@
 #include "Cube.h"
+#include "glm/ext/matrix_transform.hpp"
+
+using namespace glm;
 
 static const GLfloat g_color_buffer_data[] = {
         0.583f, 0.771f, 0.014f,
