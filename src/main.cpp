@@ -5,13 +5,13 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include "./initialization/initialization.h"
-#include "Axis/Axis.h"
 #include "inputs/inputs.h"
 #include "Cube/Cube.h"
 #include "Shaders/shaders.h"
 #include "sources/generalShader/GeneralShader.h"
 #include "TranslateMatrix/TranslateMatrix.h"
 #include "Olaf/Olaf.h"
+#include "ArrowAxis/ArrowAxis.h"
 
 using namespace glm;
 
@@ -43,7 +43,7 @@ int main(int argc, char *argv[]) {
 
         setDefaultWorldMatrix(shaderProgram);
 
-        (new Axis())->Draw();
+        (new ArrowAxis())->Draw();
         (new Olaf(&shaderProgram))->Draw();
 
         glfwSwapBuffers(window);

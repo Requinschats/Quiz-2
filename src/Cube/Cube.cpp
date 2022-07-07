@@ -69,13 +69,13 @@ Cube::Cube(float rgb1, float rgb2, float rgb3) {
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *) 0);
 
     //color buffer
-    GLuint colorbuffer;
+    GLuint colorBuffer;
     array<float, 36> colorBufferData = getColorBufferData(rgb1 / 255, rgb2 / 255, rgb3 / 255);
-    glGenBuffers(1, &colorbuffer);
-    glBindBuffer(GL_ARRAY_BUFFER, colorbuffer);
+    glGenBuffers(1, &colorBuffer);
+    glBindBuffer(GL_ARRAY_BUFFER, colorBuffer);
     glBufferData(GL_ARRAY_BUFFER, sizeof(colorBufferData), &colorBufferData, GL_STATIC_DRAW);
     glEnableVertexAttribArray(1);
-    glBindBuffer(GL_ARRAY_BUFFER, colorbuffer);
+    glBindBuffer(GL_ARRAY_BUFFER, colorBuffer);
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void *) 0);
 
     GLuint indexBufferObject;
