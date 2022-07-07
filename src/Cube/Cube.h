@@ -2,7 +2,7 @@
 
 class Cube {
 public:
-    Cube();
+    Cube(float rgb1 = 255.0f, float rgb2 = 255.0f, float rgb3 = 255.0f);
 
     ~Cube();
 
