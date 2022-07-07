@@ -12,6 +12,7 @@
 #include "TranslateMatrix/TranslateMatrix.h"
 #include "Olaf/Olaf.h"
 #include "ArrowAxis/ArrowAxis.h"
+#include "Grid/Grid.h"
 
 using namespace glm;
 
@@ -33,6 +34,7 @@ int main(int argc, char *argv[]) {
 
     float lastFrameTime = glfwGetTime();
     while (!glfwWindowShouldClose(window)) {
+        glClearColor(0.7, 0.7, 1, 0.2);
         setCameraPosition(&shaderProgram, &cameraPosition, &cameraLookAt, &cameraUp);
 
         float dt = glfwGetTime() - lastFrameTime;
@@ -41,16 +43,15 @@ int main(int argc, char *argv[]) {
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+        (new Grid(&shaderProgram))->Draw();
         setDefaultWorldMatrix(shaderProgram);
-
         (new ArrowAxis())->Draw();
         (new Olaf(&shaderProgram))->Draw();
 
-        glfwSwapBuffers(window);
-
-        glfwPollEvents();
-
         handleInputs(window, shaderProgram, &cameraPosition, &cameraLookAt, &cameraUp, dt);
+
+        glfwSwapBuffers(window);
+        glfwWaitEvents();
     }
 
     glfwTerminate();

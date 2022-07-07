@@ -26,10 +26,10 @@ const GLfloat axisVertices[] = {
 
 ArrowAxis::ArrowAxis() {
     GLuint VertexBufferObject;
-    glGenVertexArrays(1, &this->axisVAO_);
+    glGenVertexArrays(1, &this->arrowAxisVAO_);
     glGenBuffers(1, &VertexBufferObject);
 
-    glBindVertexArray(this->axisVAO_);
+    glBindVertexArray(this->arrowAxisVAO_);
     glBindBuffer(GL_ARRAY_BUFFER, VertexBufferObject);
     glBufferData(GL_ARRAY_BUFFER, sizeof(axisVertices), axisVertices, GL_STATIC_DRAW);
 
@@ -43,8 +43,7 @@ ArrowAxis::ArrowAxis() {
 }
 
 void ArrowAxis::Draw() {
-    glBindVertexArray(this->axisVAO_);
-    glLineWidth(6.0f);
-    glDrawArrays(GL_LINES, 0, 9 * 2);
+    glBindVertexArray(this->arrowAxisVAO_);
+    glDrawArrays(GL_LINES, 0, 18);
     glBindVertexArray(0);
 }
