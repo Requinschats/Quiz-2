@@ -34,13 +34,13 @@ Grid::Grid(int *shaderProgram) {
 void Grid::Draw() {
     for (int i = -50; i < 50; i++) {
         for (int j = -50; j < 50; j++) {
-            TranslateMatrix *hairTranslateMatrix = new TranslateMatrix(i,
+            TranslateMatrix *gridTranslateMatrix = new TranslateMatrix(i,
                                                                        0.0f,
                                                                        j,
                                                                        1.0f,
                                                                        1.0f,
                                                                        1.0f);
-            hairTranslateMatrix->bindTranslationMatrix(this->shaderProgram);
+            gridTranslateMatrix->bindTranslationMatrix(this->shaderProgram);
 
             glBindVertexArray(this->gridVAO_);
             glLineWidth(6.0f);
