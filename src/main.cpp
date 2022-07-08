@@ -5,15 +5,13 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include "./initialization/initialization.h"
-#include "inputs/inputs.h"
 #include "Cube/Cube.h"
 #include "Shaders/shaders.h"
 #include "sources/generalShader/GeneralShader.h"
-#include "TranslateMatrix/TranslateMatrix.h"
 #include "Olaf/Olaf.h"
 #include "ArrowAxis/ArrowAxis.h"
 #include "Grid/Grid.h"
-#include "Controller/Controller.h"
+#include "inputs/inputs.h"
 
 using namespace glm;
 
@@ -27,6 +25,7 @@ int main(int argc, char *argv[]) {
     glEnable(GL_CULL_FACE);
 
     Controller *controller = new Controller(&shaderProgram);
+    TranslateMatrix *translateMatrix = new TranslateMatrix(0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f);
 
     float olafXPosition = 0.0f;
     float olafZPosition = 0.0f;
@@ -34,10 +33,8 @@ int main(int argc, char *argv[]) {
 
     float lastFrameTime = glfwGetTime();
     while (!glfwWindowShouldClose(window)) {
+        controller->setCameraPosition();
         glClearColor(0.5, 0.5, 1, 1.0);
-
-        setCameraPosition(&shaderProgram, &controller->cameraPosition, &controller->cameraLookAt,
-                          &controller->cameraUp);
 
         float dt = glfwGetTime() - lastFrameTime;
         lastFrameTime += dt;
@@ -45,22 +42,19 @@ int main(int argc, char *argv[]) {
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        (new Grid(&shaderProgram))->Draw();
-        setDefaultWorldMatrix(shaderProgram);
-        (new ArrowAxis())->Draw();
-        (new Olaf(&shaderProgram))->Draw(
+        (new Grid(shaderProgram))->Draw(translateMatrix);
+        (new ArrowAxis())->Draw(translateMatrix, shaderProgram);
+        (new Olaf(shaderProgram))->Draw(
                 olafXPosition,
                 olafZPosition,
                 olafScale);
 
         handleViewInputs(window,
                          shaderProgram,
-                         &controller->cameraPosition,
-                         &controller->cameraLookAt,
-                         &controller->cameraUp,
+                         controller,
+                         translateMatrix,
                          dt);
         handleActionInputs(window, &olafXPosition, &olafZPosition, &olafScale);
-
         glfwSwapBuffers(window);
         glfwWaitEvents();
     }

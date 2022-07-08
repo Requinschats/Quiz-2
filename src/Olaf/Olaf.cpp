@@ -2,16 +2,16 @@
 #include "../Cube/Cube.h"
 #include "../TranslateMatrix/TranslateMatrix.h"
 
-Olaf::Olaf(int *shaderProgram) {
+Olaf::Olaf(int shaderProgram) {
     this->shaderProgram = shaderProgram;
 }
 
 void Olaf::Draw(float x_position, float z_position, float scale) {
     Cube *cube = new Cube();
     float legSize = 0.5f * scale;
-    float olafZPosition = z_position * scale;
-    float olafXPosition = x_position * scale;
-    float olafYInitialPosition = 1.0f * scale;
+    float olafZPosition = z_position;
+    float olafXPosition = x_position;
+    float olafYInitialPosition = 1.0f;
 
     //leg 1
     TranslateMatrix *leg1TranslateMatrix = new TranslateMatrix(olafXPosition - 1.0f * scale,

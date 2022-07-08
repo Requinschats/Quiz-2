@@ -1,10 +1,7 @@
 #include "glm/vec3.hpp"
+#include "glm/fwd.hpp"
 
 using namespace glm;
-
-static vec3 defaultCameraPosition = vec3(-5.6f, 10.0f, 10.0f);
-static vec3 defaultCameraLookAt = vec3(0.5f, -0.5f, -1.0f);
-static vec3 defaultCameraUp = vec3(0.0f, 1.0f, 0.0f);
 
 class Controller {
 public:
@@ -16,8 +13,12 @@ public:
 
     void setCameraPosition(vec3 cameraPosition, vec3 cameraLookAt, vec3 cameraUp);
 
+    mat4 rotateYAxis(float degreeOfRotation);
+
+    void setCameraPosition();
+
     vec3 cameraPosition;
     vec3 cameraLookAt;
     vec3 cameraUp;
-    int *shaderProgram;
+    int shaderProgram;
 };

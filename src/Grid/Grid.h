@@ -1,15 +1,16 @@
 #include "GL/glew.h"
+#include "../TranslateMatrix/TranslateMatrix.h"
 
 class Grid {
 public:
-    Grid(int *shaderProgram);
+    Grid(int shaderProgram);
 
-    void Draw();
+    void Draw(TranslateMatrix *translateMatrix);
 
     static int getRandomGridCoordinate();
 
 private:
     GLuint gridVAO_;
-    int *shaderProgram;
+    int shaderProgram;
 };
 

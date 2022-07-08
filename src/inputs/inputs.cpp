@@ -1,16 +1,14 @@
 #include "../Grid/Grid.h"
 #include "glm/glm.hpp"
 #include "inputs.h"
-#include "glm/ext/matrix_transform.hpp"
 
 using namespace glm;
 float cameraSpeed = 5.0f;
 
 void handleViewInputs(GLFWwindow *window,
                       int shaderProgram,
-                      vec3 *cameraPosition,
-                      vec3 *cameraLookAt,
-                      vec3 *cameraUp,
+                      Controller *controller,
+                      TranslateMatrix *translateMatrix,
                       float dt) {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
@@ -23,26 +21,28 @@ void handleViewInputs(GLFWwindow *window,
     }
 
     if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
-        cameraPosition->x -= cameraSpeed * dt;
+        controller->cameraPosition.x -= cameraSpeed * dt;
     }
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
-        cameraPosition->x += cameraSpeed * dt;
+        controller->cameraPosition.x += cameraSpeed * dt;
     }
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
-        cameraPosition->z -= cameraSpeed * dt;
+        controller->cameraPosition.z -= cameraSpeed * dt;
     }
     if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
-        cameraPosition->z += cameraSpeed * dt;
+        controller->cameraPosition.z += cameraSpeed * dt;
     }
     if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS) {
-        
+        translateMatrix->setRotationAngle(translateMatrix->rotationAngle + 5.0f);
     }
-
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
-        cameraPosition->y += cameraSpeed * dt;
+        controller->cameraPosition.y += cameraSpeed * dt;
     }
     if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
-        cameraPosition->y -= cameraSpeed * dt;
+        controller->cameraPosition.x -= cameraSpeed * dt;
+    }
+    if (glfwGetKey(window, GLFW_KEY_HOME) == GLFW_PRESS) {
+        controller->reset();
     }
 }
 

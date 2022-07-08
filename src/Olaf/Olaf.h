@@ -1,8 +1,8 @@
 class Olaf {
 public:
-    Olaf(int *shaderProgram);
+    Olaf(int shaderProgram);
 
     void Draw(float x_position, float z_position, float scale);
 
-    int *shaderProgram;
+    int shaderProgram;
 };

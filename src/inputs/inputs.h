@@ -1,7 +1,11 @@
 #include "GLFW/glfw3.h"
 #include "glm/glm.hpp"
+#include "../Controller/Controller.h"
 
-void handleViewInputs(GLFWwindow *window, int shaderProgram, glm::vec3 *cameraPosition, glm::vec3 *cameraLookAt,
-                      glm::vec3 *cameraUp, float dt);
+void handleViewInputs(GLFWwindow *window,
+                      int shaderProgram,
+                      Controller *controller,
+                      TranslateMatrix *translateMatrix,
+                      float dt);
 
 void handleActionInputs(GLFWwindow *window, float *olafXPosition, float *olafZPosition, float *olafScale);
