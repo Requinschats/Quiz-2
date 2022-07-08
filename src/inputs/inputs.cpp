@@ -1,11 +1,12 @@
-#include "inputs.h"
+#include "../Grid/Grid.h"
 #include "glm/glm.hpp"
+#include "inputs.h"
 
 using namespace glm;
 float cameraSpeed = 5.0f;
 
-void handleInputs(GLFWwindow *window, int shaderProgram, vec3 *cameraPosition, vec3 *cameraLookAt, vec3 *cameraUp,
-                  float dt) {
+void handleViewInputs(GLFWwindow *window, int shaderProgram, vec3 *cameraPosition, vec3 *cameraLookAt, vec3 *cameraUp,
+                      float dt) {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
 
@@ -33,5 +34,12 @@ void handleInputs(GLFWwindow *window, int shaderProgram, vec3 *cameraPosition, v
     }
     if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
         cameraPosition->y -= cameraSpeed * dt;
+    }
+}
+
+void handleActionInputs(GLFWwindow *window, float *olafXPosition, float *olafZPosition) {
+    if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
+        *olafXPosition = Grid::getRandomGridCoordinate();
+        *olafZPosition = Grid::getRandomGridCoordinate();
     }
 }
