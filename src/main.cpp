@@ -25,16 +25,21 @@ int main(int argc, char *argv[]) {
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
 
+    //controller
     vec3 cameraPosition(-5.6f, 10.0f, 10.0f);
     vec3 cameraLookAt(0.5f, -0.5f, -1.0f);
     vec3 cameraUp(0.0f, 1.0f, 0.0f);
+
+    //olaf coordinates
+    float olafXPosition = 0.0f;
+    float olafZPosition = 0.0f;
 
     glm::mat4 initialProjectionMatrix = setInitialProjectionMatrix(&shaderProgram);
     setCameraPosition(&shaderProgram, &cameraPosition, &cameraLookAt, &cameraUp);
 
     float lastFrameTime = glfwGetTime();
     while (!glfwWindowShouldClose(window)) {
-        glClearColor(0.7, 0.7, 1, 0.2);
+        glClearColor(0.5, 0.5, 1, 1.0);
         setCameraPosition(&shaderProgram, &cameraPosition, &cameraLookAt, &cameraUp);
 
         float dt = glfwGetTime() - lastFrameTime;
@@ -46,9 +51,15 @@ int main(int argc, char *argv[]) {
         (new Grid(&shaderProgram))->Draw();
         setDefaultWorldMatrix(shaderProgram);
         (new ArrowAxis())->Draw();
-        (new Olaf(&shaderProgram))->Draw();
+        (new Olaf(&shaderProgram))->Draw(olafXPosition, olafZPosition);
 
-        handleInputs(window, shaderProgram, &cameraPosition, &cameraLookAt, &cameraUp, dt);
+        handleViewInputs(window,
+                         shaderProgram,
+                         &cameraPosition,
+                         &cameraLookAt,
+                         &cameraUp,
+                         dt);
+        handleActionInputs(window, &olafXPosition, &olafZPosition);
 
         glfwSwapBuffers(window);
         glfwWaitEvents();

@@ -6,6 +6,8 @@ public:
 
     void Draw();
 
+    static int getRandomGridCoordinate();
+
 private:
     GLuint gridVAO_;
     int *shaderProgram;

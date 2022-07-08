@@ -2,7 +2,7 @@ class Olaf {
 public:
     Olaf(int *shaderProgram);
 
-    void Draw();
+    void Draw(float x_position, float z_position);
 
     int *shaderProgram;
 };

@@ -6,20 +6,28 @@ Olaf::Olaf(int *shaderProgram) {
     this->shaderProgram = shaderProgram;
 }
 
-void Olaf::Draw() {
+void Olaf::Draw(float x_position, float z_position) {
     Cube *cube = new Cube();
     float legSize = 0.5f;
-    float olafZPosition = -10.0f;
-    float olafXPosition = 2.0f;
+    float olafZPosition = z_position;
+    float olafXPosition = x_position;
 
     //leg 1
-    TranslateMatrix *leg1TranslateMatrix = new TranslateMatrix(1.0f, 1.0f, olafZPosition, legSize, legSize,
+    TranslateMatrix *leg1TranslateMatrix = new TranslateMatrix(olafXPosition - 1.0f,
+                                                               1.0f,
+                                                               olafZPosition,
+                                                               legSize,
+                                                               legSize,
                                                                legSize);
     leg1TranslateMatrix->bindTranslationMatrix(this->shaderProgram);
     cube->Draw();
 
     //leg 2
-    TranslateMatrix *leg2TranslateMatrix = new TranslateMatrix(3.0f, 1.0f, olafZPosition, legSize, legSize,
+    TranslateMatrix *leg2TranslateMatrix = new TranslateMatrix(olafXPosition + 1.0f,
+                                                               1.0f,
+                                                               olafZPosition,
+                                                               legSize,
+                                                               legSize,
                                                                legSize);
     leg2TranslateMatrix->bindTranslationMatrix(this->shaderProgram);
     cube->Draw();

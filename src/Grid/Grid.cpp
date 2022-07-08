@@ -1,15 +1,18 @@
 #include "Grid.h"
 #include "../TranslateMatrix/TranslateMatrix.h"
+#include "random"
+
+using namespace std;
 
 const GLfloat vertices[] = {
-        0.5f, 0.0f, -0.5f, 1.0f, 0.0f, 0.0f, 1.0f,
-        -0.5f, 0.0f, -0.5f, 1.0f, 0.0f, 0.0f, 1.0f,
-        -0.5f, 0.0f, -0.5f, 1.0f, 0.0f, 0.0f, 1.0f,
-        -0.5f, 0.0f, 0.5f, 1.0f, 0.0f, 0.0f, 1.0f,
-        -0.5f, 0.0f, 0.5f, 1.0f, 0.0f, 0.0f, 1.0f,
-        0.5f, 0.0f, 0.5f, 1.0f, 0.0f, 0.0f, 1.0f,
-        0.5f, 0.0f, 0.5f, 1.0f, 0.0f, 0.0f, 1.0f,
-        0.5f, 0.0f, -0.5f, 1.0f, 0.0f, 0.0f, 1.0f
+        0.5f, 0.0f, -0.5f, 0.75f, 1.0f, 0.5f, 1.0f,
+        -0.5f, 0.0f, -0.5f, 0.75f, 1.0f, 0.5f, 1.0f,
+        -0.5f, 0.0f, -0.5f, 0.75f, 1.0f, 0.5f, 1.0f,
+        -0.5f, 0.0f, 0.5f, 0.75f, 1.0f, 0.5f, 1.0f,
+        -0.5f, 0.0f, 0.5f, 0.75f, 1.0f, 0.5f, 1.0f,
+        0.5f, 0.0f, 0.5f, 0.75f, 1.0f, 0.5f, 1.0f,
+        0.5f, 0.0f, 0.5f, 0.75f, 1.0f, 0.5f, 1.0f,
+        0.5f, 0.0f, -0.5f, 0.75f, 1.0f, 0.5f, 1.0f
 };
 
 Grid::Grid(int *shaderProgram) {
@@ -49,3 +52,11 @@ void Grid::Draw() {
         }
     }
 }
+
+int Grid::getRandomGridCoordinate() {
+    random_device randomDevice;
+    std::mt19937 gen(randomDevice());
+    std::uniform_int_distribution<> distribution(-50, 50);
+    return distribution(gen);
+}
+
