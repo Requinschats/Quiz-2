@@ -1,5 +1,6 @@
 #include "GL/glew.h"
 #include "ArrowAxis.h"
+#include "../initialization/initialization.h"
 
 const GLfloat axisVertices[] = {
         0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, //position, color
@@ -42,7 +43,10 @@ ArrowAxis::ArrowAxis() {
     glBindVertexArray(0);
 }
 
-void ArrowAxis::Draw() {
+void ArrowAxis::Draw(TranslateMatrix *translateMatrix, GLuint shaderProgram) {
+    translateMatrix->setDefaultPosition();
+    translateMatrix->setDefaultSize();
+    translateMatrix->bindTranslationMatrix(shaderProgram);
     glBindVertexArray(this->arrowAxisVAO_);
     glDrawArrays(GL_LINES, 0, 18);
     glBindVertexArray(0);
