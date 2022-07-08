@@ -41,13 +41,3 @@ glm::mat4 setInitialProjectionMatrix(int shaderProgram) {
     glUniformMatrix4fv(projectionMatrixLocation, 1, GL_FALSE, &projectionMatrix[0][0]);
     return projectionMatrix;
 }
-
-
-void setDefaultWorldMatrix(int shaderProgram) {
-    mat4 defaultWorldMatrix =
-            translate(mat4(1.0f), vec3(0.0f, -0.01f, 0.0f))
-            * scale(mat4(1.0f), vec3(1.0f, 1.0f, 1.0f))
-            * rotate(mat4(1.0f), glm::radians(180.0f), vec3(0.0f, 1.0f, 0.0f));
-    GLuint worldMatrixLocation = glGetUniformLocation(shaderProgram, "worldMatrix");
-    glUniformMatrix4fv(worldMatrixLocation, 1, GL_FALSE, &defaultWorldMatrix[0][0]);
-}
