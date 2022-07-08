@@ -23,7 +23,7 @@ set(EXEC A1)
 
 file(GLOB SRC src/*.cpp src/*/*.cpp src/*/*.h src/sources/*/*.cpp src/sources/*/*.h)
 
-add_executable(${EXEC} ${SRC})
+add_executable(${EXEC} ${SRC} src/Controller/Controller.cpp src/Controller/Controller.h)
 target_link_libraries(${EXEC} OpenGL::GL glew_s glfw glm)
 
 list(APPEND BIN ${EXEC})

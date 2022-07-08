@@ -13,6 +13,7 @@
 #include "Olaf/Olaf.h"
 #include "ArrowAxis/ArrowAxis.h"
 #include "Grid/Grid.h"
+#include "Controller/Controller.h"
 
 using namespace glm;
 
@@ -25,23 +26,18 @@ int main(int argc, char *argv[]) {
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
 
-    //controller
-    vec3 cameraPosition(-5.6f, 10.0f, 10.0f);
-    vec3 cameraLookAt(0.5f, -0.5f, -1.0f);
-    vec3 cameraUp(0.0f, 1.0f, 0.0f);
+    Controller *controller = new Controller(&shaderProgram);
 
-    //olaf coordinates
     float olafXPosition = 0.0f;
     float olafZPosition = 0.0f;
     float olafScale = 1.0f;
 
-    glm::mat4 initialProjectionMatrix = setInitialProjectionMatrix(&shaderProgram);
-    setCameraPosition(&shaderProgram, &cameraPosition, &cameraLookAt, &cameraUp);
-
     float lastFrameTime = glfwGetTime();
     while (!glfwWindowShouldClose(window)) {
         glClearColor(0.5, 0.5, 1, 1.0);
-        setCameraPosition(&shaderProgram, &cameraPosition, &cameraLookAt, &cameraUp);
+
+        setCameraPosition(&shaderProgram, &controller->cameraPosition, &controller->cameraLookAt,
+                          &controller->cameraUp);
 
         float dt = glfwGetTime() - lastFrameTime;
         lastFrameTime += dt;
@@ -59,9 +55,9 @@ int main(int argc, char *argv[]) {
 
         handleViewInputs(window,
                          shaderProgram,
-                         &cameraPosition,
-                         &cameraLookAt,
-                         &cameraUp,
+                         &controller->cameraPosition,
+                         &controller->cameraLookAt,
+                         &controller->cameraUp,
                          dt);
         handleActionInputs(window, &olafXPosition, &olafZPosition, &olafScale);
 
