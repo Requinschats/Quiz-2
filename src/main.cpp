@@ -33,6 +33,7 @@ int main(int argc, char *argv[]) {
     //olaf coordinates
     float olafXPosition = 0.0f;
     float olafZPosition = 0.0f;
+    float olafScale = 1.0f;
 
     glm::mat4 initialProjectionMatrix = setInitialProjectionMatrix(&shaderProgram);
     setCameraPosition(&shaderProgram, &cameraPosition, &cameraLookAt, &cameraUp);
@@ -51,7 +52,10 @@ int main(int argc, char *argv[]) {
         (new Grid(&shaderProgram))->Draw();
         setDefaultWorldMatrix(shaderProgram);
         (new ArrowAxis())->Draw();
-        (new Olaf(&shaderProgram))->Draw(olafXPosition, olafZPosition);
+        (new Olaf(&shaderProgram))->Draw(
+                olafXPosition,
+                olafZPosition,
+                olafScale);
 
         handleViewInputs(window,
                          shaderProgram,
@@ -59,7 +63,7 @@ int main(int argc, char *argv[]) {
                          &cameraLookAt,
                          &cameraUp,
                          dt);
-        handleActionInputs(window, &olafXPosition, &olafZPosition);
+        handleActionInputs(window, &olafXPosition, &olafZPosition, &olafScale);
 
         glfwSwapBuffers(window);
         glfwWaitEvents();

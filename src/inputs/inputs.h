@@ -4,4 +4,4 @@
 void handleViewInputs(GLFWwindow *window, int shaderProgram, glm::vec3 *cameraPosition, glm::vec3 *cameraLookAt,
                       glm::vec3 *cameraUp, float dt);
 
-void handleActionInputs(GLFWwindow *window, float *olafXPosition, float *olafZPosition);
+void handleActionInputs(GLFWwindow *window, float *olafXPosition, float *olafZPosition, float *olafScale);

@@ -6,15 +6,16 @@ Olaf::Olaf(int *shaderProgram) {
     this->shaderProgram = shaderProgram;
 }
 
-void Olaf::Draw(float x_position, float z_position) {
+void Olaf::Draw(float x_position, float z_position, float scale) {
     Cube *cube = new Cube();
-    float legSize = 0.5f;
-    float olafZPosition = z_position;
-    float olafXPosition = x_position;
+    float legSize = 0.5f * scale;
+    float olafZPosition = z_position * scale;
+    float olafXPosition = x_position * scale;
+    float olafYInitialPosition = 1.0f * scale;
 
     //leg 1
-    TranslateMatrix *leg1TranslateMatrix = new TranslateMatrix(olafXPosition - 1.0f,
-                                                               1.0f,
+    TranslateMatrix *leg1TranslateMatrix = new TranslateMatrix(olafXPosition - 1.0f * scale,
+                                                               olafYInitialPosition,
                                                                olafZPosition,
                                                                legSize,
                                                                legSize,
@@ -23,8 +24,8 @@ void Olaf::Draw(float x_position, float z_position) {
     cube->Draw();
 
     //leg 2
-    TranslateMatrix *leg2TranslateMatrix = new TranslateMatrix(olafXPosition + 1.0f,
-                                                               1.0f,
+    TranslateMatrix *leg2TranslateMatrix = new TranslateMatrix(olafXPosition + 1.0f * scale,
+                                                               olafYInitialPosition,
                                                                olafZPosition,
                                                                legSize,
                                                                legSize,
@@ -33,10 +34,10 @@ void Olaf::Draw(float x_position, float z_position) {
     cube->Draw();
 
     //body
-    float bodyWidth = 3.0f;
-    float bodyDepth = 0.5f;
-    float bodyHeight = 3.0f;
-    float bodyYPosition = 4.0f;
+    float bodyWidth = 3.0f * scale;
+    float bodyDepth = 0.5f * scale;
+    float bodyHeight = 3.0f * scale;
+    float bodyYPosition = olafYInitialPosition + 3.0f * scale;
     TranslateMatrix *bodyTranslateMatrix = new TranslateMatrix(olafXPosition,
                                                                bodyYPosition,
                                                                olafZPosition,
@@ -47,9 +48,9 @@ void Olaf::Draw(float x_position, float z_position) {
     cube->Draw();
 
     //neck
-    float neckWidth = 2.0f;
-    float neckHeight = 1.0f;
-    float neckYPosition = bodyYPosition + 4.0f;
+    float neckWidth = 2.0f * scale;
+    float neckHeight = 1.0f * scale;
+    float neckYPosition = bodyYPosition + 4.0f * scale;
     TranslateMatrix *neckTranslateMatrix = new TranslateMatrix(olafXPosition,
                                                                neckYPosition,
                                                                olafZPosition,
@@ -60,9 +61,9 @@ void Olaf::Draw(float x_position, float z_position) {
     cube->Draw();
 
     //arms
-    float armWidth = 3.0f;
-    float armHeight = 0.5f;
-    float armYPosition = 9.0f;
+    float armWidth = 3.0f * scale;
+    float armHeight = 0.5f * scale;
+    float armYPosition = 9.0f * scale;
 
     //left arm
     float leftArmXPosition = olafXPosition - (neckWidth * 2);
@@ -87,9 +88,9 @@ void Olaf::Draw(float x_position, float z_position) {
     cube->Draw();
 
     //head
-    float headWidth = 1.5f;
-    float headHeight = 1.0f;
-    float headYPosition = neckYPosition + 2.0f;
+    float headWidth = 1.5f * scale;
+    float headHeight = 1.0f * scale;
+    float headYPosition = neckYPosition + 2.0f * scale;
     TranslateMatrix *headTranslateMatrix = new TranslateMatrix(olafXPosition,
                                                                headYPosition,
                                                                olafZPosition,
@@ -101,10 +102,10 @@ void Olaf::Draw(float x_position, float z_position) {
 
     //nose
     Cube *noseCube = new Cube(255.0f, 160.0f, 122.0f);
-    float noseWidth = 0.25f;
-    float noseHeight = 0.25f;
-    float noseZPosition = olafZPosition + 0.5f;
-    float noseYPosition = headYPosition + 0.20f;
+    float noseWidth = 0.25f * scale;
+    float noseHeight = 0.25f * scale;
+    float noseZPosition = olafZPosition + 0.5f * scale;
+    float noseYPosition = headYPosition + 0.20f * scale;
 //    float nose1XPosition = olafXPosition - 0.75f;
     TranslateMatrix *noseTranslateMatrix = new TranslateMatrix(olafXPosition,
                                                                noseYPosition,
@@ -117,13 +118,13 @@ void Olaf::Draw(float x_position, float z_position) {
 
     //eyes
     Cube *eyesCube = new Cube(100.0f, 100.0f, 100.0f);
-    float eyeWidth = 0.25f;
-    float eyeHeight = 0.25f;
-    float eyeZPosition = olafZPosition + 0.5f;
-    float eyeYPosition = headYPosition + 0.5f;
+    float eyeWidth = 0.25f * scale;
+    float eyeHeight = 0.25f * scale;
+    float eyeZPosition = olafZPosition + 0.5f * scale;
+    float eyeYPosition = headYPosition + 0.5f * scale;
 
     //eye 1
-    float eye1XPosition = olafXPosition - 0.75f;
+    float eye1XPosition = olafXPosition - 0.75f * scale;
     TranslateMatrix *eye1TranslateMatrix = new TranslateMatrix(eye1XPosition,
                                                                eyeYPosition,
                                                                eyeZPosition,
@@ -134,7 +135,7 @@ void Olaf::Draw(float x_position, float z_position) {
     eyesCube->Draw();
 
     //eye 2
-    float eye2XPosition = olafXPosition + 0.75f;
+    float eye2XPosition = olafXPosition + 0.75f * scale;
     TranslateMatrix *eye2TranslateMatrix = new TranslateMatrix(eye2XPosition,
                                                                eyeYPosition,
                                                                eyeZPosition,
@@ -146,18 +147,23 @@ void Olaf::Draw(float x_position, float z_position) {
 
     //hair
     Cube *hairCube = new Cube(250.0f, 240.0f, 190.5f);
-    float hairWidth = 0.05f;
-    float hairHeight = 1.0f;
-    float hairYPosition = headYPosition + 2.0f;
+    float hairWidth = 0.05f * scale;
+    float hairHeight = 1.0f * scale;
+    float hairYPosition = headYPosition + 2.0f * scale;
+
+    //hair 1
     TranslateMatrix *hairTranslateMatrix = new TranslateMatrix(olafXPosition,
                                                                hairYPosition,
                                                                olafZPosition,
-                                                               hairWidth,
-                                                               hairHeight,
-                                                               bodyDepth);
+                                                               hairWidth * scale,
+                                                               hairHeight * scale,
+                                                               bodyDepth * scale);
     hairTranslateMatrix->bindTranslationMatrix(this->shaderProgram);
     hairCube->Draw();
-    TranslateMatrix *hairTranslateMatrix2 = new TranslateMatrix(olafXPosition + 0.5,
+
+    //hair 2
+    float hair2XPosition = olafXPosition + 0.5f * scale;
+    TranslateMatrix *hairTranslateMatrix2 = new TranslateMatrix(hair2XPosition,
                                                                 hairYPosition,
                                                                 olafZPosition,
                                                                 hairWidth,
@@ -165,7 +171,10 @@ void Olaf::Draw(float x_position, float z_position) {
                                                                 bodyDepth);
     hairTranslateMatrix2->bindTranslationMatrix(this->shaderProgram);
     hairCube->Draw();
-    TranslateMatrix *hairTranslateMatrix3 = new TranslateMatrix(olafXPosition - 0.5,
+
+    //hair 3
+    float hair3XPosition = olafXPosition - 0.5f * scale;
+    TranslateMatrix *hairTranslateMatrix3 = new TranslateMatrix(hair3XPosition,
                                                                 hairYPosition,
                                                                 olafZPosition,
                                                                 hairWidth,
