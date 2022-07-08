@@ -45,6 +45,7 @@ int main(int argc, char *argv[]) {
         (new Grid(shaderProgram))->Draw(translateMatrix);
         (new ArrowAxis())->Draw(translateMatrix, shaderProgram);
         (new Olaf(shaderProgram))->Draw(
+                translateMatrix,
                 olafXPosition,
                 olafZPosition,
                 olafScale);
