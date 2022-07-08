@@ -37,9 +37,15 @@ void handleViewInputs(GLFWwindow *window, int shaderProgram, vec3 *cameraPositio
     }
 }
 
-void handleActionInputs(GLFWwindow *window, float *olafXPosition, float *olafZPosition) {
+void handleActionInputs(GLFWwindow *window, float *olafXPosition, float *olafZPosition, float *olafScale) {
     if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
         *olafXPosition = Grid::getRandomGridCoordinate();
         *olafZPosition = Grid::getRandomGridCoordinate();
+    }
+    if (glfwGetKey(window, GLFW_KEY_U) == GLFW_PRESS) {
+        *olafScale += 0.1f;
+    }
+    if (glfwGetKey(window, GLFW_KEY_J) == GLFW_PRESS) {
+        *olafScale -= 0.1f;
     }
 }

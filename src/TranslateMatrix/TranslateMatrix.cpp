@@ -25,7 +25,7 @@ void TranslateMatrix::bindTranslationMatrix(int *shaderProgram) {
                       vec3(position.x,
                            position.y,
                            position.z)) * scale(
-                    mat4(1.0f),
+                    mat4(5.0f),
                     vec3(size.x,
                          size.y,
                          size.z));
