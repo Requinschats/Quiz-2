@@ -26,6 +26,7 @@ int main(int argc, char *argv[]) {
 
     Controller *controller = new Controller(&shaderProgram);
     TranslateMatrix *translateMatrix = new TranslateMatrix(0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f);
+    RenderMode renderMode = RenderMode::triangles;
 
     float olafXPosition = 0.0f;
     float olafZPosition = 0.0f;
@@ -45,6 +46,7 @@ int main(int argc, char *argv[]) {
         (new Grid(shaderProgram))->Draw(translateMatrix);
         (new ArrowAxis())->Draw(translateMatrix, shaderProgram);
         (new Olaf(shaderProgram))->Draw(
+                renderMode,
                 translateMatrix,
                 olafXPosition,
                 olafZPosition,
@@ -55,7 +57,13 @@ int main(int argc, char *argv[]) {
                          controller,
                          translateMatrix,
                          dt);
-        handleActionInputs(window, &olafXPosition, &olafZPosition, &olafScale);
+        handleActionInputs(
+                window,
+                &olafXPosition,
+                &olafZPosition,
+                &olafScale,
+                &renderMode
+        );
         glfwSwapBuffers(window);
         glfwWaitEvents();
     }

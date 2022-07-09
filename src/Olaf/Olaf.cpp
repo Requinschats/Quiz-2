@@ -1,13 +1,18 @@
 #include "Olaf.h"
-#include "../Cube/Cube.h"
-#include "../TranslateMatrix/TranslateMatrix.h"
+
 
 Olaf::Olaf(int shaderProgram) {
     this->shaderProgram = shaderProgram;
 }
 
-void Olaf::Draw(TranslateMatrix *translateMatrix, float x_position, float z_position, float scale) {
-    Cube *cube = new Cube();
+void Olaf::Draw(
+        RenderMode renderMode,
+        TranslateMatrix *translateMatrix,
+        float x_position,
+        float z_position,
+        float scale
+) {
+    Cube *cube = new Cube(255.0f, 255.0f, 255.0f, renderMode);
     float legSize = 0.5f * scale;
     float olafZPosition = z_position;
     float olafXPosition = x_position;
@@ -73,7 +78,7 @@ void Olaf::Draw(TranslateMatrix *translateMatrix, float x_position, float z_posi
     cube->Draw();
 
     //nose
-    Cube *noseCube = new Cube(255.0f, 160.0f, 122.0f);
+    Cube *noseCube = new Cube(255.0f, 160.0f, 122.0f, renderMode);
     float noseWidth = 0.25f * scale;
     float noseHeight = 0.25f * scale;
     float noseZPosition = olafZPosition + 0.5f * scale;
@@ -84,7 +89,7 @@ void Olaf::Draw(TranslateMatrix *translateMatrix, float x_position, float z_posi
     noseCube->Draw();
 
     //eyes
-    Cube *eyesCube = new Cube(100.0f, 100.0f, 100.0f);
+    Cube *eyesCube = new Cube(100.0f, 100.0f, 100.0f, renderMode);
     float eyeWidth = 0.25f * scale;
     float eyeHeight = 0.25f * scale;
     float eyeZPosition = olafZPosition + 0.5f * scale;
@@ -105,7 +110,7 @@ void Olaf::Draw(TranslateMatrix *translateMatrix, float x_position, float z_posi
     eyesCube->Draw();
 
     //hair
-    Cube *hairCube = new Cube(250.0f, 240.0f, 190.5f);
+    Cube *hairCube = new Cube(250.0f, 240.0f, 190.5f, renderMode);
     float hairWidth = 0.05f * scale;
     float hairHeight = 1.0f * scale;
     float hairYPosition = headYPosition + 2.0f * scale;
