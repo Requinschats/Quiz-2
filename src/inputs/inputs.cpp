@@ -40,6 +40,7 @@ void handleViewInputs(GLFWwindow *window,
     }
     if (glfwGetKey(window, GLFW_KEY_HOME) == GLFW_PRESS) {
         controller->reset();
+        translateMatrix->resetDefault();
     }
 }
 
