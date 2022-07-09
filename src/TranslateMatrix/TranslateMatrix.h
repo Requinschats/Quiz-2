@@ -35,4 +35,8 @@ public:
     void setDefaultPosition();
 
     void setDefaultSize();
+
+    void setDefaultRotationAngle();
+
+    void resetDefault();
 };

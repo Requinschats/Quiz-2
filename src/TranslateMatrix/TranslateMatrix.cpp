@@ -40,10 +40,20 @@ void TranslateMatrix::setRotationAngle(float rotationAngle) {
     this->rotationAngle = rotationAngle;
 }
 
+void TranslateMatrix::setDefaultRotationAngle() {
+    this->rotationAngle = 0.0f;
+}
+
 void TranslateMatrix::setDefaultPosition() {
     this->setPosition(0.0f, 0.0f, 0.0f);
 }
 
 void TranslateMatrix::setDefaultSize() {
     this->setSize(1.0f, 1.0f, 1.0f);
+}
+
+void TranslateMatrix::resetDefault() {
+    this->setDefaultSize();
+    this->setDefaultPosition();
+    this->setDefaultRotationAngle();
 }
