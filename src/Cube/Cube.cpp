@@ -56,7 +56,8 @@ GLuint elements[] = {
         6, 7, 3
 };
 
-Cube::Cube(float rgb1, float rgb2, float rgb3) {
+Cube::Cube(float rgb1, float rgb2, float rgb3, RenderMode renderMode) {
+    this->renderMode_ = renderMode;
     GLuint VertexBufferObject;
     glGenVertexArrays(1, &this->cubeVAO_);
     glGenBuffers(1, &VertexBufferObject);
@@ -92,5 +93,16 @@ Cube::~Cube() {}
 void Cube::Draw() {
     glBindVertexArray(this->cubeVAO_);
     glLineWidth(4.0f);
-    glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
+    glDrawElements(getGLRenderMode(), 36, GL_UNSIGNED_INT, 0);
+}
+
+int Cube::getGLRenderMode() {
+    switch (this->renderMode_) {
+        case RenderMode::points:
+            return GL_POINTS;
+        case RenderMode::lines:
+            return GL_LINES;
+        case RenderMode::triangles:
+            return GL_TRIANGLES;
+    }
 }

@@ -1,6 +1,5 @@
 #include "TranslateMatrix.h"
 #include "GL/glew.h"
-#include "glm/fwd.hpp"
 #include "glm/ext/matrix_transform.hpp"
 
 using namespace glm;
@@ -18,9 +17,9 @@ TranslateMatrix::TranslateMatrix(float x_position,
 
 void TranslateMatrix::bindTranslationMatrix(int shaderProgram) {
     glm::mat4 translationMatrix =
-            translate(mat4(1.0f), vec3(position.x, position.y, position.z))
-            * scale(mat4(5.0f), vec3(size.x, size.y, size.z))
-            * rotate(mat4(1.0f), radians(this->rotationAngle), vec3(0.0f, 1.0f, 0.0f));
+            rotate(mat4(1.0f), radians(this->rotationAngle), vec3(0.0f, 1.0f, 0.0f))
+            * translate(mat4(1.0f), vec3(position.x, position.y, position.z))
+            * scale(mat4(5.0f), vec3(size.x, size.y, size.z));
     GLuint worldMatrixLocation = glGetUniformLocation(shaderProgram, "worldMatrix");
     glUniformMatrix4fv(worldMatrixLocation, 1, GL_FALSE, &translationMatrix[0][0]);
 }

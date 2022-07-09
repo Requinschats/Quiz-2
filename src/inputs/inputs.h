@@ -1,6 +1,7 @@
 #include "GLFW/glfw3.h"
 #include "glm/glm.hpp"
 #include "../Controller/Controller.h"
+#include "../Cube/Cube.h"
 
 void handleViewInputs(GLFWwindow *window,
                       int shaderProgram,
@@ -8,4 +9,10 @@ void handleViewInputs(GLFWwindow *window,
                       TranslateMatrix *translateMatrix,
                       float dt);
 
-void handleActionInputs(GLFWwindow *window, float *olafXPosition, float *olafZPosition, float *olafScale);
+void handleActionInputs(
+        GLFWwindow *window,
+        float *olafXPosition,
+        float *olafZPosition,
+        float *olafScale,
+        RenderMode *renderMode
+);
