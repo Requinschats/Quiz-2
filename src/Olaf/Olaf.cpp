@@ -78,7 +78,7 @@ void Olaf::Draw(
     cube->Draw();
 
     //nose
-    Cube *noseCube = new Cube(255.0f, 160.0f, 122.0f);
+    Cube *noseCube = new Cube(255.0f, 160.0f, 122.0f, renderMode);
     float noseWidth = 0.25f * scale;
     float noseHeight = 0.25f * scale;
     float noseZPosition = olafZPosition + 0.5f * scale;
@@ -89,7 +89,7 @@ void Olaf::Draw(
     noseCube->Draw();
 
     //eyes
-    Cube *eyesCube = new Cube(100.0f, 100.0f, 100.0f);
+    Cube *eyesCube = new Cube(100.0f, 100.0f, 100.0f, renderMode);
     float eyeWidth = 0.25f * scale;
     float eyeHeight = 0.25f * scale;
     float eyeZPosition = olafZPosition + 0.5f * scale;
@@ -110,7 +110,7 @@ void Olaf::Draw(
     eyesCube->Draw();
 
     //hair
-    Cube *hairCube = new Cube(250.0f, 240.0f, 190.5f);
+    Cube *hairCube = new Cube(250.0f, 240.0f, 190.5f, renderMode);
     float hairWidth = 0.05f * scale;
     float hairHeight = 1.0f * scale;
     float hairYPosition = headYPosition + 2.0f * scale;
