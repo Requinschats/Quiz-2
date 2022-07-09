@@ -29,6 +29,7 @@ GLFWwindow *initializeWindow() {
         glfwTerminate();
         return NULL;
     }
+
     return window;
 }
 

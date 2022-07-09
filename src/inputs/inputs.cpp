@@ -10,6 +10,15 @@ void handleViewInputs(GLFWwindow *window,
                       Controller *controller,
                       TranslateMatrix *translateMatrix,
                       float dt) {
+    handleViewKeyboardInputs(window, shaderProgram, controller, translateMatrix, dt);
+    handleViewMouseInputs(window, controller, translateMatrix);
+}
+
+void handleViewKeyboardInputs(GLFWwindow *window,
+                              int shaderProgram,
+                              Controller *controller,
+                              TranslateMatrix *translateMatrix,
+                              float dt) {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
 
@@ -41,6 +50,17 @@ void handleViewInputs(GLFWwindow *window,
     if (glfwGetKey(window, GLFW_KEY_HOME) == GLFW_PRESS) {
         controller->reset();
         translateMatrix->resetDefault();
+    }
+}
+
+void handleViewMouseInputs(GLFWwindow *window,
+                           Controller *controller,
+                           TranslateMatrix *translateMatrix) {
+    if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS) {
+        controller->handleMouseRightClick(window);
+    }
+    if (controller->lastMouseState == "right" && glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_RELEASE) {
+        controller->setCameraPositionFromMouse(window);
     }
 }
 

@@ -9,6 +9,14 @@ void handleViewInputs(GLFWwindow *window,
                       TranslateMatrix *translateMatrix,
                       float dt);
 
+void handleViewKeyboardInputs(GLFWwindow *window,
+                              int shaderProgram,
+                              Controller *controller,
+                              TranslateMatrix *translateMatrix,
+                              float dt);
+
+void handleViewMouseInputs(GLFWwindow *window, Controller *controller, TranslateMatrix *translateMatrix);
+
 void handleActionInputs(
         GLFWwindow *window,
         float *olafXPosition,

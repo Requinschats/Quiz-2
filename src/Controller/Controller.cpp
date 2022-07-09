@@ -9,6 +9,7 @@ const vec3 defaultCameraUp = vec3(0.0f, 1.0f, 0.0f);
 
 Controller::Controller(int *shaderProgram) {
     this->shaderProgram = *shaderProgram;
+    this->lastMouseState = "";
     glm::mat4 initialProjectionMatrix = setInitialProjectionMatrix(this->shaderProgram);
     this->setCameraPosition(defaultCameraPosition, defaultCameraLookAt, defaultCameraUp);
 }
@@ -44,4 +45,34 @@ glm::mat4 Controller::rotateYAxis(float degreeOfRotation) {
     return glm::rotate(glm::mat4(1.0f),
                        glm::radians(degreeOfRotation),
                        glm::vec3(0, 1, 0));
+}
+
+void Controller::setMousePosition(GLFWwindow *window) {
+    double xpos, ypos;
+    glfwGetCursorPos(window, &xpos, &ypos);
+    this->mousePosition.x = xpos;
+    this->mousePosition.y = ypos;
+}
+
+void Controller::handleMouseRightClick(GLFWwindow *window) {
+    this->setMousePosition(window);
+    this->lastMouseState = "right";
+}
+
+void Controller::setCameraPositionFromMouse(GLFWwindow *window) {
+    double mousePosX, mousePosY;
+    glfwGetCursorPos(window, &mousePosX, &mousePosY);
+
+    double dx = mousePosX - this->mousePosition.x;
+    double dy = mousePosY - this->mousePosition.y;
+
+    //set the new camera position from dx and dy
+    this->cameraPosition = vec3(this->cameraLookAt.x + dx,
+                                this->cameraLookAt.y + dy,
+                                this->cameraPosition.z);
+    this->setCameraPosition();
+
+    this->mousePosition.x = mousePosX;
+    this->mousePosition.y = mousePosY;
+    this->lastMouseState = "";
 }

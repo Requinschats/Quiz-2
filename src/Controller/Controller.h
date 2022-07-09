@@ -1,7 +1,10 @@
+#include <string>
 #include "glm/vec3.hpp"
 #include "glm/fwd.hpp"
+#include "GLFW/glfw3.h"
 
 using namespace glm;
+using namespace std;
 
 class Controller {
 public:
@@ -17,8 +20,16 @@ public:
 
     void setCameraPosition();
 
+    void setCameraPositionFromMouse(GLFWwindow *window);
+
+    void setMousePosition(GLFWwindow *window);
+
+    void handleMouseRightClick(GLFWwindow *window);
+
     vec3 cameraPosition;
     vec3 cameraLookAt;
+    string lastMouseState;
     vec3 cameraUp;
+    vec3 mousePosition;
     int shaderProgram;
 };
