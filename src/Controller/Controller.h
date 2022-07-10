@@ -20,7 +20,7 @@ public:
 
     void setCameraPosition();
 
-    void setCameraPositionFromMouse(GLFWwindow *window);
+    void setCameraPositionFromMouse(GLFWwindow *window, float dt);
 
     void setMousePosition(GLFWwindow *window);
 

@@ -11,7 +11,7 @@ void handleViewInputs(GLFWwindow *window,
                       TranslateMatrix *translateMatrix,
                       float dt) {
     handleViewKeyboardInputs(window, shaderProgram, controller, translateMatrix, dt);
-    handleViewMouseInputs(window, controller, translateMatrix);
+    handleViewMouseInputs(window, controller, translateMatrix, dt);
 }
 
 void handleViewKeyboardInputs(GLFWwindow *window,
@@ -55,12 +55,13 @@ void handleViewKeyboardInputs(GLFWwindow *window,
 
 void handleViewMouseInputs(GLFWwindow *window,
                            Controller *controller,
-                           TranslateMatrix *translateMatrix) {
+                           TranslateMatrix *translateMatrix,
+                           float dt) {
     if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS) {
         controller->handleMouseRightClick(window);
     }
     if (controller->lastMouseState == "right" && glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_RELEASE) {
-        controller->setCameraPositionFromMouse(window);
+        controller->setCameraPositionFromMouse(window, dt);
     }
     if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS) {
         controller->handleMouseLeftClick(window);

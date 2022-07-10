@@ -64,18 +64,41 @@ void Controller::handleMouseLeftClick(GLFWwindow *window) {
     this->lastMouseState = "left";
 }
 
-void Controller::setCameraPositionFromMouse(GLFWwindow *window) {
+void Controller::setCameraPositionFromMouse(GLFWwindow *window, float dt) {
     double mousePosX, mousePosY;
     glfwGetCursorPos(window, &mousePosX, &mousePosY);
 
     double dx = mousePosX - this->mousePosition.x;
     double dy = mousePosY - this->mousePosition.y;
 
-    //set the new camera position from dx and dy
-    this->cameraPosition = vec3(this->cameraLookAt.x + dx,
-                                this->cameraLookAt.y + dy,
-                                this->cameraPosition.z);
-    this->setCameraPosition();
+    const float cameraAngularSpeed = 60.0f;
+    float cameraHorizontalAngle = 90.0f;
+    float cameraVerticalAngle = 0.0f;
+
+    cameraHorizontalAngle -= dx * cameraAngularSpeed * dt;
+    cameraVerticalAngle -= dy * cameraAngularSpeed * dt;
+
+    cameraVerticalAngle = std::max(-85.0f, std::min(85.0f, cameraVerticalAngle));
+
+    cameraVerticalAngle = std::max(-85.0f, std::min(85.0f, cameraVerticalAngle));
+    if (cameraHorizontalAngle > 360) {
+        cameraHorizontalAngle -= 360;
+    } else if (cameraHorizontalAngle < -360) {
+        cameraHorizontalAngle += 360;
+    }
+
+    float theta = radians(cameraHorizontalAngle);
+    float phi = radians(cameraVerticalAngle);
+
+    cameraLookAt = vec3(cosf(phi) * cosf(theta), sinf(phi), -cosf(phi) * sinf(theta));
+    vec3 cameraSideVector = glm::cross(cameraLookAt, vec3(0.0f, 1.0f, 0.0f));
+
+    glm::normalize(cameraSideVector);
+
+    cameraPosition -= cameraSideVector * 1.0f * dt;
+
+    mat4 viewMatrix = mat4(1.0);
+    this->setCameraPosition(cameraPosition, cameraLookAt, cameraUp);
 
     this->mousePosition.x = mousePosX;
     this->mousePosition.y = mousePosY;
@@ -87,11 +110,11 @@ void Controller::zoomOutFromMouse(GLFWwindow *window) {
     glfwGetCursorPos(window, &mousePosX, &mousePosY);
 
     double dx = mousePosX - this->mousePosition.x;
-    double dy = mousePosY - this->mousePosition.y;
+    double dy = (mousePosY - this->mousePosition.y) * 2;
 
-    this->cameraPosition = vec3(this->cameraPosition.x - 1.5,
-                                this->cameraPosition.y + 1.5,
-                                this->cameraPosition.z + 1.5);
+    this->cameraPosition = vec3(this->cameraPosition.x + dy,
+                                this->cameraPosition.y - dy,
+                                this->cameraPosition.z - dy);
     this->setCameraPosition();
     this->mousePosition.x = mousePosX;
     this->mousePosition.y = mousePosY;

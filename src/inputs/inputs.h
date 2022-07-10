@@ -15,7 +15,7 @@ void handleViewKeyboardInputs(GLFWwindow *window,
                               TranslateMatrix *translateMatrix,
                               float dt);
 
-void handleViewMouseInputs(GLFWwindow *window, Controller *controller, TranslateMatrix *translateMatrix);
+void handleViewMouseInputs(GLFWwindow *window, Controller *controller, TranslateMatrix *translateMatrix, float dt);
 
 void handleActionInputs(
         GLFWwindow *window,
