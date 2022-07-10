@@ -26,6 +26,10 @@ public:
 
     void handleMouseRightClick(GLFWwindow *window);
 
+    void handleMouseLeftClick(GLFWwindow *window);
+
+    void zoomOutFromMouse(GLFWwindow *window);
+
     vec3 cameraPosition;
     vec3 cameraLookAt;
     string lastMouseState;

@@ -59,6 +59,11 @@ void Controller::handleMouseRightClick(GLFWwindow *window) {
     this->lastMouseState = "right";
 }
 
+void Controller::handleMouseLeftClick(GLFWwindow *window) {
+    this->setMousePosition(window);
+    this->lastMouseState = "left";
+}
+
 void Controller::setCameraPositionFromMouse(GLFWwindow *window) {
     double mousePosX, mousePosY;
     glfwGetCursorPos(window, &mousePosX, &mousePosY);
@@ -72,6 +77,22 @@ void Controller::setCameraPositionFromMouse(GLFWwindow *window) {
                                 this->cameraPosition.z);
     this->setCameraPosition();
 
+    this->mousePosition.x = mousePosX;
+    this->mousePosition.y = mousePosY;
+    this->lastMouseState = "";
+}
+
+void Controller::zoomOutFromMouse(GLFWwindow *window) {
+    double mousePosX, mousePosY;
+    glfwGetCursorPos(window, &mousePosX, &mousePosY);
+
+    double dx = mousePosX - this->mousePosition.x;
+    double dy = mousePosY - this->mousePosition.y;
+
+    this->cameraPosition = vec3(this->cameraPosition.x - 1.5,
+                                this->cameraPosition.y + 1.5,
+                                this->cameraPosition.z + 1.5);
+    this->setCameraPosition();
     this->mousePosition.x = mousePosX;
     this->mousePosition.y = mousePosY;
     this->lastMouseState = "";
