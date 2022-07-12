@@ -2,8 +2,10 @@
 
 #include <array>
 #include <GL/glew.h>
+#include <glm/glm.hpp>
 
 using namespace std;
+using namespace glm;
 
 static array<GLfloat, 36> getTexturedColorBufferData(float rgb1, float rgb2, float rgb3) {
     return {
@@ -19,6 +21,23 @@ static array<GLfloat, 36> getTexturedColorBufferData(float rgb1, float rgb2, flo
             rgb1, rgb2, rgb3,
             rgb1, rgb2, rgb3,
             rgb1, rgb2, rgb3
+    };
+}
+
+static array<GLfloat, 36> getTexturesBufferData() {
+    return {
+            0.0f, 0.0f,
+            0.0f, 1.0f,
+            0.0f, 0.0f,
+            1.0f, 1.0f,
+            0.0f, 0.0f,
+            0.0f, 1.0f,
+            0.0f, 0.0f,
+            1.0f, 1.0f,
+            0.0f, 0.0f,
+            0.0f, 1.0f,
+            0.0f, 0.0f,
+            1.0f, 1.0f,
     };
 }
 
@@ -56,6 +75,15 @@ GLuint textured_elements[] = {
         6, 7, 3
 };
 
+struct TexturedColoredVertex {
+    TexturedColoredVertex(vec3 _position, vec3 _color, vec2 _uv)
+            : position(_position), color(_color), uv(_uv) {}
+
+    vec3 position;
+    vec3 color;
+    vec2 uv;
+};
+
 TexturedCube::TexturedCube(float rgb1, float rgb2, float rgb3, RenderMode renderMode) {
     this->renderMode_ = renderMode;
     GLuint VertexBufferObject;
@@ -78,6 +106,16 @@ TexturedCube::TexturedCube(float rgb1, float rgb2, float rgb3, RenderMode render
     glEnableVertexAttribArray(1);
     glBindBuffer(GL_ARRAY_BUFFER, colorBuffer);
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void *) 0);
+
+
+    GLuint aUVBuffer;
+    array<float, 36> uvBufferData = getTexturesBufferData();
+    glGenBuffers(1, &aUVBuffer);
+    glBindBuffer(GL_ARRAY_BUFFER, aUVBuffer);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(uvBufferData), &uvBufferData, GL_STATIC_DRAW);
+    glEnableVertexAttribArray(2);
+    glBindBuffer(GL_ARRAY_BUFFER, aUVBuffer);
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void *) 0);
 
     GLuint indexBufferObject;
     glGenBuffers(1, &indexBufferObject);

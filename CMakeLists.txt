@@ -20,6 +20,7 @@ include(BuildGLFW)
 include(BuildGLM)
 
 set(EXEC A1)
+set(ASSETS assets)
 
 
 file(GLOB SRC src/*.cpp src/*/*.cpp src/*/*.h src/sources/*/*.cpp src/sources/*/*.h)
@@ -32,5 +33,6 @@ list(APPEND BIN ${EXEC})
 
 # install files to install location
 install(TARGETS ${BIN} DESTINATION ${CMAKE_INSTALL_PREFIX})
+install(DIRECTORY ${ASSETS} DESTINATION ${CMAKE_INSTALL_PREFIX})
 
 
