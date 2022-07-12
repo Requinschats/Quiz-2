@@ -1,7 +1,9 @@
 #include "Grid.h"
 #include "random"
+#include "glm/glm.hpp"
 
 using namespace std;
+using namespace glm;
 
 const GLfloat vertices[] = {
         0.5f, 0.0f, -0.5f, 0.75f, 1.0f, 0.5f, 1.0f,

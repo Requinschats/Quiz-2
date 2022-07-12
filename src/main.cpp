@@ -12,6 +12,8 @@
 #include "ArrowAxis/ArrowAxis.h"
 #include "Grid/Grid.h"
 #include "inputs/inputs.h"
+#include "./Textures/Textures.h"
+#include "./TexturedCube/TexturedCube.h"
 
 using namespace glm;
 
@@ -20,6 +22,8 @@ int main(int argc, char *argv[]) {
     GLFWwindow *window = initializeWindow();
 
     int shaderProgram = compileAndLinkShaders(getVertexShaderSource(), getFragmentShaderSource());
+    int texturedShaderProgram = compileAndLinkShaders(getTexturedVertexShaderSource(),
+                                                      getTexturedFragmentShaderSource());
     glUseProgram(shaderProgram);
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
@@ -33,7 +37,11 @@ int main(int argc, char *argv[]) {
     float olafScale = 1.0f;
 
     float lastFrameTime = glfwGetTime();
+
+    GLuint brickTextureID = loadTexture("assets/textures/brick.jpg");
+
     while (!glfwWindowShouldClose(window)) {
+        glUseProgram(shaderProgram);
         controller->setCameraPosition();
         glClearColor(0.5, 0.5, 1, 1.0);
 
@@ -43,7 +51,6 @@ int main(int argc, char *argv[]) {
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        (new Grid(shaderProgram))->Draw(translateMatrix);
         (new ArrowAxis())->Draw(translateMatrix, shaderProgram);
         (new Olaf(shaderProgram))->Draw(
                 renderMode,
@@ -51,6 +58,21 @@ int main(int argc, char *argv[]) {
                 olafXPosition,
                 olafZPosition,
                 olafScale);
+
+        (new Grid(shaderProgram))->Draw(translateMatrix);
+
+//        glUseProgram(texturedShaderProgram);
+//
+//        glActiveTexture(GL_TEXTURE0);
+//        GLuint textureLocation = glGetUniformLocation(texturedShaderProgram, "textureSampler");
+//        glBindTexture(GL_TEXTURE_2D, brickTextureID);
+//        glUniform1i(textureLocation, 0);
+        TexturedCube *texturedCube = new TexturedCube(255.0f, 255.0f, 255.0f, renderMode);
+        translateMatrix->setPosition(olafXPosition - 1.0f * 5, 3, olafZPosition);
+        translateMatrix->setSize(2.0f, 2.0f, 2.0f);
+        translateMatrix->bindTranslationMatrix(shaderProgram);
+        texturedCube->Draw();
+
 
         handleViewInputs(window,
                          shaderProgram,
