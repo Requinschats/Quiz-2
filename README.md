@@ -15,6 +15,8 @@
 - Space bar: new random olaf position
 - U: Increase olaf size
 - J: Decrease olaf size
+- Mouse right-click pan: x-direction camera rotation
+- Mouse middle-click pan: zoom in/out
 
 #### Author Email (if any question): olivier.fradette.roy@gmail.com
 
