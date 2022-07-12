@@ -57,16 +57,17 @@ void handleViewMouseInputs(GLFWwindow *window,
                            Controller *controller,
                            TranslateMatrix *translateMatrix,
                            float dt) {
-    if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS) {
+    if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS && controller->lastMouseState != "right") {
         controller->handleMouseRightClick(window);
     }
     if (controller->lastMouseState == "right" && glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_RELEASE) {
         controller->setCameraPositionFromMouse(window, dt);
     }
-    if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS) {
-        controller->handleMouseLeftClick(window);
+    if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_MIDDLE) == GLFW_PRESS && controller->lastMouseState != "middle") {
+        controller->handleMouseMiddleClick(window);
     }
-    if (controller->lastMouseState == "left" && glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_RELEASE) {
+    if (controller->lastMouseState == "middle" &&
+        glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_MIDDLE) == GLFW_RELEASE) {
         controller->zoomOutFromMouse(window);
     }
 }

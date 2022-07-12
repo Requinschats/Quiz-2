@@ -26,7 +26,7 @@ public:
 
     void handleMouseRightClick(GLFWwindow *window);
 
-    void handleMouseLeftClick(GLFWwindow *window);
+    void handleMouseMiddleClick(GLFWwindow *window);
 
     void zoomOutFromMouse(GLFWwindow *window);
 
@@ -35,5 +35,12 @@ public:
     string lastMouseState;
     vec3 cameraUp;
     vec3 mousePosition;
+    float cameraHorizontalAngle;
+    float cameraVerticalAngle;
     int shaderProgram;
+
+private:
+    void setDefaultLookAt();
+
+    void normalizeCameraHorizontalAngle();
 };

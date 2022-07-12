@@ -10,8 +10,9 @@ const vec3 defaultCameraUp = vec3(0.0f, 1.0f, 0.0f);
 Controller::Controller(int *shaderProgram) {
     this->shaderProgram = *shaderProgram;
     this->lastMouseState = "";
-    glm::mat4 initialProjectionMatrix = setInitialProjectionMatrix(this->shaderProgram);
     this->setCameraPosition(defaultCameraPosition, defaultCameraLookAt, defaultCameraUp);
+    this->setDefaultLookAt();
+    glm::mat4 initialProjectionMatrix = setInitialProjectionMatrix(this->shaderProgram);
 }
 
 void Controller::setCameraPosition(vec3 cameraPosition, vec3 cameraLookAt, vec3 cameraUp) {
@@ -36,7 +37,7 @@ void Controller::setCameraPosition() {
 
 void Controller::reset() {
     this->cameraPosition = defaultCameraPosition;
-    this->cameraLookAt = defaultCameraLookAt;
+    this->setDefaultLookAt();
     this->cameraUp = defaultCameraUp;
     this->setCameraPosition(defaultCameraPosition, defaultCameraLookAt, defaultCameraUp);
 }
@@ -59,9 +60,34 @@ void Controller::handleMouseRightClick(GLFWwindow *window) {
     this->lastMouseState = "right";
 }
 
-void Controller::handleMouseLeftClick(GLFWwindow *window) {
+void Controller::handleMouseMiddleClick(GLFWwindow *window) {
     this->setMousePosition(window);
-    this->lastMouseState = "left";
+    this->lastMouseState = "middle";
+}
+
+void Controller::normalizeCameraHorizontalAngle() {
+    if (this->cameraHorizontalAngle > 360) {
+        this->cameraHorizontalAngle -= 360;
+    } else if (cameraHorizontalAngle < -360) {
+        this->cameraHorizontalAngle += 360;
+    }
+}
+
+void Controller::setDefaultLookAt() {
+    this->cameraHorizontalAngle = 30.0f;
+    this->cameraVerticalAngle = 0.0f;
+
+    this->cameraVerticalAngle = std::max(-85.0f, std::min(85.0f, this->cameraVerticalAngle));
+    this->normalizeCameraHorizontalAngle();
+
+    float theta = radians(this->cameraHorizontalAngle);
+    float phi = radians(this->cameraVerticalAngle);
+    this->cameraLookAt = vec3(cosf(phi) * cosf(theta), sinf(phi), -cosf(phi) * sinf(theta));
+    vec3 cameraSideVector = glm::cross(this->cameraLookAt, vec3(0.0f, 1.0f, 0.0f));
+    glm::normalize(cameraSideVector);
+
+    this->cameraPosition -= cameraSideVector * 1.0f;
+    this->setCameraPosition(this->cameraPosition, this->cameraLookAt, this->cameraUp);
 }
 
 void Controller::setCameraPositionFromMouse(GLFWwindow *window, float dt) {
@@ -71,34 +97,24 @@ void Controller::setCameraPositionFromMouse(GLFWwindow *window, float dt) {
     double dx = mousePosX - this->mousePosition.x;
     double dy = mousePosY - this->mousePosition.y;
 
-    const float cameraAngularSpeed = 60.0f;
-    float cameraHorizontalAngle = 90.0f;
-    float cameraVerticalAngle = 0.0f;
+    const float cameraAngularSpeed = 6.0f;
 
-    cameraHorizontalAngle -= dx * cameraAngularSpeed * dt;
-    cameraVerticalAngle -= dy * cameraAngularSpeed * dt;
+    this->cameraHorizontalAngle -= dx * cameraAngularSpeed * dt;
+    this->cameraHorizontalAngle -= dy * cameraAngularSpeed * dt;
 
-    cameraVerticalAngle = std::max(-85.0f, std::min(85.0f, cameraVerticalAngle));
+    this->cameraVerticalAngle = std::max(-85.0f, std::min(85.0f, this->cameraVerticalAngle));
+    this->normalizeCameraHorizontalAngle();
 
-    cameraVerticalAngle = std::max(-85.0f, std::min(85.0f, cameraVerticalAngle));
-    if (cameraHorizontalAngle > 360) {
-        cameraHorizontalAngle -= 360;
-    } else if (cameraHorizontalAngle < -360) {
-        cameraHorizontalAngle += 360;
-    }
+    float theta = radians(this->cameraHorizontalAngle);
+    float phi = radians(this->cameraVerticalAngle);
 
-    float theta = radians(cameraHorizontalAngle);
-    float phi = radians(cameraVerticalAngle);
-
-    cameraLookAt = vec3(cosf(phi) * cosf(theta), sinf(phi), -cosf(phi) * sinf(theta));
-    vec3 cameraSideVector = glm::cross(cameraLookAt, vec3(0.0f, 1.0f, 0.0f));
-
+    this->cameraLookAt = vec3(cosf(phi) * cosf(theta), sinf(phi), -cosf(phi) * sinf(theta));
+    vec3 cameraSideVector = glm::cross(this->cameraLookAt, vec3(0.0f, 1.0f, 0.0f));
     glm::normalize(cameraSideVector);
 
-    cameraPosition -= cameraSideVector * 1.0f * dt;
+    this->cameraPosition -= cameraSideVector * 1.0f * dt;
 
-    mat4 viewMatrix = mat4(1.0);
-    this->setCameraPosition(cameraPosition, cameraLookAt, cameraUp);
+    this->setCameraPosition(this->cameraPosition, this->cameraLookAt, this->cameraUp);
 
     this->mousePosition.x = mousePosX;
     this->mousePosition.y = mousePosY;
@@ -108,13 +124,10 @@ void Controller::setCameraPositionFromMouse(GLFWwindow *window, float dt) {
 void Controller::zoomOutFromMouse(GLFWwindow *window) {
     double mousePosX, mousePosY;
     glfwGetCursorPos(window, &mousePosX, &mousePosY);
-
-    double dx = mousePosX - this->mousePosition.x;
-    double dy = (mousePosY - this->mousePosition.y) * 2;
-
-    this->cameraPosition = vec3(this->cameraPosition.x + dy,
-                                this->cameraPosition.y - dy,
-                                this->cameraPosition.z - dy);
+    double dy = (mousePosY - this->mousePosition.y) * 0.025f;
+    this->cameraPosition = vec3(this->cameraPosition.x - dy,
+                                this->cameraPosition.y + dy,
+                                this->cameraPosition.z + dy);
     this->setCameraPosition();
     this->mousePosition.x = mousePosX;
     this->mousePosition.y = mousePosY;
