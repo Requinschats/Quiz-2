@@ -100,7 +100,7 @@ void Controller::setCameraPositionFromMouse(GLFWwindow *window, float dt) {
     const float cameraAngularSpeed = 6.0f;
 
     this->cameraHorizontalAngle -= dx * cameraAngularSpeed * dt;
-    this->cameraHorizontalAngle -= dy * cameraAngularSpeed * dt;
+    this->cameraVerticalAngle -= dy * cameraAngularSpeed * dt;
 
     this->cameraVerticalAngle = std::max(-85.0f, std::min(85.0f, this->cameraVerticalAngle));
     this->normalizeCameraHorizontalAngle();
