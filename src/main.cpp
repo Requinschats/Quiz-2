@@ -63,12 +63,13 @@ int main(int argc, char *argv[]) {
 
         glUseProgram(texturedShaderProgram);
         glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, brickTextureID);
         GLuint textureLocation = glGetUniformLocation(texturedShaderProgram, "textureSampler");
         glBindTexture(GL_TEXTURE_2D, brickTextureID);
         glUniform1i(textureLocation, 0);
         TexturedCube *texturedCube = new TexturedCube(255.0f, 255.0f, 255.0f, renderMode);
         translateMatrix->setPosition(olafXPosition - 1.0f * 5, 3, olafZPosition);
-        translateMatrix->setSize(2.0f, 2.0f, 2.0f);
+        translateMatrix->setSize(24.0f, 25.0f, 24.0f);
         translateMatrix->bindTranslationMatrix(texturedShaderProgram);
         texturedCube->Draw();
 

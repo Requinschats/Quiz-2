@@ -15,6 +15,8 @@ GLuint loadTexture(const char *filename) {
     GLuint textureId = 0;
     glGenTextures(1, &textureId);
     assert(textureId != 0);
+
+
     glBindTexture(GL_TEXTURE_2D, textureId);
 
     // Step2 Set filter parameters

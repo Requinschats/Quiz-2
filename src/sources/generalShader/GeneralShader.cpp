@@ -64,6 +64,6 @@ char *getTexturedFragmentShaderSource() {
             "void main()"
             "{"
             "   vec4 textureColor = texture( textureSampler, vertexUV );"
-            "   FragColor = textureColor * vec4(vertexColor.r, vertexColor.g, vertexColor.b, 1.0f);"
+            "   FragColor = textureColor;"
             "}";
 }
