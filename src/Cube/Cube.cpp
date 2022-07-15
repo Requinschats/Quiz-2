@@ -56,7 +56,24 @@ GLuint elements[] = {
         6, 7, 3
 };
 
-Cube::Cube(float rgb1, float rgb2, float rgb3, RenderMode renderMode) {
+static array<GLfloat, 36> getTexturesBufferData() {
+    return {
+            0.0f, 0.0f,
+            1.0f, 0.0f,
+            1.0f, 1.0f,
+            0.0f, 1.0f,
+            0.0f, 0.0f,
+            1.0f, 0.0f,
+            1.0f, 1.0f,
+            0.0f, 1.0f,
+            0.0f, 0.0f,
+            1.0f, 0.0f,
+            1.0f, 1.0f,
+            0.0f, 1.0f
+    };
+}
+
+Cube::Cube(float rgb1, float rgb2, float rgb3, RenderMode renderMode, bool isTextured) {
     this->renderMode_ = renderMode;
     GLuint VertexBufferObject;
     glGenVertexArrays(1, &this->cubeVAO_);
@@ -78,6 +95,17 @@ Cube::Cube(float rgb1, float rgb2, float rgb3, RenderMode renderMode) {
     glEnableVertexAttribArray(1);
     glBindBuffer(GL_ARRAY_BUFFER, colorBuffer);
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void *) 0);
+
+    if(isTextured){
+        GLuint aUVBuffer;
+        array<float, 36> uvBufferData = getTexturesBufferData();
+        glGenBuffers(1, &aUVBuffer);
+        glBindBuffer(GL_ARRAY_BUFFER, aUVBuffer);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(uvBufferData), &uvBufferData, GL_STATIC_DRAW);
+        glEnableVertexAttribArray(2);
+        glBindBuffer(GL_ARRAY_BUFFER, aUVBuffer);
+        glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void *) 0);
+    }
 
     GLuint indexBufferObject;
     glGenBuffers(1, &indexBufferObject);

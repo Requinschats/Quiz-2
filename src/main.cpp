@@ -21,15 +21,14 @@ int main(int argc, char *argv[]) {
 
     GLFWwindow *window = initializeWindow();
 
-//    int shaderProgram = compileAndLinkShaders(getVertexShaderSource(), getFragmentShaderSource());
+    int colorShaderProgram = compileAndLinkShaders(getVertexShaderSource(), getFragmentShaderSource());
     int shaderProgram = compileAndLinkShaders(getTexturedVertexShaderSource(),
                                                       getTexturedFragmentShaderSource());
-    glUseProgram(shaderProgram);
+    glUseProgram(colorShaderProgram);
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
 
-    Controller *texturedController = new Controller(&shaderProgram);
-    Controller *controller = new Controller(&shaderProgram);
+    Controller *controller = new Controller(&colorShaderProgram);
     TranslateMatrix *translateMatrix = new TranslateMatrix(0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f);
     RenderMode renderMode = RenderMode::triangles;
 
@@ -42,7 +41,7 @@ int main(int argc, char *argv[]) {
     GLuint brickTextureID = loadTexture("assets/textures/brick.jpg");
 
     while (!glfwWindowShouldClose(window)) {
-        glUseProgram(shaderProgram);
+        glUseProgram(colorShaderProgram);
         controller->setCameraPosition();
         glClearColor(0.5, 0.5, 1, 1.0);
 
@@ -52,15 +51,7 @@ int main(int argc, char *argv[]) {
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        (new ArrowAxis())->Draw(translateMatrix, shaderProgram);
-        (new Olaf(shaderProgram))->Draw(
-                renderMode,
-                translateMatrix,
-                olafXPosition,
-                olafZPosition,
-                olafScale);
-
-        (new Grid(shaderProgram))->Draw(translateMatrix);
+        (new ArrowAxis())->Draw(translateMatrix, colorShaderProgram);
 
         glUseProgram(shaderProgram);
         glActiveTexture(GL_TEXTURE0);
@@ -68,12 +59,19 @@ int main(int argc, char *argv[]) {
         GLuint textureLocation = glGetUniformLocation(shaderProgram, "textureSampler");
         glBindTexture(GL_TEXTURE_2D, brickTextureID);
         glUniform1i(textureLocation, 0);
-        TexturedCube *texturedCube = new TexturedCube(255.0f, 255.0f, 255.0f, renderMode);
-        translateMatrix->setPosition(olafXPosition - 1.0f * 5, 3, olafZPosition);
-        translateMatrix->setSize(24.0f, 25.0f, 24.0f);
-        translateMatrix->bindTranslationMatrix(shaderProgram);
-        texturedCube->Draw();
+        controller->setShader(&shaderProgram);
 
+        (new Olaf(shaderProgram))->Draw(
+                renderMode,
+                translateMatrix,
+                olafXPosition,
+                olafZPosition,
+                olafScale);
+
+
+        glUseProgram(colorShaderProgram);
+        controller->setShader(&colorShaderProgram);
+        (new Grid(colorShaderProgram))->Draw(translateMatrix);
 
         handleViewInputs(window,
                          shaderProgram,

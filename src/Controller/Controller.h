@@ -14,6 +14,8 @@ public:
 
     void reset();
 
+    void setShader(int *shaderProgram);
+
     void setCameraPosition(vec3 cameraPosition, vec3 cameraLookAt, vec3 cameraUp);
 
     mat4 rotateYAxis(float degreeOfRotation);

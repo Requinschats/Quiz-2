@@ -12,7 +12,8 @@ public:
             float rgb1 = 255.0f,
             float rgb2 = 255.0f,
             float rgb3 = 255.0f,
-            RenderMode renderMode = RenderMode::triangles
+            RenderMode renderMode = RenderMode::triangles,
+            bool isTextured = false
     );
 
     ~Cube();

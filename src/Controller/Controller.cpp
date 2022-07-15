@@ -15,6 +15,12 @@ Controller::Controller(int *shaderProgram) {
     glm::mat4 initialProjectionMatrix = setInitialProjectionMatrix(this->shaderProgram);
 }
 
+void Controller::setShader(int *shaderProgram) {
+    this->shaderProgram = *shaderProgram;
+    this->setCameraPosition();
+    setInitialProjectionMatrix(this->shaderProgram);
+}
+
 void Controller::setCameraPosition(vec3 cameraPosition, vec3 cameraLookAt, vec3 cameraUp) {
     this->cameraPosition = cameraPosition;
     this->cameraLookAt = cameraLookAt;
