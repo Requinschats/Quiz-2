@@ -21,13 +21,14 @@ int main(int argc, char *argv[]) {
 
     GLFWwindow *window = initializeWindow();
 
-    int shaderProgram = compileAndLinkShaders(getVertexShaderSource(), getFragmentShaderSource());
-    int texturedShaderProgram = compileAndLinkShaders(getTexturedVertexShaderSource(),
+//    int shaderProgram = compileAndLinkShaders(getVertexShaderSource(), getFragmentShaderSource());
+    int shaderProgram = compileAndLinkShaders(getTexturedVertexShaderSource(),
                                                       getTexturedFragmentShaderSource());
     glUseProgram(shaderProgram);
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
 
+    Controller *texturedController = new Controller(&shaderProgram);
     Controller *controller = new Controller(&shaderProgram);
     TranslateMatrix *translateMatrix = new TranslateMatrix(0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f);
     RenderMode renderMode = RenderMode::triangles;
@@ -61,16 +62,16 @@ int main(int argc, char *argv[]) {
 
         (new Grid(shaderProgram))->Draw(translateMatrix);
 
-        glUseProgram(texturedShaderProgram);
+        glUseProgram(shaderProgram);
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, brickTextureID);
-        GLuint textureLocation = glGetUniformLocation(texturedShaderProgram, "textureSampler");
+        GLuint textureLocation = glGetUniformLocation(shaderProgram, "textureSampler");
         glBindTexture(GL_TEXTURE_2D, brickTextureID);
         glUniform1i(textureLocation, 0);
         TexturedCube *texturedCube = new TexturedCube(255.0f, 255.0f, 255.0f, renderMode);
         translateMatrix->setPosition(olafXPosition - 1.0f * 5, 3, olafZPosition);
         translateMatrix->setSize(24.0f, 25.0f, 24.0f);
-        translateMatrix->bindTranslationMatrix(texturedShaderProgram);
+        translateMatrix->bindTranslationMatrix(shaderProgram);
         texturedCube->Draw();
 
 
