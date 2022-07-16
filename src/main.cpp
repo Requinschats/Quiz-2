@@ -65,10 +65,10 @@ int main(int argc, char *argv[]) {
                 olafRotationAngle);
 
 
-        glUseProgram(colorShaderProgram);
-        controller->setShader(&colorShaderProgram);
+//        glUseProgram(colorShaderProgram);
+//        controller->setShader(&colorShaderProgram);
 
-        (new Grid(colorShaderProgram))->Draw(translateMatrix);
+        (new Grid(texturedShaderProgram))->Draw(translateMatrix);
 
         handleViewInputs(window,
                          texturedShaderProgram,

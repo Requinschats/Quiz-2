@@ -50,13 +50,13 @@ GLuint loadTexture(const char *filename) {
 
 Textures::Textures(int texturedShaderProgram) {
     this->texturedShaderProgram = texturedShaderProgram;
-    this->brickTextureID = loadTexture("assets/textures/brick.jpg");
+    this->snowTextureID = loadTexture("assets/textures/snow.jpeg");
 }
 
 void Textures::loadBrickTexture(){
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, brickTextureID);
+    glBindTexture(GL_TEXTURE_2D, snowTextureID);
     GLuint textureLocation = glGetUniformLocation(texturedShaderProgram, "textureSampler");
-    glBindTexture(GL_TEXTURE_2D, brickTextureID);
+    glBindTexture(GL_TEXTURE_2D, snowTextureID);
     glUniform1i(textureLocation, 0);
 }

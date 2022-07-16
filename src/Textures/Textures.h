@@ -10,6 +10,6 @@ public:
 
     void loadBrickTexture();
 
-    GLuint brickTextureID;
+    GLuint snowTextureID;
     int texturedShaderProgram;
 };
