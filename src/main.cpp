@@ -51,10 +51,8 @@ int main(int argc, char *argv[]) {
 
         (new ArrowAxis())->Draw(translateMatrix, colorShaderProgram);
 
-        glUseProgram(texturedShaderProgram);
-        controller->setShader(&texturedShaderProgram);
-
-        (new Olaf(texturedShaderProgram, textures))->Draw(
+        Olaf *olaf = new Olaf(texturedShaderProgram, colorShaderProgram, controller, textures);
+        olaf->Draw(
                 renderMode,
                 translateMatrix,
                 olafXPosition,
@@ -62,6 +60,8 @@ int main(int argc, char *argv[]) {
                 olafScale,
                 olafRotationAngle);
 
+        glUseProgram(texturedShaderProgram);
+        controller->setShader(&texturedShaderProgram);
         textures->loadSnowTexture();
         (new Grid(texturedShaderProgram))->Draw(translateMatrix);
 

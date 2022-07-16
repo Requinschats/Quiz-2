@@ -3,6 +3,9 @@
 #include "glm/fwd.hpp"
 #include "GLFW/glfw3.h"
 
+#pragma once
+
+
 using namespace glm;
 using namespace std;
 

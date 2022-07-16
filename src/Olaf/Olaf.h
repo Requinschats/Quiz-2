@@ -1,13 +1,14 @@
 #include "../TranslateMatrix/TranslateMatrix.h"
 #include "../Cube/Cube.h"
 #include "../Textures/Textures.h"
+#include "../Controller/Controller.h"
 
 static float olafRotationAngle = 0.0f;
 
 class Olaf {
 
 public:
-    Olaf(int shaderProgram, Textures *textures);
+    Olaf(int texturedShaderProgram,int colorShaderProgram, Controller *controller, Textures *textures);
 
     void Draw(
             RenderMode renderMode,
@@ -18,6 +19,8 @@ public:
             float rotationAngle
     );
 
-    int shaderProgram;
+    int texturedShaderProgram;
     Textures *textures;
+    int colorShaderProgram;
+    Controller *controller;
 };
