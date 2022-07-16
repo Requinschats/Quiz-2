@@ -1,7 +1,10 @@
 #include "Olaf.h"
 
-Olaf::Olaf(int shaderProgram) {
-    this->shaderProgram = shaderProgram;
+Olaf::Olaf(int texturedShaderProgram, int colorShaderProgram, Controller *controller, Textures *textures) {
+    this->texturedShaderProgram = texturedShaderProgram;
+    this->colorShaderProgram = colorShaderProgram;
+    this->controller = controller;
+    this->textures = textures;
 }
 
 void Olaf::Draw(
@@ -12,24 +15,29 @@ void Olaf::Draw(
         float scale,
         float rotationAngle
 ) {
+    glUseProgram(texturedShaderProgram);
+    controller->setShader(&texturedShaderProgram);
+
     Cube *cube = new Cube(255.0f, 255.0f, 255.0f, renderMode, true);
     float legSize = 0.5f * scale;
     float olafZPosition = z_position;
     float olafXPosition = x_position;
     float olafYInitialPosition = 1.0f;
 
+    this->textures->loadSnowTexture();
+
     //leg 1
     translateMatrix->setPosition(olafXPosition - 1.0f * scale, olafYInitialPosition, olafZPosition);
     translateMatrix->setSize(legSize, legSize, legSize);
     translateMatrix->setObjectRotationAngle(rotationAngle, vec3(1, 0, 1));
-    translateMatrix->bindTranslationMatrix(this->shaderProgram, true);
+    translateMatrix->bindTranslationMatrix(this->texturedShaderProgram, true);
     cube->Draw();
 
     //leg 2
     translateMatrix->setPosition(olafXPosition + 1.0f * scale, olafYInitialPosition, olafZPosition);
     translateMatrix->setSize(legSize, legSize, legSize);
     translateMatrix->setObjectRotationAngle(rotationAngle, vec3(-1, 0, 1));
-    translateMatrix->bindTranslationMatrix(this->shaderProgram, true);
+    translateMatrix->bindTranslationMatrix(this->texturedShaderProgram, true);
     cube->Draw();
 
     //body
@@ -40,7 +48,7 @@ void Olaf::Draw(
     translateMatrix->setPosition(olafXPosition, bodyYPosition, olafZPosition);
     translateMatrix->setSize(bodyWidth, bodyHeight, bodyDepth);
     translateMatrix->setObjectRotationAngle(rotationAngle, vec3(0, 0, 1));
-    translateMatrix->bindTranslationMatrix(this->shaderProgram, true);
+    translateMatrix->bindTranslationMatrix(this->texturedShaderProgram, true);
     cube->Draw();
 
     //neck
@@ -50,7 +58,7 @@ void Olaf::Draw(
     translateMatrix->setPosition(olafXPosition, neckYPosition, olafZPosition);
     translateMatrix->setSize(neckWidth, neckHeight, bodyDepth);
     translateMatrix->setObjectRotationAngle(rotationAngle, vec3(0, 0, 1));
-    translateMatrix->bindTranslationMatrix(this->shaderProgram, true);
+    translateMatrix->bindTranslationMatrix(this->texturedShaderProgram, true);
     cube->Draw();
 
     //arms
@@ -63,7 +71,7 @@ void Olaf::Draw(
     translateMatrix->setPosition(leftArmXPosition, armYPosition, olafZPosition);
     translateMatrix->setSize(armWidth, armHeight, bodyDepth);
     translateMatrix->setObjectRotationAngle(rotationAngle, vec3(4, 0, 1));
-    translateMatrix->bindTranslationMatrix(this->shaderProgram, true);
+    translateMatrix->bindTranslationMatrix(this->texturedShaderProgram, true);
     cube->Draw();
 
     //right arm
@@ -71,7 +79,7 @@ void Olaf::Draw(
     translateMatrix->setPosition(rightArmXPosition, armYPosition, olafZPosition);
     translateMatrix->setSize(armWidth, armHeight, bodyDepth);
     translateMatrix->setObjectRotationAngle(rotationAngle, vec3(-4, 0, 1));
-    translateMatrix->bindTranslationMatrix(this->shaderProgram, true);
+    translateMatrix->bindTranslationMatrix(this->texturedShaderProgram, true);
     cube->Draw();
 
     //head
@@ -81,10 +89,11 @@ void Olaf::Draw(
     translateMatrix->setPosition(olafXPosition, headYPosition, olafZPosition);
     translateMatrix->setSize(headWidth, headHeight, bodyDepth);
     translateMatrix->setObjectRotationAngle(rotationAngle, vec3(0, 0, 1));
-    translateMatrix->bindTranslationMatrix(this->shaderProgram, true);
+    translateMatrix->bindTranslationMatrix(this->texturedShaderProgram, true);
     cube->Draw();
 
     //nose
+    this->textures->loadCarrotTexture();
     Cube *noseCube = new Cube(255.0f, 160.0f, 122.0f, renderMode);
     float noseWidth = 0.25f * scale;
     float noseHeight = 0.25f * scale;
@@ -93,7 +102,7 @@ void Olaf::Draw(
     translateMatrix->setPosition(olafXPosition, noseYPosition, noseZPosition);
     translateMatrix->setSize(noseWidth, noseHeight, bodyDepth);
     translateMatrix->setObjectRotationAngle(rotationAngle, vec3(0, 0, 0.5));
-    translateMatrix->bindTranslationMatrix(this->shaderProgram, true);
+    translateMatrix->bindTranslationMatrix(this->texturedShaderProgram, true);
     noseCube->Draw();
 
     //eyes
@@ -103,12 +112,15 @@ void Olaf::Draw(
     float eyeZPosition = olafZPosition + 0.5f * scale;
     float eyeYPosition = headYPosition + 0.5f * scale;
 
+    glUseProgram(colorShaderProgram);
+    controller->setShader(&colorShaderProgram);
+
     //eye 1
     float eye1XPosition = olafXPosition - 0.75f * scale;
     translateMatrix->setPosition(eye1XPosition, eyeYPosition, eyeZPosition);
     translateMatrix->setSize(eyeWidth, eyeHeight, bodyDepth);
     translateMatrix->setObjectRotationAngle(rotationAngle, vec3(0.75, 0, 0.5));
-    translateMatrix->bindTranslationMatrix(this->shaderProgram, true);
+    translateMatrix->bindTranslationMatrix(this->colorShaderProgram, true);
     eyesCube->Draw();
 
     //eye 2
@@ -116,20 +128,24 @@ void Olaf::Draw(
     translateMatrix->setPosition(eye2XPosition, eyeYPosition, eyeZPosition);
     translateMatrix->setSize(eyeWidth, eyeHeight, bodyDepth);
     translateMatrix->setObjectRotationAngle(rotationAngle, vec3(-0.75, 0, 0.5));
-    translateMatrix->bindTranslationMatrix(this->shaderProgram, true);
+    translateMatrix->bindTranslationMatrix(this->colorShaderProgram, true);
     eyesCube->Draw();
 
+    this->textures->loadMetalTexture();
     //hair
-    Cube *hairCube = new Cube(250.0f, 240.0f, 190.5f, renderMode);
+    Cube *hairCube = new Cube(250.0f, 240.0f, 190.5f, renderMode, true);
     float hairWidth = 0.05f * scale;
     float hairHeight = 1.0f * scale;
     float hairYPosition = headYPosition + 2.0f * scale;
+
+    glUseProgram(texturedShaderProgram);
+    controller->setShader(&texturedShaderProgram);
 
     //hair 1
     translateMatrix->setPosition(olafXPosition, hairYPosition, olafZPosition);
     translateMatrix->setSize(hairWidth, hairHeight, bodyDepth);
     translateMatrix->setObjectRotationAngle(rotationAngle, vec3(0, 0, 1));
-    translateMatrix->bindTranslationMatrix(this->shaderProgram, true);
+    translateMatrix->bindTranslationMatrix(this->texturedShaderProgram, true);
     hairCube->Draw();
 
     //hair 2
@@ -137,7 +153,7 @@ void Olaf::Draw(
     translateMatrix->setPosition(hair2XPosition, hairYPosition, olafZPosition);
     translateMatrix->setSize(hairWidth, hairHeight, bodyDepth);
     translateMatrix->setObjectRotationAngle(rotationAngle, vec3(0, 0, 1));
-    translateMatrix->bindTranslationMatrix(this->shaderProgram, true);
+    translateMatrix->bindTranslationMatrix(this->texturedShaderProgram, true);
     hairCube->Draw();
 
     //hair 3
@@ -145,6 +161,6 @@ void Olaf::Draw(
     translateMatrix->setPosition(hair3XPosition, hairYPosition, olafZPosition);
     translateMatrix->setSize(hairWidth, hairHeight, bodyDepth);
     translateMatrix->setObjectRotationAngle(rotationAngle, vec3(0, 0, 1));
-    translateMatrix->bindTranslationMatrix(this->shaderProgram, true);
+    translateMatrix->bindTranslationMatrix(this->texturedShaderProgram, true);
     hairCube->Draw();
 }

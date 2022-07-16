@@ -12,7 +12,6 @@
 #include "ArrowAxis/ArrowAxis.h"
 #include "Grid/Grid.h"
 #include "inputs/inputs.h"
-#include "./Textures/Textures.h"
 
 using namespace glm;
 
@@ -52,11 +51,8 @@ int main(int argc, char *argv[]) {
 
         (new ArrowAxis())->Draw(translateMatrix, colorShaderProgram);
 
-        glUseProgram(texturedShaderProgram);
-        textures->loadBrickTexture();
-        controller->setShader(&texturedShaderProgram);
-
-        (new Olaf(texturedShaderProgram))->Draw(
+        Olaf *olaf = new Olaf(texturedShaderProgram, colorShaderProgram, controller, textures);
+        olaf->Draw(
                 renderMode,
                 translateMatrix,
                 olafXPosition,
@@ -64,11 +60,10 @@ int main(int argc, char *argv[]) {
                 olafScale,
                 olafRotationAngle);
 
-
-        glUseProgram(colorShaderProgram);
-        controller->setShader(&colorShaderProgram);
-
-        (new Grid(colorShaderProgram))->Draw(translateMatrix);
+        glUseProgram(texturedShaderProgram);
+        controller->setShader(&texturedShaderProgram);
+        textures->loadSnowTexture();
+        (new Grid(texturedShaderProgram))->Draw(translateMatrix);
 
         handleViewInputs(window,
                          texturedShaderProgram,

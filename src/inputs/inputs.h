@@ -1,7 +1,7 @@
 #include "GLFW/glfw3.h"
 #include "glm/glm.hpp"
-#include "../Controller/Controller.h"
 #include "../Cube/Cube.h"
+#include "../Controller/Controller.h"
 
 void handleViewInputs(GLFWwindow *window,
                       int shaderProgram,
