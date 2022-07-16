@@ -5,6 +5,9 @@
 #include "../Shaders/shaders.h"
 
 static float olafRotationAngle = 0.0f;
+static float olafXPosition = 0.0f;
+static float olafZPosition = 0.0f;
+static float olafScale = 1.0f;
 
 class Olaf {
 
