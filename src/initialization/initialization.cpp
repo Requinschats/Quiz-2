@@ -30,6 +30,9 @@ GLFWwindow *initializeWindow() {
         return NULL;
     }
 
+    glEnable(GL_DEPTH_TEST);
+    glEnable(GL_CULL_FACE);
+
     return window;
 }
 
