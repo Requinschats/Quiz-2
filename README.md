@@ -1,4 +1,4 @@
-# COMP371-A1
+# COMP371-A2
 
 ### Implemented controls:
 
