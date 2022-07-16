@@ -61,7 +61,8 @@ int main(int argc, char *argv[]) {
                 translateMatrix,
                 olafXPosition,
                 olafZPosition,
-                olafScale);
+                olafScale,
+                olafRotationAngle);
 
 
         glUseProgram(colorShaderProgram);
@@ -79,7 +80,8 @@ int main(int argc, char *argv[]) {
                 &olafXPosition,
                 &olafZPosition,
                 &olafScale,
-                &renderMode
+                &renderMode,
+                &olafRotationAngle
         );
         glfwSwapBuffers(window);
         glfwWaitEvents();
