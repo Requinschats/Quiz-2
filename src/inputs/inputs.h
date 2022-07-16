@@ -23,5 +23,6 @@ void handleActionInputs(
         float *olafZPosition,
         float *olafScale,
         RenderMode *renderMode,
-        float *olafRotationAngle
+        float *olafRotationAngle,
+        bool *withTexture
 );

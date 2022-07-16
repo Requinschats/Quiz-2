@@ -6,7 +6,6 @@
 #include <GLFW/glfw3.h>
 #include "./initialization/initialization.h"
 #include "Cube/Cube.h"
-#include "Shaders/shaders.h"
 #include "sources/generalShader/GeneralShader.h"
 #include "Olaf/Olaf.h"
 #include "ArrowAxis/ArrowAxis.h"
@@ -19,54 +18,50 @@ int main(int argc, char *argv[]) {
 
     GLFWwindow *window = initializeWindow();
 
-    int colorShaderProgram = compileAndLinkShaders(getVertexShaderSource(), getFragmentShaderSource());
-    int texturedShaderProgram = compileAndLinkShaders(getTexturedVertexShaderSource(),
-                                                      getTexturedFragmentShaderSource());
-    glUseProgram(colorShaderProgram);
-    glEnable(GL_DEPTH_TEST);
-    glEnable(GL_CULL_FACE);
+    Shaders *shaders = new Shaders();
 
-    Controller *controller = new Controller(&colorShaderProgram);
+    Controller *controller = new Controller(&shaders->colorShaderProgram);
     TranslateMatrix *translateMatrix = new TranslateMatrix(0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f);
+    Textures *textures = new Textures(shaders->texturedShaderProgram);
     RenderMode renderMode = RenderMode::triangles;
 
     float olafXPosition = 0.0f;
     float olafZPosition = 0.0f;
     float olafScale = 1.0f;
+    bool withTexture = true;
 
     float lastFrameTime = glfwGetTime();
 
-    Textures *textures = new Textures(texturedShaderProgram);
-
     while (!glfwWindowShouldClose(window)) {
-        glUseProgram(colorShaderProgram);
+        glUseProgram(shaders->colorShaderProgram);
+
         controller->setCameraPosition();
-        glClearColor(0.5, 0.5, 1, 1.0);
 
         float dt = glfwGetTime() - lastFrameTime;
         lastFrameTime += dt;
 
-
+        glClearColor(0.5, 0.5, 1, 1.0);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        (new ArrowAxis())->Draw(translateMatrix, colorShaderProgram);
+        (new ArrowAxis())->Draw(translateMatrix, shaders->colorShaderProgram);
 
-        Olaf *olaf = new Olaf(texturedShaderProgram, colorShaderProgram, controller, textures);
+        Olaf *olaf = new Olaf(shaders, controller, textures);
         olaf->Draw(
                 renderMode,
                 translateMatrix,
                 olafXPosition,
                 olafZPosition,
                 olafScale,
-                olafRotationAngle);
+                olafRotationAngle,
+                withTexture);
 
-        glUseProgram(texturedShaderProgram);
-        controller->setShader(&texturedShaderProgram);
+        glUseProgram(shaders->texturedShaderProgram);
+        controller->setShader(&shaders->texturedShaderProgram);
         textures->loadSnowTexture();
-        (new Grid(texturedShaderProgram))->Draw(translateMatrix);
+        (new Grid(shaders->texturedShaderProgram))->Draw(translateMatrix);
 
         handleViewInputs(window,
-                         texturedShaderProgram,
+                         shaders->texturedShaderProgram,
                          controller,
                          translateMatrix,
                          dt);
@@ -76,7 +71,8 @@ int main(int argc, char *argv[]) {
                 &olafZPosition,
                 &olafScale,
                 &renderMode,
-                &olafRotationAngle
+                &olafRotationAngle,
+                &withTexture
         );
         glfwSwapBuffers(window);
         glfwWaitEvents();

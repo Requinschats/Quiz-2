@@ -78,7 +78,8 @@ void handleActionInputs(
         float *olafZPosition,
         float *olafScale,
         RenderMode *renderMode,
-        float *olafRotationAngle
+        float *olafRotationAngle,
+        bool *withTexture
 ) {
     if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
         *olafXPosition = Grid::getRandomGridCoordinate();
@@ -104,5 +105,8 @@ void handleActionInputs(
     }
     if (glfwGetKey(window, GLFW_KEY_M) == GLFW_PRESS) {
         *olafRotationAngle -= 5.0f;
+    }
+    if (glfwGetKey(window, GLFW_KEY_X) == GLFW_PRESS) {
+        *withTexture = !*withTexture;
     }
 }
