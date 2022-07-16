@@ -71,7 +71,8 @@ int main(int argc, char *argv[]) {
                 &olafZPosition,
                 &olafScale,
                 &renderMode,
-                &olafRotationAngle
+                &olafRotationAngle,
+                &withTexture
         );
         glfwSwapBuffers(window);
         glfwWaitEvents();
