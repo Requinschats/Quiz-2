@@ -22,6 +22,6 @@
 
 #### Student ID: 40074024
 
-![Alt text](https://user-images.githubusercontent.com/39419311/177330507-4b575e32-f771-40e1-acfb-0ecde8853524.png)
 
-![Alt text](https://user-images.githubusercontent.com/39419311/177331212-2ef73ef7-01ff-442e-808c-b90cba5da191.png)
+<img width="616" alt="Screen Shot 2022-07-16 at 7 00 13 PM" src="https://user-images.githubusercontent.com/39419311/179374384-8f86d562-c596-44a5-a6a0-1bf6928bd353.png">
+<img width="623" alt="Screen Shot 2022-07-16 at 7 00 26 PM" src="https://user-images.githubusercontent.com/39419311/179374390-8fbd0e91-3676-4a25-bbaf-0c88b50709ec.png">
