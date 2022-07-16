@@ -42,10 +42,10 @@ void handleViewKeyboardInputs(GLFWwindow *window,
         controller->cameraPosition.z += cameraSpeed * dt;
     }
     if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS) {
-        translateMatrix->setRotationAngle(translateMatrix->rotationAngle + 5.0f);
+        translateMatrix->setWorldRotationAngle(translateMatrix->rotationAngle + 5.0f);
     }
     if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS) {
-        translateMatrix->setRotationAngle(translateMatrix->rotationAngle - 5.0f);
+        translateMatrix->setWorldRotationAngle(translateMatrix->rotationAngle - 5.0f);
     }
     if (glfwGetKey(window, GLFW_KEY_HOME) == GLFW_PRESS) {
         controller->reset();
@@ -77,7 +77,8 @@ void handleActionInputs(
         float *olafXPosition,
         float *olafZPosition,
         float *olafScale,
-        RenderMode *renderMode
+        RenderMode *renderMode,
+        float *olafRotationAngle
 ) {
     if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
         *olafXPosition = Grid::getRandomGridCoordinate();
@@ -97,5 +98,11 @@ void handleActionInputs(
     }
     if (glfwGetKey(window, GLFW_KEY_T) == GLFW_PRESS) {
         *renderMode = RenderMode::triangles;
+    }
+    if (glfwGetKey(window, GLFW_KEY_N) == GLFW_PRESS) {
+        *olafRotationAngle += 5.0f;
+    }
+    if (glfwGetKey(window, GLFW_KEY_M) == GLFW_PRESS) {
+        *olafRotationAngle -= 5.0f;
     }
 }
