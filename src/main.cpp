@@ -25,12 +25,13 @@ int main(int argc, char *argv[]) {
     Textures *textures = new Textures(shaders->texturedShaderProgram);
     RenderMode renderMode = RenderMode::triangles;
 
-    float olafXPosition = 0.0f;
-    float olafZPosition = 0.0f;
-    float olafScale = 1.0f;
     bool withTexture = true;
 
     float lastFrameTime = glfwGetTime();
+
+    ArrowAxis *arrowAxis = new ArrowAxis();
+    Olaf *olaf = new Olaf(shaders, controller, textures);
+    Grid *grid = new Grid(shaders->texturedShaderProgram);
 
     while (!glfwWindowShouldClose(window)) {
         glUseProgram(shaders->colorShaderProgram);
@@ -43,9 +44,8 @@ int main(int argc, char *argv[]) {
         glClearColor(0.5, 0.5, 1, 1.0);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        (new ArrowAxis())->Draw(translateMatrix, shaders->colorShaderProgram);
+        arrowAxis->Draw(translateMatrix, shaders->colorShaderProgram);
 
-        Olaf *olaf = new Olaf(shaders, controller, textures);
         olaf->Draw(
                 renderMode,
                 translateMatrix,
@@ -58,7 +58,8 @@ int main(int argc, char *argv[]) {
         glUseProgram(shaders->texturedShaderProgram);
         controller->setShader(&shaders->texturedShaderProgram);
         textures->loadSnowTexture();
-        (new Grid(shaders->texturedShaderProgram))->Draw(translateMatrix);
+
+        grid->Draw(translateMatrix);
 
         handleViewInputs(window,
                          shaders->texturedShaderProgram,
