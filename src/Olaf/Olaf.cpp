@@ -12,7 +12,7 @@ void Olaf::Draw(
         float z_position,
         float scale
 ) {
-    Cube *cube = new Cube(255.0f, 255.0f, 255.0f, renderMode);
+    Cube *cube = new Cube(255.0f, 255.0f, 255.0f, renderMode, true);
     float legSize = 0.5f * scale;
     float olafZPosition = z_position;
     float olafXPosition = x_position;

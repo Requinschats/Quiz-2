@@ -12,6 +12,7 @@
 #include "ArrowAxis/ArrowAxis.h"
 #include "Grid/Grid.h"
 #include "inputs/inputs.h"
+#include "./Textures/Textures.h"
 
 using namespace glm;
 
@@ -19,12 +20,14 @@ int main(int argc, char *argv[]) {
 
     GLFWwindow *window = initializeWindow();
 
-    int shaderProgram = compileAndLinkShaders(getVertexShaderSource(), getFragmentShaderSource());
-    glUseProgram(shaderProgram);
+    int colorShaderProgram = compileAndLinkShaders(getVertexShaderSource(), getFragmentShaderSource());
+    int texturedShaderProgram = compileAndLinkShaders(getTexturedVertexShaderSource(),
+                                                      getTexturedFragmentShaderSource());
+    glUseProgram(colorShaderProgram);
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
 
-    Controller *controller = new Controller(&shaderProgram);
+    Controller *controller = new Controller(&colorShaderProgram);
     TranslateMatrix *translateMatrix = new TranslateMatrix(0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f);
     RenderMode renderMode = RenderMode::triangles;
 
@@ -33,7 +36,11 @@ int main(int argc, char *argv[]) {
     float olafScale = 1.0f;
 
     float lastFrameTime = glfwGetTime();
+
+    Textures *textures = new Textures(texturedShaderProgram);
+
     while (!glfwWindowShouldClose(window)) {
+        glUseProgram(colorShaderProgram);
         controller->setCameraPosition();
         glClearColor(0.5, 0.5, 1, 1.0);
 
@@ -43,17 +50,27 @@ int main(int argc, char *argv[]) {
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        (new Grid(shaderProgram))->Draw(translateMatrix);
-        (new ArrowAxis())->Draw(translateMatrix, shaderProgram);
-        (new Olaf(shaderProgram))->Draw(
+        (new ArrowAxis())->Draw(translateMatrix, colorShaderProgram);
+
+        glUseProgram(texturedShaderProgram);
+        textures->loadBrickTexture();
+        controller->setShader(&texturedShaderProgram);
+
+        (new Olaf(texturedShaderProgram))->Draw(
                 renderMode,
                 translateMatrix,
                 olafXPosition,
                 olafZPosition,
                 olafScale);
 
+
+        glUseProgram(colorShaderProgram);
+        controller->setShader(&colorShaderProgram);
+
+        (new Grid(colorShaderProgram))->Draw(translateMatrix);
+
         handleViewInputs(window,
-                         shaderProgram,
+                         texturedShaderProgram,
                          controller,
                          translateMatrix,
                          dt);

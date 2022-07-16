@@ -3,7 +3,7 @@
 #include "glm/detail/type_mat4x4.hpp"
 #include "glm/ext/matrix_transform.hpp"
 
-const vec3 defaultCameraPosition = vec3(-5.6f, 10.0f, 10.0f);
+const vec3 defaultCameraPosition = vec3(-15.6f, 10.0f, 10.0f);
 const vec3 defaultCameraLookAt = vec3(0.5f, 0.0f, -1.0f);
 const vec3 defaultCameraUp = vec3(0.0f, 1.0f, 0.0f);
 
@@ -13,6 +13,12 @@ Controller::Controller(int *shaderProgram) {
     this->setCameraPosition(defaultCameraPosition, defaultCameraLookAt, defaultCameraUp);
     this->setDefaultLookAt();
     glm::mat4 initialProjectionMatrix = setInitialProjectionMatrix(this->shaderProgram);
+}
+
+void Controller::setShader(int *shaderProgram) {
+    this->shaderProgram = *shaderProgram;
+    this->setCameraPosition();
+    setInitialProjectionMatrix(this->shaderProgram);
 }
 
 void Controller::setCameraPosition(vec3 cameraPosition, vec3 cameraLookAt, vec3 cameraUp) {
