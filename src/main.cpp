@@ -13,7 +13,6 @@
 #include "Grid/Grid.h"
 #include "inputs/inputs.h"
 #include "./Textures/Textures.h"
-#include "./TexturedCube/TexturedCube.h"
 
 using namespace glm;
 

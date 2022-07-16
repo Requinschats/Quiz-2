@@ -25,7 +25,7 @@ set(ASSETS assets)
 
 file(GLOB SRC src/*.cpp src/*/*.cpp src/*/*.h src/sources/*/*.cpp src/sources/*/*.h)
 
-add_executable(${EXEC} ${SRC} src/Textures/Textures.cpp src/Textures/Textures.h src/TexturedCube/TexturedCube.cpp src/TexturedCube/TexturedCube.h)
+add_executable(${EXEC} ${SRC})
 target_include_directories(${EXEC} PRIVATE include)
 target_link_libraries(${EXEC} OpenGL::GL glew_s glfw glm)
 
