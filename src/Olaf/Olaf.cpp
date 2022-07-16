@@ -92,7 +92,7 @@ void Olaf::Draw(
     float noseYPosition = headYPosition + 0.20f * scale;
     translateMatrix->setPosition(olafXPosition, noseYPosition, noseZPosition);
     translateMatrix->setSize(noseWidth, noseHeight, bodyDepth);
-    translateMatrix->setObjectRotationAngle(rotationAngle, vec3(0, 0, 0));
+    translateMatrix->setObjectRotationAngle(rotationAngle, vec3(0, 0, 0.5));
     translateMatrix->bindTranslationMatrix(this->shaderProgram, true);
     noseCube->Draw();
 
@@ -107,7 +107,7 @@ void Olaf::Draw(
     float eye1XPosition = olafXPosition - 0.75f * scale;
     translateMatrix->setPosition(eye1XPosition, eyeYPosition, eyeZPosition);
     translateMatrix->setSize(eyeWidth, eyeHeight, bodyDepth);
-    translateMatrix->setObjectRotationAngle(rotationAngle, vec3(0.75, 0, 0));
+    translateMatrix->setObjectRotationAngle(rotationAngle, vec3(0.75, 0, 0.5));
     translateMatrix->bindTranslationMatrix(this->shaderProgram, true);
     eyesCube->Draw();
 
@@ -115,7 +115,7 @@ void Olaf::Draw(
     float eye2XPosition = olafXPosition + 0.75f * scale;
     translateMatrix->setPosition(eye2XPosition, eyeYPosition, eyeZPosition);
     translateMatrix->setSize(eyeWidth, eyeHeight, bodyDepth);
-    translateMatrix->setObjectRotationAngle(rotationAngle, vec3(-0.75, 0, 0));
+    translateMatrix->setObjectRotationAngle(rotationAngle, vec3(-0.75, 0, 0.5));
     translateMatrix->bindTranslationMatrix(this->shaderProgram, true);
     eyesCube->Draw();
 
