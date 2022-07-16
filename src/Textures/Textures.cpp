@@ -20,8 +20,13 @@ GLuint loadTexture(const char *filename) {
     glBindTexture(GL_TEXTURE_2D, textureId);
 
     // Step2 Set filter parameters
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    float borderColor[] = { 0.9f, 0, 0.0, 1.0f };
+    glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);
+
 
     // Step3 Load Textures with dimension data
     int width, height, nrChannels;
@@ -50,13 +55,31 @@ GLuint loadTexture(const char *filename) {
 
 Textures::Textures(int texturedShaderProgram) {
     this->texturedShaderProgram = texturedShaderProgram;
-    this->snowTextureID = loadTexture("assets/textures/snow.jpeg");
+    this->snowTextureID = loadTexture("assets/textures/snow-2.jpeg");
+    this->carrotTextureID = loadTexture("assets/textures/carrot.jpeg");
+    this->metalTextureID = loadTexture("assets/textures/metal.jpeg");
 }
 
-void Textures::loadBrickTexture(){
+void Textures::loadSnowTexture(){
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, snowTextureID);
     GLuint textureLocation = glGetUniformLocation(texturedShaderProgram, "textureSampler");
     glBindTexture(GL_TEXTURE_2D, snowTextureID);
+    glUniform1i(textureLocation, 0);
+}
+
+void Textures::loadCarrotTexture() {
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, carrotTextureID);
+    GLuint textureLocation = glGetUniformLocation(texturedShaderProgram, "textureSampler");
+    glBindTexture(GL_TEXTURE_2D, carrotTextureID);
+    glUniform1i(textureLocation, 0);
+}
+
+void Textures::loadMetalTexture() {
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, metalTextureID);
+    GLuint textureLocation = glGetUniformLocation(texturedShaderProgram, "textureSampler");
+    glBindTexture(GL_TEXTURE_2D, metalTextureID);
     glUniform1i(textureLocation, 0);
 }

@@ -5,36 +5,15 @@
 using namespace std;
 using namespace glm;
 
-//const GLfloat vertices[] = {
-//        0.5f, 0.0f, -0.5f, 0.75f, 1.0f, 0.5f, 1.0f, 0, 0,
-//        -0.5f, 0.0f, -0.5f, 0.75f, 1.0f, 0.5f, 1.0f, 0,1,
-//        -0.5f, 0.0f, -0.5f, 0.75f, 1.0f, 0.5f, 1.0f, 1, 1,
-//        -0.5f, 0.0f, 0.5f, 0.75f, 1.0f, 0.5f, 1.0f, 1, 0,
-//        -0.5f, 0.0f, 0.5f, 0.75f, 1.0f, 0.5f, 1.0f, 0, 0,
-//        0.5f, 0.0f, 0.5f, 0.75f, 1.0f, 0.5f, 1.0f, 0, 1,
-//        0.5f, 0.0f, 0.5f, 0.75f, 1.0f, 0.5f, 1.0f, 1, 1,
-//        0.5f, 0.0f, -0.5f, 0.75f, 1.0f, 0.5f, 1.0f, 1, 0
-//};
-
 const GLfloat vertices[] = {
         //bottom
         -0.5f, 0.0f, -0.5f, 0.75f, 1.0f, 0.5f, 1.0f, 0, 0,
-        -0.5f, 0.0f, 0.5f, 0.75f, 1.0f, 0.5f, 1.0f, 0,1,
+        -0.5f, 0.0f, 0.5f, 0.75f, 1.0f, 0.5f, 1.0f, 0, 1,
         0.5f, 0.0f, 0.5f, 0.75f, 1.0f, 0.5f, 1.0f, 1, 1,
 
-        0.5f, 0.0f, 0.5f, 0.75f, 1.0f, 0.5f, 1.0f, 0, 0,
-        0.5f, 0.0f, -0.5f, 0.75f, 1.0f, 0.5f, 1.0f, 0, 1,
-        -0.5f, 0.0f, -0.5f, 0.75f, 1.0f, 0.5f, 1.0f, 1, 1,
-
-//        -0.5f, 0.0f, 0.5f, 0.75f, 1.0f, 0.5f, 1.0f, 1, 0,
-//
-////        //middle left right
-//        0.5f, 0.0f, 0.5f, 0.75f, 1.0f, 0.5f, 1.0f, 0, 0,
-//        -0.5f, 0.0f, -0.5f, 0.75f, 1.0f, 0.5f, 1.0f, 0, 0,
-
-//        0.5f, 0.0f, 0.5f, 0.75f, 1.0f, 0.5f, 1.0f, 0, 1,
-//        0.5f, 0.0f, 0.5f, 0.75f, 1.0f, 0.5f, 1.0f, 1, 1,
-//        0.5f, 0.0f, -0.5f, 0.75f, 1.0f, 0.5f, 1.0f, 1, 0
+        0.5f, 0.0f, 0.5f, 0.75f, 1.0f, 0.5f, 1.0f, 1, 1,
+        0.5f, 0.0f, -0.5f, 0.75f, 1.0f, 0.5f, 1.0f, 1, 0,
+        -0.5f, 0.0f, -0.5f, 0.75f, 1.0f, 0.5f, 1.0f, 0, 0
 };
 
 Grid::Grid(int shaderProgram) {
@@ -70,11 +49,11 @@ void Grid::Draw(TranslateMatrix *translateMatrix) {
     for (int i = -50; i < 50; i++) {
         for (int j = -50; j < 50; j++) {
             translateMatrix->setPosition(i, 0.0f, j);
-            translateMatrix->setSize(1.0f, 1.0f, 1.0f);
+            translateMatrix->setSize(5.0f, 1.0f, 5.0f);
             translateMatrix->bindTranslationMatrix(this->shaderProgram);
 
             glBindVertexArray(this->gridVAO_);
-            glLineWidth(6.0f);
+            glLineWidth(0.0f);
             glDrawArrays(GL_TRIANGLES, 0, 6);
             glBindVertexArray(0);
         }

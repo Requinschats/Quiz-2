@@ -8,8 +8,13 @@ public:
 
     ~Textures();
 
-    void loadBrickTexture();
+    void loadSnowTexture();
+    void loadCarrotTexture();
 
     GLuint snowTextureID;
     int texturedShaderProgram;
+    GLuint metalTextureID;
+    GLuint carrotTextureID;
+
+    void loadMetalTexture();
 };

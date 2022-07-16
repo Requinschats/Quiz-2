@@ -1,7 +1,8 @@
 #include "Olaf.h"
 
-Olaf::Olaf(int shaderProgram) {
+Olaf::Olaf(int shaderProgram, Textures *textures) {
     this->shaderProgram = shaderProgram;
+    this->textures = textures;
 }
 
 void Olaf::Draw(
@@ -17,6 +18,8 @@ void Olaf::Draw(
     float olafZPosition = z_position;
     float olafXPosition = x_position;
     float olafYInitialPosition = 1.0f;
+
+    this->textures->loadSnowTexture();
 
     //leg 1
     translateMatrix->setPosition(olafXPosition - 1.0f * scale, olafYInitialPosition, olafZPosition);
@@ -85,6 +88,7 @@ void Olaf::Draw(
     cube->Draw();
 
     //nose
+    this->textures->loadCarrotTexture();
     Cube *noseCube = new Cube(255.0f, 160.0f, 122.0f, renderMode);
     float noseWidth = 0.25f * scale;
     float noseHeight = 0.25f * scale;
@@ -97,6 +101,7 @@ void Olaf::Draw(
     noseCube->Draw();
 
     //eyes
+    this->textures->loadSnowTexture();
     Cube *eyesCube = new Cube(100.0f, 100.0f, 100.0f, renderMode);
     float eyeWidth = 0.25f * scale;
     float eyeHeight = 0.25f * scale;
@@ -119,8 +124,9 @@ void Olaf::Draw(
     translateMatrix->bindTranslationMatrix(this->shaderProgram, true);
     eyesCube->Draw();
 
+    this->textures->loadMetalTexture();
     //hair
-    Cube *hairCube = new Cube(250.0f, 240.0f, 190.5f, renderMode);
+    Cube *hairCube = new Cube(250.0f, 240.0f, 190.5f, renderMode, true);
     float hairWidth = 0.05f * scale;
     float hairHeight = 1.0f * scale;
     float hairYPosition = headYPosition + 2.0f * scale;
