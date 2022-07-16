@@ -22,7 +22,7 @@ int main(int argc, char *argv[]) {
     GLFWwindow *window = initializeWindow();
 
     int colorShaderProgram = compileAndLinkShaders(getVertexShaderSource(), getFragmentShaderSource());
-    int shaderProgram = compileAndLinkShaders(getTexturedVertexShaderSource(),
+    int texturedShaderProgram = compileAndLinkShaders(getTexturedVertexShaderSource(),
                                                       getTexturedFragmentShaderSource());
     glUseProgram(colorShaderProgram);
     glEnable(GL_DEPTH_TEST);
@@ -38,7 +38,7 @@ int main(int argc, char *argv[]) {
 
     float lastFrameTime = glfwGetTime();
 
-    GLuint brickTextureID = loadTexture("assets/textures/brick.jpg");
+    Textures *textures = new Textures(texturedShaderProgram);
 
     while (!glfwWindowShouldClose(window)) {
         glUseProgram(colorShaderProgram);
@@ -53,15 +53,11 @@ int main(int argc, char *argv[]) {
 
         (new ArrowAxis())->Draw(translateMatrix, colorShaderProgram);
 
-        glUseProgram(shaderProgram);
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, brickTextureID);
-        GLuint textureLocation = glGetUniformLocation(shaderProgram, "textureSampler");
-        glBindTexture(GL_TEXTURE_2D, brickTextureID);
-        glUniform1i(textureLocation, 0);
-        controller->setShader(&shaderProgram);
+        glUseProgram(texturedShaderProgram);
+        textures->loadBrickTexture();
+        controller->setShader(&texturedShaderProgram);
 
-        (new Olaf(shaderProgram))->Draw(
+        (new Olaf(texturedShaderProgram))->Draw(
                 renderMode,
                 translateMatrix,
                 olafXPosition,
@@ -71,10 +67,11 @@ int main(int argc, char *argv[]) {
 
         glUseProgram(colorShaderProgram);
         controller->setShader(&colorShaderProgram);
+
         (new Grid(colorShaderProgram))->Draw(translateMatrix);
 
         handleViewInputs(window,
-                         shaderProgram,
+                         texturedShaderProgram,
                          controller,
                          translateMatrix,
                          dt);

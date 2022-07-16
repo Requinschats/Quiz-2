@@ -47,3 +47,16 @@ GLuint loadTexture(const char *filename) {
     glBindTexture(GL_TEXTURE_2D, 0);
     return textureId;
 }
+
+Textures::Textures(int texturedShaderProgram) {
+    this->texturedShaderProgram = texturedShaderProgram;
+    this->brickTextureID = loadTexture("assets/textures/brick.jpg");
+}
+
+void Textures::loadBrickTexture(){
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, brickTextureID);
+    GLuint textureLocation = glGetUniformLocation(texturedShaderProgram, "textureSampler");
+    glBindTexture(GL_TEXTURE_2D, brickTextureID);
+    glUniform1i(textureLocation, 0);
+}
