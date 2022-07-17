@@ -17,6 +17,8 @@ void Olaf::Draw(
     float olafXPosition = movement->position.x;
     float olafZPosition = movement->position.z;
 
+    PhysicalPosition physicalPosition = movement->getPhysicalPosition();
+
     shaders->bindShaderFromWithTexture(withTexture, controller);
 
     Cube *cube = new Cube(255.0f, 255.0f, 255.0f, renderMode, withTexture);
@@ -28,6 +30,7 @@ void Olaf::Draw(
     //leg 1
     translateMatrix->setPosition(olafXPosition - 1.0f * scale, olafYInitialPosition, olafZPosition);
     translateMatrix->setSize(legSize, legSize, legSize);
+    translateMatrix->setObjectXRotationAngle(physicalPosition.legRotationAngle, vec3(0, 0, 0));
     translateMatrix->setObjectYRotationAngle(rotationAngle, vec3(1, 0, 1));
     translateMatrix->bindTranslationMatrix(shaders->bindedShader);
     cube->Draw();
@@ -35,6 +38,7 @@ void Olaf::Draw(
     //leg 2
     translateMatrix->setPosition(olafXPosition + 1.0f * scale, olafYInitialPosition, olafZPosition);
     translateMatrix->setSize(legSize, legSize, legSize);
+    translateMatrix->setObjectXRotationAngle(physicalPosition.legRotationAngle, vec3(0, 0, 0));
     translateMatrix->setObjectYRotationAngle(rotationAngle, vec3(-1, 0, 1));
     translateMatrix->bindTranslationMatrix(shaders->bindedShader);
     cube->Draw();
@@ -69,6 +73,7 @@ void Olaf::Draw(
     float leftArmXPosition = olafXPosition - (neckWidth * 2);
     translateMatrix->setPosition(leftArmXPosition, armYPosition, olafZPosition);
     translateMatrix->setSize(armWidth, armHeight, bodyDepth);
+    translateMatrix->setObjectXRotationAngle(physicalPosition.armRotationAngle, vec3(1, 0, 1));
     translateMatrix->setObjectYRotationAngle(rotationAngle, vec3(4, 0, 1));
     translateMatrix->bindTranslationMatrix(shaders->bindedShader);
     cube->Draw();
@@ -77,6 +82,7 @@ void Olaf::Draw(
     float rightArmXPosition = olafXPosition + (neckWidth * 2);
     translateMatrix->setPosition(rightArmXPosition, armYPosition, olafZPosition);
     translateMatrix->setSize(armWidth, armHeight, bodyDepth);
+    translateMatrix->setObjectXRotationAngle(physicalPosition.armRotationAngle, vec3(1, 0, 1));
     translateMatrix->setObjectYRotationAngle(rotationAngle, vec3(-4, 0, 1));
     translateMatrix->bindTranslationMatrix(shaders->bindedShader);
     cube->Draw();

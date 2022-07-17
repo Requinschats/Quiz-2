@@ -1,4 +1,5 @@
 #include <glm/glm.hpp>
+
 #pragma once
 
 using namespace glm;
@@ -9,9 +10,9 @@ struct PhysicalPosition {
 };
 
 static PhysicalPosition physicalPositions[3] = {
-    {120, 120},
-    {240, 240},
-    {360, 360}
+        {120, 120},
+        {240, 240},
+        {360, 360}
 };
 
 
@@ -19,7 +20,9 @@ class Movement {
 public:
     vec3 position;
     int physicalPositionIndex;
+
     void nextMovement();
+
     Movement(vec3 position);
 
     void moveForward();
@@ -29,4 +32,6 @@ public:
     void moveLeft();
 
     void moveRight();
+
+    PhysicalPosition getPhysicalPosition();
 };

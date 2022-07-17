@@ -17,11 +17,23 @@ TranslateMatrix::TranslateMatrix(float x_position,
 }
 
 glm::mat4 TranslateMatrix::getRotatedObjectMatrix(glm::mat4 translationMatrix) {
+    if (objectRotation.xAxisRotation.objectRotationAngle != 0) {
+        translationMatrix = getSingleAxisRotatedObjectMatrix(translationMatrix,
+                                                             objectRotation.xAxisRotation.objectRotationAngle,
+                                                             this->objectRotation.xAxisRotation.pathToRotationMatrix,
+                                                             RotationAxis::x);
+    }
     if (objectRotation.yAxisRotation.objectRotationAngle != 0) {
         translationMatrix = getSingleAxisRotatedObjectMatrix(translationMatrix,
                                                              objectRotation.yAxisRotation.objectRotationAngle,
                                                              this->objectRotation.yAxisRotation.pathToRotationMatrix,
                                                              RotationAxis::y);
+    }
+    if (objectRotation.zAxisRotation.objectRotationAngle != 0) {
+        translationMatrix = getSingleAxisRotatedObjectMatrix(translationMatrix,
+                                                             objectRotation.zAxisRotation.objectRotationAngle,
+                                                             this->objectRotation.zAxisRotation.pathToRotationMatrix,
+                                                             RotationAxis::z);
     }
     return translationMatrix;
 }
