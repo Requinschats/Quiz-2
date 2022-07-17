@@ -11,3 +11,26 @@ void Movement::nextMovement() {
         this->physicalPositionIndex = 0;
     }
 }
+
+void Movement::moveForward() {
+    this->position.z += 1.0f;
+    nextMovement();
+}
+
+void Movement::moveBackward() {
+    this->position.z -= 1.0f;
+    nextMovement();
+}
+
+void Movement::moveLeft() {
+    this->position.x -= 1.0f;
+    nextMovement();
+}
+
+void Movement::moveRight() {
+    this->position.x += 1.0f;
+    nextMovement();
+}
+
+
+
