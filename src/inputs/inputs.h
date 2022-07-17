@@ -2,6 +2,8 @@
 #include "glm/glm.hpp"
 #include "../Cube/Cube.h"
 #include "../Controller/Controller.h"
+#include "../Olaf/movement/Movement.h"
+#include "../TranslateMatrix/TranslateMatrix.h"
 
 void handleViewInputs(GLFWwindow *window,
                       int shaderProgram,
@@ -19,8 +21,7 @@ void handleViewMouseInputs(GLFWwindow *window, Controller *controller, Translate
 
 void handleActionInputs(
         GLFWwindow *window,
-        float *olafXPosition,
-        float *olafZPosition,
+        Movement *movement,
         float *olafScale,
         RenderMode *renderMode,
         float *olafRotationAngle,

@@ -49,8 +49,6 @@ int main(int argc, char *argv[]) {
         olaf->Draw(
                 renderMode,
                 translateMatrix,
-                olafXPosition,
-                olafZPosition,
                 olafScale,
                 olafRotationAngle,
                 withTexture);
@@ -68,8 +66,7 @@ int main(int argc, char *argv[]) {
                          dt);
         handleActionInputs(
                 window,
-                &olafXPosition,
-                &olafZPosition,
+                olaf->movement,
                 &olafScale,
                 &renderMode,
                 &olafRotationAngle,

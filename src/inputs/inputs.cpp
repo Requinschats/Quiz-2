@@ -74,16 +74,14 @@ void handleViewMouseInputs(GLFWwindow *window,
 
 void handleActionInputs(
         GLFWwindow *window,
-        float *olafXPosition,
-        float *olafZPosition,
+        Movement *movement,
         float *olafScale,
         RenderMode *renderMode,
         float *olafRotationAngle,
         bool *withTexture
 ) {
     if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
-        *olafXPosition = Grid::getRandomGridCoordinate();
-        *olafZPosition = Grid::getRandomGridCoordinate();
+        movement->position = vec3(Grid::getRandomGridCoordinate(), 0.0f, Grid::getRandomGridCoordinate());
     }
     if (glfwGetKey(window, GLFW_KEY_U) == GLFW_PRESS) {
         *olafScale += 0.1f;

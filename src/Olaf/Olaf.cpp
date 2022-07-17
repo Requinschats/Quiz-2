@@ -4,23 +4,23 @@ Olaf::Olaf(Shaders *shaders, Controller *controller, Textures *textures) {
     this->shaders = shaders;
     this->controller = controller;
     this->textures = textures;
+    this->movement = new Movement(vec3(0.0f, 0.0f, 0.0f));
 }
 
 void Olaf::Draw(
         RenderMode renderMode,
         TranslateMatrix *translateMatrix,
-        float x_position,
-        float z_position,
         float scale,
         float rotationAngle,
         bool withTexture
 ) {
+    float olafXPosition = movement->position.x;
+    float olafZPosition = movement->position.z;
+
     shaders->bindShaderFromWithTexture(withTexture, controller);
 
     Cube *cube = new Cube(255.0f, 255.0f, 255.0f, renderMode, withTexture);
     float legSize = 0.5f * scale;
-    float olafZPosition = z_position;
-    float olafXPosition = x_position;
     float olafYInitialPosition = 1.0f;
 
     this->textures->loadSnowTexture();
