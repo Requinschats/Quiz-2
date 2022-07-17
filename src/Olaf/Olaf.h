@@ -3,10 +3,9 @@
 #include "../Textures/Textures.h"
 #include "../Controller/Controller.h"
 #include "../Shaders/shaders.h"
+#include "movement/Movement.h"
 
 static float olafRotationAngle = 0.0f;
-static float olafXPosition = 0.0f;
-static float olafZPosition = 0.0f;
 static float olafScale = 1.0f;
 
 class Olaf {
@@ -17,8 +16,6 @@ public:
     void Draw(
             RenderMode renderMode,
             TranslateMatrix *translateMatrix,
-            float x_position,
-            float z_position,
             float scale,
             float rotationAngle,
             bool withTexture
@@ -27,4 +24,5 @@ public:
     Textures *textures;
     Controller *controller;
     Shaders *shaders;
+    Movement *movement;
 };
