@@ -9,9 +9,9 @@ struct PhysicalPosition {
 };
 
 static PhysicalPosition physicalPositions[3] = {
-    {-1, 0.0f},
-    {1, 0.0f},
-        {1, 0.0f}
+    {120, 120},
+    {240, 240},
+    {360, 360}
 };
 
 
@@ -21,4 +21,12 @@ public:
     int physicalPositionIndex;
     void nextMovement();
     Movement(vec3 position);
+
+    void moveForward();
+
+    void moveBackward();
+
+    void moveLeft();
+
+    void moveRight();
 };

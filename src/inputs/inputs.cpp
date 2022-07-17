@@ -107,4 +107,16 @@ void handleActionInputs(
     if (glfwGetKey(window, GLFW_KEY_X) == GLFW_PRESS) {
         *withTexture = !*withTexture;
     }
+    if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) {
+        movement->moveForward();
+    }
+    if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS) {
+        movement->moveBackward();
+    }
+    if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS) {
+        movement->moveLeft();
+    }
+    if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS) {
+        movement->moveRight();
+    }
 }
