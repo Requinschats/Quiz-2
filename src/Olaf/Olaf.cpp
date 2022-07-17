@@ -28,15 +28,15 @@ void Olaf::Draw(
     //leg 1
     translateMatrix->setPosition(olafXPosition - 1.0f * scale, olafYInitialPosition, olafZPosition);
     translateMatrix->setSize(legSize, legSize, legSize);
-    translateMatrix->setObjectRotationAngle(rotationAngle, vec3(1, 0, 1));
-    translateMatrix->bindTranslationMatrix(shaders->bindedShader, true);
+    translateMatrix->setObjectYRotationAngle(rotationAngle, vec3(1, 0, 1));
+    translateMatrix->bindTranslationMatrix(shaders->bindedShader);
     cube->Draw();
 
     //leg 2
     translateMatrix->setPosition(olafXPosition + 1.0f * scale, olafYInitialPosition, olafZPosition);
     translateMatrix->setSize(legSize, legSize, legSize);
-    translateMatrix->setObjectRotationAngle(rotationAngle, vec3(-1, 0, 1));
-    translateMatrix->bindTranslationMatrix(shaders->bindedShader, true);
+    translateMatrix->setObjectYRotationAngle(rotationAngle, vec3(-1, 0, 1));
+    translateMatrix->bindTranslationMatrix(shaders->bindedShader);
     cube->Draw();
 
     //body
@@ -46,8 +46,8 @@ void Olaf::Draw(
     float bodyYPosition = olafYInitialPosition + 3.0f * scale;
     translateMatrix->setPosition(olafXPosition, bodyYPosition, olafZPosition);
     translateMatrix->setSize(bodyWidth, bodyHeight, bodyDepth);
-    translateMatrix->setObjectRotationAngle(rotationAngle, vec3(0, 0, 1));
-    translateMatrix->bindTranslationMatrix(shaders->bindedShader, true);
+    translateMatrix->setObjectYRotationAngle(rotationAngle, vec3(0, 0, 1));
+    translateMatrix->bindTranslationMatrix(shaders->bindedShader);
     cube->Draw();
 
     //neck
@@ -56,8 +56,8 @@ void Olaf::Draw(
     float neckYPosition = bodyYPosition + 4.0f * scale;
     translateMatrix->setPosition(olafXPosition, neckYPosition, olafZPosition);
     translateMatrix->setSize(neckWidth, neckHeight, bodyDepth);
-    translateMatrix->setObjectRotationAngle(rotationAngle, vec3(0, 0, 1));
-    translateMatrix->bindTranslationMatrix(shaders->bindedShader, true);
+    translateMatrix->setObjectYRotationAngle(rotationAngle, vec3(0, 0, 1));
+    translateMatrix->bindTranslationMatrix(shaders->bindedShader);
     cube->Draw();
 
     //arms
@@ -69,16 +69,16 @@ void Olaf::Draw(
     float leftArmXPosition = olafXPosition - (neckWidth * 2);
     translateMatrix->setPosition(leftArmXPosition, armYPosition, olafZPosition);
     translateMatrix->setSize(armWidth, armHeight, bodyDepth);
-    translateMatrix->setObjectRotationAngle(rotationAngle, vec3(4, 0, 1));
-    translateMatrix->bindTranslationMatrix(shaders->bindedShader, true);
+    translateMatrix->setObjectYRotationAngle(rotationAngle, vec3(4, 0, 1));
+    translateMatrix->bindTranslationMatrix(shaders->bindedShader);
     cube->Draw();
 
     //right arm
     float rightArmXPosition = olafXPosition + (neckWidth * 2);
     translateMatrix->setPosition(rightArmXPosition, armYPosition, olafZPosition);
     translateMatrix->setSize(armWidth, armHeight, bodyDepth);
-    translateMatrix->setObjectRotationAngle(rotationAngle, vec3(-4, 0, 1));
-    translateMatrix->bindTranslationMatrix(shaders->bindedShader, true);
+    translateMatrix->setObjectYRotationAngle(rotationAngle, vec3(-4, 0, 1));
+    translateMatrix->bindTranslationMatrix(shaders->bindedShader);
     cube->Draw();
 
     //head
@@ -87,8 +87,8 @@ void Olaf::Draw(
     float headYPosition = neckYPosition + 2.0f * scale;
     translateMatrix->setPosition(olafXPosition, headYPosition, olafZPosition);
     translateMatrix->setSize(headWidth, headHeight, bodyDepth);
-    translateMatrix->setObjectRotationAngle(rotationAngle, vec3(0, 0, 1));
-    translateMatrix->bindTranslationMatrix(shaders->bindedShader, true);
+    translateMatrix->setObjectYRotationAngle(rotationAngle, vec3(0, 0, 1));
+    translateMatrix->bindTranslationMatrix(shaders->bindedShader);
     cube->Draw();
 
     //nose
@@ -100,8 +100,8 @@ void Olaf::Draw(
     float noseYPosition = headYPosition + 0.20f * scale;
     translateMatrix->setPosition(olafXPosition, noseYPosition, noseZPosition);
     translateMatrix->setSize(noseWidth, noseHeight, bodyDepth);
-    translateMatrix->setObjectRotationAngle(rotationAngle, vec3(0, 0, 0.5));
-    translateMatrix->bindTranslationMatrix(shaders->bindedShader, true);
+    translateMatrix->setObjectYRotationAngle(rotationAngle, vec3(0, 0, 0.5));
+    translateMatrix->bindTranslationMatrix(shaders->bindedShader);
     noseCube->Draw();
 
     //eyes
@@ -117,16 +117,16 @@ void Olaf::Draw(
     float eye1XPosition = olafXPosition - 0.75f * scale;
     translateMatrix->setPosition(eye1XPosition, eyeYPosition, eyeZPosition);
     translateMatrix->setSize(eyeWidth, eyeHeight, bodyDepth);
-    translateMatrix->setObjectRotationAngle(rotationAngle, vec3(0.75, 0, 0.5));
-    translateMatrix->bindTranslationMatrix(shaders->bindedShader, true);
+    translateMatrix->setObjectYRotationAngle(rotationAngle, vec3(0.75, 0, 0.5));
+    translateMatrix->bindTranslationMatrix(shaders->bindedShader);
     eyesCube->Draw();
 
     //eye 2
     float eye2XPosition = olafXPosition + 0.75f * scale;
     translateMatrix->setPosition(eye2XPosition, eyeYPosition, eyeZPosition);
     translateMatrix->setSize(eyeWidth, eyeHeight, bodyDepth);
-    translateMatrix->setObjectRotationAngle(rotationAngle, vec3(-0.75, 0, 0.5));
-    translateMatrix->bindTranslationMatrix(shaders->bindedShader, true);
+    translateMatrix->setObjectYRotationAngle(rotationAngle, vec3(-0.75, 0, 0.5));
+    translateMatrix->bindTranslationMatrix(shaders->bindedShader);
     eyesCube->Draw();
 
     this->textures->loadMetalTexture();
@@ -141,23 +141,23 @@ void Olaf::Draw(
     //hair 1
     translateMatrix->setPosition(olafXPosition, hairYPosition, olafZPosition);
     translateMatrix->setSize(hairWidth, hairHeight, bodyDepth);
-    translateMatrix->setObjectRotationAngle(rotationAngle, vec3(0, 0, 1));
-    translateMatrix->bindTranslationMatrix(shaders->bindedShader, true);
+    translateMatrix->setObjectYRotationAngle(rotationAngle, vec3(0, 0, 1));
+    translateMatrix->bindTranslationMatrix(shaders->bindedShader);
     hairCube->Draw();
 
     //hair 2
     float hair2XPosition = olafXPosition + 0.5f * scale;
     translateMatrix->setPosition(hair2XPosition, hairYPosition, olafZPosition);
     translateMatrix->setSize(hairWidth, hairHeight, bodyDepth);
-    translateMatrix->setObjectRotationAngle(rotationAngle, vec3(0, 0, 1));
-    translateMatrix->bindTranslationMatrix(shaders->bindedShader, true);
+    translateMatrix->setObjectYRotationAngle(rotationAngle, vec3(0, 0, 1));
+    translateMatrix->bindTranslationMatrix(shaders->bindedShader);
     hairCube->Draw();
 
     //hair 3
     float hair3XPosition = olafXPosition - 0.5f * scale;
     translateMatrix->setPosition(hair3XPosition, hairYPosition, olafZPosition);
     translateMatrix->setSize(hairWidth, hairHeight, bodyDepth);
-    translateMatrix->setObjectRotationAngle(rotationAngle, vec3(0, 0, 1));
-    translateMatrix->bindTranslationMatrix(shaders->bindedShader, true);
+    translateMatrix->setObjectYRotationAngle(rotationAngle, vec3(0, 0, 1));
+    translateMatrix->bindTranslationMatrix(shaders->bindedShader);
     hairCube->Draw();
 }
