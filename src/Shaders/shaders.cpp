@@ -2,6 +2,38 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
 #include "../sources/generalShader/GeneralShader.h"
+#include "fstream"
+#include <string>
+#include <sstream>
+
+struct ShaderProgramSource {
+    char *VertexSource;
+    char *FragmentSource;
+};
+
+static ShaderProgramSource getShaderSourceFromPath(string path) {
+    std::ifstream stream(path);
+
+    enum class ShaderType {
+        NONE = -1, VERTEX = 0, FRAGMENT = 1
+    };
+
+    std::string line;
+    std::stringstream ss[2];
+    ShaderType type = ShaderType::NONE;
+    while (getline(stream, line)) {
+        if (line.find("#shader") != string::npos) {
+            if (line.find("vertex") != string::npos) {
+                type = ShaderType::VERTEX;
+            } else if (line.find("fragment") != string::npos) {
+                type = ShaderType::FRAGMENT;
+            }
+        } else {
+            ss[(int) type] << line << '\n';
+        }
+    }
+    return {const_cast<char *>(ss[0].str().c_str()), const_cast<char *>(ss[1].str().c_str())};
+}
 
 int compileAndLinkShaders(char *vertexShaderSource, char *fragmentShaderSource) {
     int vertexShader = glCreateShader(GL_VERTEX_SHADER);
@@ -44,14 +76,16 @@ int compileAndLinkShaders(char *vertexShaderSource, char *fragmentShaderSource) 
 }
 
 Shaders::Shaders() {
-    this->colorShaderProgram = compileAndLinkShaders(getVertexShaderSource(), getFragmentShaderSource());
+    ShaderProgramSource colorShadersSource = getShaderSourceFromPath("resources/generalShader.shader");
+    this->colorShaderProgram = compileAndLinkShaders(colorShadersSource.VertexSource,
+                                                     colorShadersSource.FragmentSource);
     this->texturedShaderProgram = compileAndLinkShaders(getTexturedVertexShaderSource(),
-                                                      getTexturedFragmentShaderSource());
+                                                        getTexturedFragmentShaderSource());
     this->bindedShader = colorShaderProgram;
 }
 
-void Shaders::bindShaderFromWithTexture(bool withTexture, Controller *controller){
-    if(withTexture){
+void Shaders::bindShaderFromWithTexture(bool withTexture, Controller *controller) {
+    if (withTexture) {
         glUseProgram(texturedShaderProgram);
         controller->setShader(&texturedShaderProgram);
         this->bindedShader = texturedShaderProgram;
