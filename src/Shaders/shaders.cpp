@@ -1,48 +1,17 @@
 #include "shaders.h"
 #include <GLFW/glfw3.h>
 #include <iostream>
-#include "../sources/generalShader/GeneralShader.h"
 #include "fstream"
 #include <string>
 #include <sstream>
 
-struct ShaderProgramSource {
-    char *VertexSource;
-    char *FragmentSource;
-};
-
-//static ShaderProgramSource getShaderSourceFromPath(string path) {
-//    std::ifstream stream(path);
-//
-//    enum class ShaderType {
-//        NONE = -1, VERTEX = 0, FRAGMENT = 1
-//    };
-//
-//    std::string line;
-//    std::stringstream ss[2];
-//    ShaderType type = ShaderType::NONE;
-//    while (getline(stream, line)) {
-//        if (line.find("#shader") != string::npos) {
-//            if (line.find("vertex") != string::npos) {
-//                type = ShaderType::VERTEX;
-//            } else if (line.find("fragment") != string::npos) {
-//                type = ShaderType::FRAGMENT;
-//            }
-//        } else {
-//            ss[(int) type] << line << '\n';
-//        }
-//    }
-//    return {const_cast<char *>(ss[0].str().c_str()), const_cast<char *>(ss[1].str().c_str())};
-//}
-
 static string getShaderSourceFromPath(string path) {
     std::string VertexShaderCode;
-    std::ifstream VertexShaderStream("resources/generalShader/generalShaderVertex.glsl", std::ios::in);
+    std::ifstream VertexShaderStream(path, std::ios::in);
     std::stringstream sstr;
     sstr << VertexShaderStream.rdbuf();
     VertexShaderCode = sstr.str();
     VertexShaderStream.close();
-    cout << VertexShaderCode << endl;
     return VertexShaderCode;
 }
 
@@ -86,17 +55,25 @@ int compileAndLinkShaders(char *vertexShaderSource, char *fragmentShaderSource) 
     return shaderProgram;
 }
 
+void Shaders::initializeColorShaderProgram() {
+    string colorVertexShaderCode = getShaderSourceFromPath("resources/generalShader/generalShaderVertex.glsl");
+    char *VertexSourcePointer = const_cast<char *>((colorVertexShaderCode).c_str());
+    string colorFragmentShaderCode = getShaderSourceFromPath("resources/generalShader/generalShaderFragment.glsl");
+    char *FragmentSourcePointer = const_cast<char *>((colorFragmentShaderCode).c_str());
+    this->colorShaderProgram = compileAndLinkShaders(VertexSourcePointer, FragmentSourcePointer);
+}
+
+void Shaders::initializeTexturedShaderProgram() {
+    string texturedVertexShaderCode = getShaderSourceFromPath("resources/texturedShader/texturedShaderVertex.glsl");
+    char *texturedVertexSourcePointer = const_cast<char *>((texturedVertexShaderCode).c_str());
+    string texturedFragmentShaderCode = getShaderSourceFromPath("resources/texturedShader/texturedShaderFragment.glsl");
+    char *texturedFragmentSourcePointer = const_cast<char *>((texturedFragmentShaderCode).c_str());
+    this->texturedShaderProgram = compileAndLinkShaders(texturedVertexSourcePointer, texturedFragmentSourcePointer);
+}
+
 Shaders::Shaders() {
-
-    string vertexShaderCode = getShaderSourceFromPath("resources/generalShader/generalShaderVertex.glsl");
-    char *VertexSourcePointer = const_cast<char *>((vertexShaderCode).c_str());
-
-//    char *vertexShaderSource = getShaderSourceFromPath("resources/generalShader/generalShaderVertex.glsl");
-//    std::cout << vertexShaderSource << std::endl;
-//    char *fragmentShaderSource = getShaderSourceFromPath("resources/generalShader/generalShaderFragment.glsl");
-    this->colorShaderProgram = compileAndLinkShaders(VertexSourcePointer, getFragmentShaderSource());
-    this->texturedShaderProgram = compileAndLinkShaders(getTexturedVertexShaderSource(),
-                                                        getTexturedFragmentShaderSource());
+    initializeColorShaderProgram();
+    initializeTexturedShaderProgram();
     this->bindedShader = colorShaderProgram;
 }
 
