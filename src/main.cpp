@@ -6,7 +6,6 @@
 #include <GLFW/glfw3.h>
 #include "./initialization/initialization.h"
 #include "Cube/Cube.h"
-#include "sources/generalShader/GeneralShader.h"
 #include "Olaf/Olaf.h"
 #include "ArrowAxis/ArrowAxis.h"
 #include "Grid/Grid.h"
