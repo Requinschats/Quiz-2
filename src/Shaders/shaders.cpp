@@ -11,28 +11,39 @@ struct ShaderProgramSource {
     char *FragmentSource;
 };
 
-static ShaderProgramSource getShaderSourceFromPath(string path) {
-    std::ifstream stream(path);
+//static ShaderProgramSource getShaderSourceFromPath(string path) {
+//    std::ifstream stream(path);
+//
+//    enum class ShaderType {
+//        NONE = -1, VERTEX = 0, FRAGMENT = 1
+//    };
+//
+//    std::string line;
+//    std::stringstream ss[2];
+//    ShaderType type = ShaderType::NONE;
+//    while (getline(stream, line)) {
+//        if (line.find("#shader") != string::npos) {
+//            if (line.find("vertex") != string::npos) {
+//                type = ShaderType::VERTEX;
+//            } else if (line.find("fragment") != string::npos) {
+//                type = ShaderType::FRAGMENT;
+//            }
+//        } else {
+//            ss[(int) type] << line << '\n';
+//        }
+//    }
+//    return {const_cast<char *>(ss[0].str().c_str()), const_cast<char *>(ss[1].str().c_str())};
+//}
 
-    enum class ShaderType {
-        NONE = -1, VERTEX = 0, FRAGMENT = 1
-    };
-
-    std::string line;
-    std::stringstream ss[2];
-    ShaderType type = ShaderType::NONE;
-    while (getline(stream, line)) {
-        if (line.find("#shader") != string::npos) {
-            if (line.find("vertex") != string::npos) {
-                type = ShaderType::VERTEX;
-            } else if (line.find("fragment") != string::npos) {
-                type = ShaderType::FRAGMENT;
-            }
-        } else {
-            ss[(int) type] << line << '\n';
-        }
-    }
-    return {const_cast<char *>(ss[0].str().c_str()), const_cast<char *>(ss[1].str().c_str())};
+static string getShaderSourceFromPath(string path) {
+    std::string VertexShaderCode;
+    std::ifstream VertexShaderStream("resources/generalShader/generalShaderVertex.glsl", std::ios::in);
+    std::stringstream sstr;
+    sstr << VertexShaderStream.rdbuf();
+    VertexShaderCode = sstr.str();
+    VertexShaderStream.close();
+    cout << VertexShaderCode << endl;
+    return VertexShaderCode;
 }
 
 int compileAndLinkShaders(char *vertexShaderSource, char *fragmentShaderSource) {
@@ -76,9 +87,14 @@ int compileAndLinkShaders(char *vertexShaderSource, char *fragmentShaderSource) 
 }
 
 Shaders::Shaders() {
-    ShaderProgramSource colorShadersSource = getShaderSourceFromPath("resources/generalShader.shader");
-    this->colorShaderProgram = compileAndLinkShaders(colorShadersSource.VertexSource,
-                                                     colorShadersSource.FragmentSource);
+
+    string vertexShaderCode = getShaderSourceFromPath("resources/generalShader/generalShaderVertex.glsl");
+    char *VertexSourcePointer = const_cast<char *>((vertexShaderCode).c_str());
+
+//    char *vertexShaderSource = getShaderSourceFromPath("resources/generalShader/generalShaderVertex.glsl");
+//    std::cout << vertexShaderSource << std::endl;
+//    char *fragmentShaderSource = getShaderSourceFromPath("resources/generalShader/generalShaderFragment.glsl");
+    this->colorShaderProgram = compileAndLinkShaders(VertexSourcePointer, getFragmentShaderSource());
     this->texturedShaderProgram = compileAndLinkShaders(getTexturedVertexShaderSource(),
                                                         getTexturedFragmentShaderSource());
     this->bindedShader = colorShaderProgram;
