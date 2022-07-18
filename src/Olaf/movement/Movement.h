@@ -36,4 +36,8 @@ public:
     void moveRight();
 
     PhysicalPosition getPhysicalPosition();
+
+    int rotationAngle;
+
+    vec3 getDirectionVector(float angle);
 };

@@ -24,6 +24,5 @@ void handleActionInputs(
         Movement *movement,
         float *olafScale,
         RenderMode *renderMode,
-        float *olafRotationAngle,
         bool *withTexture
 );

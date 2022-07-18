@@ -1,8 +1,10 @@
+#include <cstdio>
 #include "Movement.h"
 
 Movement::Movement(vec3 position) {
     this->position = position;
     this->physicalPositionIndex = 0;
+    this->rotationAngle = 0;
 }
 
 void Movement::nextMovement() {
@@ -17,12 +19,14 @@ PhysicalPosition Movement::getPhysicalPosition() {
 }
 
 void Movement::moveForward() {
-    this->position.z += 1.0f;
+    this->position.x = this->position.x + this->getDirectionVector(this->rotationAngle).x;
+    this->position.z = this->position.z + this->getDirectionVector(this->rotationAngle).z;
     nextMovement();
 }
 
 void Movement::moveBackward() {
-    this->position.z -= 1.0f;
+    this->position.x = this->position.x - this->getDirectionVector(this->rotationAngle).x;
+    this->position.z = this->position.z - this->getDirectionVector(this->rotationAngle).z;
     nextMovement();
 }
 
@@ -36,5 +40,11 @@ void Movement::moveRight() {
     nextMovement();
 }
 
+vec3 Movement::getDirectionVector(float angle) {
+    float radians = angle * (M_PI / 180);
+    float x = cos(radians);
+    float z = sin(radians);
+    return vec3(x, 0, z);
 
+}
 

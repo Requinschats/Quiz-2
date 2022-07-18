@@ -5,7 +5,6 @@
 #include "../Shaders/shaders.h"
 #include "movement/Movement.h"
 
-static float olafRotationAngle = 0.0f;
 static float olafScale = 1.0f;
 
 class Olaf {
@@ -17,7 +16,6 @@ public:
             RenderMode renderMode,
             TranslateMatrix *translateMatrix,
             float scale,
-            float rotationAngle,
             bool withTexture
     );
 
