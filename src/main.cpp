@@ -50,7 +50,6 @@ int main(int argc, char *argv[]) {
                 renderMode,
                 translateMatrix,
                 olafScale,
-                olafRotationAngle,
                 withTexture);
 
         glUseProgram(shaders->texturedShaderProgram);
@@ -69,7 +68,6 @@ int main(int argc, char *argv[]) {
                 olaf->movement,
                 &olafScale,
                 &renderMode,
-                &olafRotationAngle,
                 &withTexture
         );
         glfwSwapBuffers(window);
