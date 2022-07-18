@@ -24,7 +24,7 @@ GLuint loadTexture(const char *filename) {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-    float borderColor[] = { 0.9f, 0, 0.0, 1.0f };
+    float borderColor[] = {0.9f, 0, 0.0, 1.0f};
     glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);
 
 
@@ -60,7 +60,7 @@ Textures::Textures(int texturedShaderProgram) {
     this->metalTextureID = loadTexture("assets/textures/metal.jpeg");
 }
 
-void Textures::loadSnowTexture(){
+void Textures::loadSnowTexture() {
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, snowTextureID);
     GLuint textureLocation = glGetUniformLocation(texturedShaderProgram, "textureSampler");

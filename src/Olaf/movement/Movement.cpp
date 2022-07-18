@@ -2,7 +2,7 @@
 
 Movement::Movement(vec3 position) {
     this->position = position;
-    this->physicalPositionIndex = 1;
+    this->physicalPositionIndex = 0;
 }
 
 void Movement::nextMovement() {

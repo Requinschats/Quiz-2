@@ -6,13 +6,15 @@ using namespace glm;
 
 struct PhysicalPosition {
     float legRotationAngle;
-    float armRotationAngle;
+    float armXRotationAngle;
+    float armZRotationAngle;
 };
 
-static PhysicalPosition physicalPositions[3] = {
-        {120, 120},
-        {240, 240},
-        {360, 360}
+static PhysicalPosition physicalPositions[4] = {
+        {0,   0,   0},
+        {120, 120, 60},
+        {0,   0,   0},
+        {240, 240, 320}
 };
 
 
