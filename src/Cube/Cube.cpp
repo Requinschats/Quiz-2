@@ -1,38 +1,39 @@
 #include "Cube.h"
 #include "glm/ext/matrix_transform.hpp"
 #include <array>
+#include <glm/vec3.hpp>
 
 using namespace glm;
 using namespace std;
 
-static array<GLfloat, 36> getColorBufferData(float rgb1, float rgb2, float rgb3) {
+static array<vec3, 12> getColorBufferData(float rgb1, float rgb2, float rgb3) {
     return {
-            rgb1, rgb2, rgb3,
-            rgb1, rgb2, rgb3,
-            rgb1, rgb2, rgb3,
-            rgb1, rgb2, rgb3,
-            rgb1, rgb2, rgb3,
-            rgb1, rgb2, rgb3,
-            rgb1, rgb2, rgb3,
-            rgb1, rgb2, rgb3,
-            rgb1, rgb2, rgb3,
-            rgb1, rgb2, rgb3,
-            rgb1, rgb2, rgb3,
-            rgb1, rgb2, rgb3
+            vec3(rgb1, rgb2, rgb3),
+            vec3(rgb1, rgb2, rgb3),
+            vec3(rgb1, rgb2, rgb3),
+            vec3(rgb1, rgb2, rgb3),
+            vec3(rgb1, rgb2, rgb3),
+            vec3(rgb1, rgb2, rgb3),
+            vec3(rgb1, rgb2, rgb3),
+            vec3(rgb1, rgb2, rgb3),
+            vec3(rgb1, rgb2, rgb3),
+            vec3(rgb1, rgb2, rgb3),
+            vec3(rgb1, rgb2, rgb3),
+            vec3(rgb1, rgb2, rgb3)
     };
 }
 
-GLfloat vertices[] = {
+static array<vec3, 8> vertices[] = {
         // front
-        -1.0, -1.0, 1.0,
-        1.0, -1.0, 1.0,
-        1.0, 1.0, 1.0,
-        -1.0, 1.0, 1.0,
+        vec3(-1.0, -1.0, 1.0),
+        vec3(1.0, -1.0, 1.0),
+        vec3(1.0, 1.0, 1.0),
+        vec3(-1.0, 1.0, 1.0),
         // back
-        -1.0, -1.0, -1.0,
-        1.0, -1.0, -1.0,
-        1.0, 1.0, -1.0,
-        -1.0, 1.0, -1.0
+        vec3(-1.0, -1.0, -1.0),
+        vec3(1.0, -1.0, -1.0),
+        vec3(1.0, 1.0, -1.0),
+        vec3(-1.0, 1.0, -1.0)
 };
 
 GLuint elements[] = {
@@ -81,22 +82,22 @@ Cube::Cube(float rgb1, float rgb2, float rgb3, RenderMode renderMode, bool isTex
 
     glBindVertexArray(this->cubeVAO_);
     glBindBuffer(GL_ARRAY_BUFFER, VertexBufferObject);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), &vertices->front(), GL_STATIC_DRAW);
 
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *) 0);
 
     //color buffer
     GLuint colorBuffer;
-    array<float, 36> colorBufferData = getColorBufferData(rgb1 / 255, rgb2 / 255, rgb3 / 255);
+    array<vec3, 12> colorBufferData = getColorBufferData(rgb1 / 255, rgb2 / 255, rgb3 / 255);
     glGenBuffers(1, &colorBuffer);
     glBindBuffer(GL_ARRAY_BUFFER, colorBuffer);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(colorBufferData), &colorBufferData, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(colorBufferData), &colorBufferData.front(), GL_STATIC_DRAW);
     glEnableVertexAttribArray(1);
     glBindBuffer(GL_ARRAY_BUFFER, colorBuffer);
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void *) 0);
 
-    if(isTextured){
+    if (isTextured) {
         GLuint aUVBuffer;
         array<float, 36> uvBufferData = getTexturesBufferData();
         glGenBuffers(1, &aUVBuffer);
