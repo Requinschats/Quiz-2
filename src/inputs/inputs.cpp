@@ -98,10 +98,10 @@ void handleActionInputs(
         *renderMode = RenderMode::triangles;
     }
     if (glfwGetKey(window, GLFW_KEY_N) == GLFW_PRESS) {
-        movement->rotationAngle += 5.0f;
+        movement->incrementRotationAngle();
     }
     if (glfwGetKey(window, GLFW_KEY_M) == GLFW_PRESS) {
-        movement->rotationAngle -= 5.0f;
+        movement->decrementRotationAngle();
     }
     if (glfwGetKey(window, GLFW_KEY_X) == GLFW_PRESS) {
         *withTexture = !*withTexture;

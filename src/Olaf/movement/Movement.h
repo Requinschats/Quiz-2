@@ -40,4 +40,8 @@ public:
     int rotationAngle;
 
     vec3 getDirectionVector(float angle);
+
+    void incrementRotationAngle();
+
+    void decrementRotationAngle();
 };
