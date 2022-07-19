@@ -1,4 +1,5 @@
 #include "Olaf.h"
+#include "../sphere/Sphere.h"
 
 Olaf::Olaf(Shaders *shaders, Controller *controller, Textures *textures) {
     this->shaders = shaders;
@@ -89,21 +90,22 @@ void Olaf::Draw(
     cube->Draw();
 
     //head
-    float headWidth = 1.5f * scale;
-    float headHeight = 1.0f * scale;
+    float headWidth = 0.75f * scale;
+    float headHeight = 0.75f * scale;
     float headYPosition = neckYPosition + 2.0f * scale;
     translateMatrix->setPosition(olafXPosition, headYPosition, olafZPosition);
-    translateMatrix->setSize(headWidth, headHeight, bodyDepth);
+    translateMatrix->setSize(headWidth, headHeight, bodyDepth - 0.25f);
     translateMatrix->setObjectYRotationAngle(movement->rotationAngle, vec3(0, 0, 1));
     translateMatrix->bindTranslationMatrix(shaders->bindedShader);
-    cube->Draw();
+    Sphere *sphere = new Sphere();
+    sphere->draw();
 
     //nose
     this->textures->loadCarrotTexture();
     Cube *noseCube = new Cube(255.0f, 160.0f, 122.0f, renderMode, withTexture);
     float noseWidth = 0.25f * scale;
     float noseHeight = 0.25f * scale;
-    float noseZPosition = olafZPosition + 0.5f * scale;
+    float noseZPosition = olafZPosition + 1.5f * scale;
     float noseYPosition = headYPosition + 0.20f * scale;
     translateMatrix->setPosition(olafXPosition, noseYPosition, noseZPosition);
     translateMatrix->setSize(noseWidth, noseHeight, bodyDepth);
@@ -115,7 +117,7 @@ void Olaf::Draw(
     Cube *eyesCube = new Cube(100.0f, 100.0f, 100.0f, renderMode);
     float eyeWidth = 0.25f * scale;
     float eyeHeight = 0.25f * scale;
-    float eyeZPosition = olafZPosition + 0.5f * scale;
+    float eyeZPosition = olafZPosition + 1.25f * scale;
     float eyeYPosition = headYPosition + 0.5f * scale;
 
     shaders->bindShaderFromWithTexture(false, controller);

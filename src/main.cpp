@@ -11,6 +11,9 @@
 #include "Grid/Grid.h"
 #include "inputs/inputs.h"
 
+#include "./objectLoader/ObjectLoader.h"
+#include "./sphere/Sphere.h"
+
 using namespace glm;
 
 int main(int argc, char *argv[]) {
