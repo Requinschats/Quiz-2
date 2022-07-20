@@ -36,6 +36,9 @@ int main(int argc, char *argv[]) {
     Grid *grid = new Grid(shaders->texturedShaderProgram);
 
     while (!glfwWindowShouldClose(window)) {
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
         glUseProgram(shaders->colorShaderProgram);
 
         controller->setCameraPosition();
@@ -58,7 +61,9 @@ int main(int argc, char *argv[]) {
         controller->setShader(&shaders->texturedShaderProgram);
         textures->loadSnowTexture();
 
+        glDepthMask(GL_FALSE);
         grid->Draw(translateMatrix);
+        glDepthMask(GL_TRUE);
 
         handleViewInputs(window,
                          shaders->texturedShaderProgram,

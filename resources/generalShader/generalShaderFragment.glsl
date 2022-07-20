@@ -6,5 +6,10 @@ out vec4 FragColor;
 
 void main()
 {
-    FragColor = vec4(vertexNormal, 1.0f);
+    vec4 color = vec4(vertexNormal, 1.0f);
+    if (color.a == 0.0){
+        discard;
+    }
+    FragColor = color;
+
 }
