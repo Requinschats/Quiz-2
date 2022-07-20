@@ -11,5 +11,8 @@ out vec4 FragColor;
 void main()
 {
     vec4 textureColor = texture(textureSampler, vertexUV);
+    if (textureColor.a == 0.0){
+        discard;
+    }
     FragColor = textureColor;
 }
