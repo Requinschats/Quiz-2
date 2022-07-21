@@ -23,8 +23,8 @@ void Lighting::setParameters(int shaderProgram, vec3 lightFocusCoordinates) {
     vec3 lightDirection = normalize(lightFocus - lightPosition);
 
     float lightNearPlane = 20.0f;
-    float lightFarPlane = 200.0f;
-    mat4 lightProjectionMatrix = frustum(-1.0f, 1.0f, -1.0f, 1.0f, lightNearPlane, lightFarPlane);
+    float lightFarPlane = 100.0f;
+    mat4 lightProjectionMatrix = frustum(-10.0f, 10.0f, -10.0f, 10.0f, lightNearPlane, lightFarPlane);
     mat4 lightViewMatrix = lookAt(lightPosition, lightFocus, vec3(0.0f, 1.0f, 0.0f));
     mat4 lightSpaceMatrix = lightProjectionMatrix * lightViewMatrix;
 

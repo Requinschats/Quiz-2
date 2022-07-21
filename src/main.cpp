@@ -64,6 +64,8 @@ int main(int argc, char *argv[]) {
         translateMatrix->bindTranslationMatrix(shaders->colorShaderProgram);
         lightCube->Draw();
 
+        lighting->initializeLighting(shaders->texturedShaderProgram);
+        lighting->setParameters(shaders->texturedShaderProgram, olaf->movement->position);
         glUseProgram(shaders->texturedShaderProgram);
         controller->setShader(&shaders->texturedShaderProgram);
         textures->loadSnowTexture();
