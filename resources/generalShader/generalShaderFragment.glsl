@@ -24,6 +24,7 @@ uniform sampler2D shadow_map;
 in vec3 fragment_position;
 in vec4 fragment_position_light_space;
 in vec3 fragment_normal;
+in vec3 fragment_color;
 
 in vec4 gl_FragCoord;
 
@@ -83,7 +84,7 @@ void main()
     diffuse = scalar * diffuse_color(light_color, light_position);
     specular = scalar * specular_color(light_color, light_position);
 
-    vec3 color = (specular + diffuse + ambient) * object_color;
+    vec3 color = (specular + diffuse + ambient) * fragment_color;
 
     result = vec4(color, 1.0f);
 }

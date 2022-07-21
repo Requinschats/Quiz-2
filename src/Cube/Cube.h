@@ -25,4 +25,6 @@ public:
 private:
     GLuint cubeVAO_;
     RenderMode renderMode_;
+
+    void Draw(int shaderProgram);
 };
