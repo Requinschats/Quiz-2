@@ -14,7 +14,7 @@ void Lighting::initializeLighting(int shaderProgram) {
     SetUniform1Value(shaderProgram, "light_cutoff_inner", cos(radians(lightAngleInner)));
     SetUniform1Value(shaderProgram, "light_cutoff_outer", cos(radians(lightAngleOuter)));
     SetUniformVec3(shaderProgram, "light_color", vec3(1.0, 1.0, 1.0));
-    SetUniformVec3(shaderProgram, "object_color", vec3(1.0, 1.0, 1.0));
+    SetUniformVec3(shaderProgram, "object_color", vec3(0.5, 0.7, 1.0));
 }
 
 void Lighting::setParameters(int shaderProgram, vec3 lightFocusCoordinates) {
