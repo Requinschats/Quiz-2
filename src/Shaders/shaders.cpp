@@ -83,13 +83,14 @@ Shaders::Shaders() {
 }
 
 void Shaders::bindShaderFromWithTexture(bool withTexture, Controller *controller) {
-    lighting->setParameters(texturedShaderProgram);
     if (withTexture) {
         glUseProgram(texturedShaderProgram);
+        lighting->setParameters(texturedShaderProgram);
         controller->setShader(&texturedShaderProgram);
         this->bindedShader = texturedShaderProgram;
     } else {
         glUseProgram(colorShaderProgram);
+        lighting->setParameters(colorShaderProgram);
         controller->setShader(&colorShaderProgram);
         this->bindedShader = colorShaderProgram;
     }
