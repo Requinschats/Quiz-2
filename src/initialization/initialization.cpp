@@ -7,6 +7,10 @@
 
 using namespace glm;
 
+void window_size_callback(GLFWwindow *window, int width, int height) {
+    glfwSetWindowAspectRatio(window, width, height);
+}
+
 GLFWwindow *initializeWindow() {
     glfwInit();
 
@@ -32,6 +36,8 @@ GLFWwindow *initializeWindow() {
 
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
+
+    glfwSetWindowSizeCallback(window, window_size_callback);
 
     return window;
 }
