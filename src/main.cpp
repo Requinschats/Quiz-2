@@ -65,7 +65,7 @@ int main(int argc, char *argv[]) {
         lightCube->Draw();
 
         lighting->initializeLighting(shaders->texturedShaderProgram);
-        lighting->setParameters(shaders->texturedShaderProgram, olaf->movement->position);
+        lighting->setParameters(shaders->texturedShaderProgram);
         glUseProgram(shaders->texturedShaderProgram);
         controller->setShader(&shaders->texturedShaderProgram);
         textures->loadSnowTexture();

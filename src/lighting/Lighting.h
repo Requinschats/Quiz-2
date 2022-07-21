@@ -16,9 +16,7 @@ public:
 
     void initializeLighting(int shaderProgram);
 
-    void setParameters(int shaderProgram, vec3 lightFocusCoordinates);
-
-    vec3 lightFocusCoordinates;
+    void setParameters(int shaderProgram);
 
     void setObjectColor(int shaderProgram, vec3 objectColor);
 };
