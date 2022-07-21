@@ -114,7 +114,7 @@ void Olaf::Draw(
     noseCube->Draw();
 
     //eyes
-    Cube *eyesCube = new Cube(100.0f, 100.0f, 100.0f, renderMode);
+    Cube *eyesCube = new Cube(255.0f, 255.0f, 255.0f, renderMode);
     float eyeWidth = 0.25f * scale;
     float eyeHeight = 0.25f * scale;
     float eyeZPosition = olafZPosition + 1.25f * scale;

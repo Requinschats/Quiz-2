@@ -35,9 +35,6 @@ int main(int argc, char *argv[]) {
     Olaf *olaf = new Olaf(shaders, controller, textures);
     Grid *grid = new Grid(shaders->texturedShaderProgram);
 
-    Lighting *lighting = new Lighting();
-    lighting->initializeLighting(shaders->colorShaderProgram);
-
     while (!glfwWindowShouldClose(window)) {
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -57,12 +54,6 @@ int main(int argc, char *argv[]) {
                 translateMatrix,
                 olafScale,
                 withTexture);
-
-        Cube *lightCube = new Cube(255.0f, 255.0f, 255.0f, RenderMode::triangles, false);
-        translateMatrix->setPosition(lighting->lightPosition.x, lighting->lightPosition.y, lighting->lightPosition.z);
-        translateMatrix->setSize(2, 2, 2);
-        translateMatrix->bindTranslationMatrix(shaders->colorShaderProgram);
-        lightCube->Draw();
 
         glUseProgram(shaders->texturedShaderProgram);
         controller->setShader(&shaders->texturedShaderProgram);
