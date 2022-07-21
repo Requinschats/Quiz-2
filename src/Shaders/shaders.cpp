@@ -79,11 +79,11 @@ Shaders::Shaders() {
     this->bindedShader = colorShaderProgram;
     this->lighting = new Lighting();
     lighting->initializeLighting(colorShaderProgram);
+    lighting->initializeLighting(texturedShaderProgram);
 }
 
 void Shaders::bindShaderFromWithTexture(bool withTexture, Controller *controller) {
-    lighting->initializeLighting(texturedShaderProgram);
-    lighting->setParameters(texturedShaderProgram, vec3(0, 0, 0));
+    lighting->setParameters(texturedShaderProgram);
     if (withTexture) {
         glUseProgram(texturedShaderProgram);
         controller->setShader(&texturedShaderProgram);
@@ -97,7 +97,7 @@ void Shaders::bindShaderFromWithTexture(bool withTexture, Controller *controller
 
 void Shaders::useColorShaderProgram(Controller *controller, vec3 lightFocusCoordinate) {
     glUseProgram(colorShaderProgram);
-    lighting->setParameters(colorShaderProgram, lightFocusCoordinate);
+    lighting->setParameters(colorShaderProgram);
     controller->setCameraPosition();
     this->bindedShader = colorShaderProgram;
 }
