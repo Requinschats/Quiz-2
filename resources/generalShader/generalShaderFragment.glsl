@@ -47,17 +47,11 @@ vec3 specular_color(vec3 light_color_arg, vec3 light_position_arg) {
 }
 
 float shadow_scalar() {
-    // this function returns 1.0 when the surface receives light, and 0.0 when it is in a shadow
-    // perform perspective divide
     vec3 normalized_device_coordinates = fragment_position_light_space.xyz / fragment_position_light_space.w;
-    // transform to [0,1] range
     normalized_device_coordinates = normalized_device_coordinates * 0.5 + 0.5;
-    // get closest depth value from light's perspective (using [0,1] range fragment_position_light_space as coords)
     float closest_depth = texture(shadow_map, normalized_device_coordinates.xy).r;
-    // get depth of current fragment from light's perspective
     float current_depth = normalized_device_coordinates.z;
-    // check whether current frag pos is in shadow
-    float bias = 0;// bias applied in depth map: see shadow_vertex.glsl
+    float bias = 0;
     return ((current_depth - bias) < closest_depth) ? 1.0 : 0.0;
 }
 
