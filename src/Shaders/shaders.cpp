@@ -1,9 +1,11 @@
-#include "shaders.h"
+#include "GL/glew.h"
 #include <GLFW/glfw3.h>
 #include <iostream>
 #include "fstream"
 #include <string>
 #include <sstream>
+#include "../lighting/Lighting.h"
+#include "shaders.h"
 
 static string getShaderSourceFromPath(string path) {
     std::string VertexShaderCode;
@@ -75,6 +77,8 @@ Shaders::Shaders() {
     initializeColorShaderProgram();
     initializeTexturedShaderProgram();
     this->bindedShader = colorShaderProgram;
+    this->lighting = new Lighting();
+    lighting->initializeLighting(colorShaderProgram);
 }
 
 void Shaders::bindShaderFromWithTexture(bool withTexture, Controller *controller) {
@@ -89,3 +93,9 @@ void Shaders::bindShaderFromWithTexture(bool withTexture, Controller *controller
     }
 }
 
+void Shaders::useColorShaderProgram(Controller *controller, vec3 lightFocusCoordinate) {
+    glUseProgram(colorShaderProgram);
+    lighting->setParameters(colorShaderProgram, lightFocusCoordinate);
+    controller->setCameraPosition();
+    this->bindedShader = colorShaderProgram;
+}
