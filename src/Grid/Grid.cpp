@@ -7,13 +7,13 @@ using namespace glm;
 
 const GLfloat vertices[] = {
         //bottom
-        -0.5f, 0.0f, -0.5f, 0.75f, 1.0f, 0.5f, 1.0f, 0, 0,
-        -0.5f, 0.0f, 0.5f, 0.75f, 1.0f, 0.5f, 1.0f, 0, 1,
-        0.5f, 0.0f, 0.5f, 0.75f, 1.0f, 0.5f, 1.0f, 1, 1,
+        -0.5f, 0.0f, -0.5f, 0, 1.0f, 0, 0, 0,
+        -0.5f, 0.0f, 0.5f, 0, 1.0f, 0, 0, 1,
+        0.5f, 0.0f, 0.5f, 0, 1.0f, 0, 1, 1,
 
-        0.5f, 0.0f, 0.5f, 0.75f, 1.0f, 0.5f, 1.0f, 1, 1,
-        0.5f, 0.0f, -0.5f, 0.75f, 1.0f, 0.5f, 1.0f, 1, 0,
-        -0.5f, 0.0f, -0.5f, 0.75f, 1.0f, 0.5f, 1.0f, 0, 0
+        0.5f, 0.0f, 0.5f, 0, 1.0f, 0, 1, 1,
+        0.5f, 0.0f, -0.5f, 0, 1.0f, 0, 1, 0,
+        -0.5f, 0.0f, -0.5f, 0, 1.0f, 0, 0, 0
 };
 
 Grid::Grid(int shaderProgram) {
@@ -27,18 +27,19 @@ Grid::Grid(int shaderProgram) {
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
     glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(float), (void *) 0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void *) 0);
 
     glEnableVertexAttribArray(1);
-    glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 9 * sizeof(float), (void *) (3 * sizeof(float)));
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void *) (3 * sizeof(float)));
 
     glEnableVertexAttribArray(2);
     glVertexAttribPointer(2,                            // attribute 2 matches aUV in Vertex Shader
                           2,
                           GL_FLOAT,
                           GL_FALSE,
-                          9 * sizeof(float),
-                          (void *) (7 * sizeof(float)));      // uv is offseted by 2 vec3 (comes after position and color)
+                          8 * sizeof(float),
+                          (void *) (6 *
+                                    sizeof(float)));      // uv is offseted by 2 vec3 (comes after position and color)
 
 
 
@@ -49,7 +50,7 @@ void Grid::Draw(TranslateMatrix *translateMatrix) {
     for (int i = -50; i < 50; i++) {
         for (int j = -50; j < 50; j++) {
             translateMatrix->setPosition(i, 0.0f, j);
-            translateMatrix->setSize(5.0f, 1.0f, 5.0f);
+            translateMatrix->setSize(5.0f, 0.5, 5.0f);
             translateMatrix->bindTranslationMatrix(this->shaderProgram);
 
             glBindVertexArray(this->gridVAO_);
