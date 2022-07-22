@@ -14,13 +14,14 @@ void Olaf::Draw(
         float scale,
         bool withTexture
 ) {
+
     float olafXPosition = movement->position.x;
     float olafZPosition = movement->position.z;
 
     PhysicalPosition physicalPosition = movement->getPhysicalPosition();
 
     shaders->bindShaderFromWithTexture(withTexture, controller);
-
+    Sphere *sphere = new Sphere();
     Cube *cube = new Cube(255.0f, 255.0f, 255.0f, renderMode, withTexture);
     float legSize = 0.5f * scale;
     float olafYInitialPosition = 1.0f;
@@ -44,15 +45,15 @@ void Olaf::Draw(
     cube->Draw();
 
     //body
-    float bodyWidth = 3.0f * scale;
-    float bodyDepth = 1.0f * scale;
-    float bodyHeight = 3.0f * scale;
+    float bodyWidth = 1.5f * scale;
+    float bodyDepth = 1.5f * scale;
+    float bodyHeight = 1.5f * scale;
     float bodyYPosition = olafYInitialPosition + 4.0f * scale;
     translateMatrix->setPosition(olafXPosition, bodyYPosition, olafZPosition);
     translateMatrix->setSize(bodyWidth, bodyHeight, bodyDepth);
     translateMatrix->setObjectYRotationAngle(movement->rotationAngle, vec3(0, 0, 1));
     translateMatrix->bindTranslationMatrix(shaders->bindedShader);
-    cube->Draw();
+    sphere->draw();
 
     //neck
     float neckWidth = 2.0f * scale;
@@ -94,10 +95,9 @@ void Olaf::Draw(
     float headHeight = 0.75f * scale;
     float headYPosition = neckYPosition + 2.0f * scale;
     translateMatrix->setPosition(olafXPosition, headYPosition, olafZPosition);
-    translateMatrix->setSize(headWidth, headHeight, bodyDepth - 0.25f);
+    translateMatrix->setSize(headWidth, headHeight, headHeight);
     translateMatrix->setObjectYRotationAngle(movement->rotationAngle, vec3(0, 0, 1));
     translateMatrix->bindTranslationMatrix(shaders->bindedShader);
-    Sphere *sphere = new Sphere();
     sphere->draw();
 
     //nose

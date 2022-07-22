@@ -12,7 +12,6 @@
 #include "inputs/inputs.h"
 #include "./objectLoader/ObjectLoader.h"
 #include "./sphere/Sphere.h"
-#include "lighting/Lighting.h"
 
 using namespace glm;
 
@@ -46,6 +45,12 @@ int main(int argc, char *argv[]) {
 
         glClearColor(0.5, 0.5, 1, 1.0);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+        Sphere *sphere = new Sphere();
+        translateMatrix->setPosition(shaders->lighting->lightPosition.x, shaders->lighting->lightPosition.y,
+                                     shaders->lighting->lightPosition.z);
+        translateMatrix->bindTranslationMatrix(shaders->colorShaderProgram);
+        sphere->draw();
 
         arrowAxis->Draw(translateMatrix, shaders->colorShaderProgram);
 
