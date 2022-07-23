@@ -68,7 +68,7 @@ void handleViewMouseInputs(GLFWwindow *window,
     }
     if (controller->lastMouseState == "middle" &&
         glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_MIDDLE) == GLFW_RELEASE) {
-        controller->zoomOutFromMouse(window);
+        controller->handleZoom(window);
     }
 }
 

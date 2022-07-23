@@ -3,6 +3,4 @@
 
 GLFWwindow *initializeWindow();
 
-glm::mat4 setInitialProjectionMatrix(int shaderProgram);
-
 void setDefaultWorldMatrix(int shaderProgram);

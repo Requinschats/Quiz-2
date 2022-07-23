@@ -2,6 +2,7 @@
 #include "glm/vec3.hpp"
 #include "glm/fwd.hpp"
 #include "GLFW/glfw3.h"
+#include "glm/detail/type_mat4x4.hpp"
 
 #pragma once
 
@@ -35,6 +36,8 @@ public:
 
     void zoomOutFromMouse(GLFWwindow *window);
 
+    void setInitialProjectionMatrix(int shaderProgram);
+
     vec3 cameraPosition;
     vec3 cameraLookAt;
     string lastMouseState;
@@ -43,9 +46,17 @@ public:
     float cameraHorizontalAngle;
     float cameraVerticalAngle;
     int shaderProgram;
+    float projectionMatrixViewField;
+
+    void handleZoom(GLFWwindow *window);
 
 private:
     void setDefaultLookAt();
 
     void normalizeCameraHorizontalAngle();
+
+    void setProjectionMatrix(int shaderProgram, float projectionMatrix);
+
+    void zoomInFromMouse(GLFWwindow *window);
+
 };
