@@ -41,13 +41,3 @@ GLFWwindow *initializeWindow() {
 
     return window;
 }
-
-glm::mat4 setInitialProjectionMatrix(int shaderProgram) {
-    glm::mat4 projectionMatrix = glm::perspective(glm::radians(90.0f),  // field of view in degrees
-                                                  800.0f / 600.0f,      // aspect ratio
-                                                  0.01f, 500.0f);       // near and far (near > 0)
-
-    GLuint projectionMatrixLocation = glGetUniformLocation(shaderProgram, "projectionMatrix");
-    glUniformMatrix4fv(projectionMatrixLocation, 1, GL_FALSE, &projectionMatrix[0][0]);
-    return projectionMatrix;
-}

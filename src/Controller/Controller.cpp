@@ -1,7 +1,10 @@
 #include "Controller.h"
 #include "../initialization/initialization.h"
+#include "GLFW/glfw3.h"
+#include "glm/fwd.hpp"
 #include "glm/detail/type_mat4x4.hpp"
 #include "glm/ext/matrix_transform.hpp"
+#include "glm/ext/matrix_clip_space.hpp"
 
 const vec3 defaultCameraPosition = vec3(-15.6f, 10.0f, 10.0f);
 const vec3 defaultCameraLookAt = vec3(0.5f, 0.0f, -1.0f);
@@ -12,13 +15,31 @@ Controller::Controller(int *shaderProgram) {
     this->lastMouseState = "";
     this->setCameraPosition(defaultCameraPosition, defaultCameraLookAt, defaultCameraUp);
     this->setDefaultLookAt();
-    glm::mat4 initialProjectionMatrix = setInitialProjectionMatrix(this->shaderProgram);
+    setInitialProjectionMatrix(this->shaderProgram);
 }
 
 void Controller::setShader(int *shaderProgram) {
     this->shaderProgram = *shaderProgram;
     this->setCameraPosition();
-    setInitialProjectionMatrix(this->shaderProgram);
+    setProjectionMatrix(this->shaderProgram, projectionMatrixViewField);
+}
+
+void Controller::setInitialProjectionMatrix(int shaderProgram) {
+    this->projectionMatrixViewField = 90;
+    mat4 projectionMatrix = glm::perspective(glm::radians(projectionMatrixViewField),  // field of view in degrees
+                                             800.0f / 600.0f,      // aspect ratio
+                                             0.01f, 500.0f);       // near and far (near > 0)
+
+    GLuint projectionMatrixLocation = glGetUniformLocation(shaderProgram, "projectionMatrix");
+    glUniformMatrix4fv(projectionMatrixLocation, 1, GL_FALSE, &projectionMatrix[0][0]);
+}
+
+void Controller::setProjectionMatrix(int shaderProgram, float projectionViewField) {
+    mat4 projectionMatrix = glm::perspective(glm::radians(projectionViewField),  // field of view in degrees
+                                             800.0f / 600.0f,      // aspect ratio
+                                             0.01f, 500.0f);       // near and far (near > 0)
+    GLuint projectionMatrixLocation = glGetUniformLocation(shaderProgram, "projectionMatrix");
+    glUniformMatrix4fv(projectionMatrixLocation, 1, GL_FALSE, &projectionMatrix[0][0]);
 }
 
 void Controller::setCameraPosition(vec3 cameraPosition, vec3 cameraLookAt, vec3 cameraUp) {
@@ -127,15 +148,30 @@ void Controller::setCameraPositionFromMouse(GLFWwindow *window, float dt) {
     this->lastMouseState = "";
 }
 
-void Controller::zoomOutFromMouse(GLFWwindow *window) {
+void Controller::handleZoom(GLFWwindow *window) {
     double mousePosX, mousePosY;
     glfwGetCursorPos(window, &mousePosX, &mousePosY);
-    double dy = (mousePosY - this->mousePosition.y) * 0.025f;
-    this->cameraPosition = vec3(this->cameraPosition.x - dy,
-                                this->cameraPosition.y + dy,
-                                this->cameraPosition.z + dy);
-    this->setCameraPosition();
-    this->mousePosition.x = mousePosX;
-    this->mousePosition.y = mousePosY;
+    double dy = mousePosY - this->mousePosition.y;
+    if (dy > 0) {
+        zoomOutFromMouse(window);
+    } else if (dy < 0) {
+        zoomInFromMouse(window);
+    }
     this->lastMouseState = "";
+}
+
+void Controller::zoomOutFromMouse(GLFWwindow *window) {
+    bool hasReachedMaxViewField = this->projectionMatrixViewField > 160;
+    if (!hasReachedMaxViewField) {
+        this->projectionMatrixViewField += 10;
+        setProjectionMatrix(this->shaderProgram, projectionMatrixViewField);
+    }
+}
+
+void Controller::zoomInFromMouse(GLFWwindow *window) {
+    bool hasReachedMinViewField = this->projectionMatrixViewField < 10;
+    if (!hasReachedMinViewField) {
+        this->projectionMatrixViewField -= 10;
+        setProjectionMatrix(this->shaderProgram, projectionMatrixViewField);
+    }
 }
