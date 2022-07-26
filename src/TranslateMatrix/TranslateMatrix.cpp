@@ -40,7 +40,9 @@ glm::mat4 TranslateMatrix::getRotatedObjectMatrix(glm::mat4 translationMatrix) {
 
 void TranslateMatrix::bindTranslationMatrix(int shaderProgram) {
     glm::mat4 translationMatrix =
-            rotate(mat4(1.0f), radians(this->rotationAngle), vec3(0.0f, 1.0f, 0.0f))
+            rotate(mat4(1.0f), radians(this->rotationAngleYaxis), vec3(0.0f, 1.0f, 0.0f))
+            * rotate(mat4(1.0f), radians(this->rotationAngleXaxis), vec3(1.0f, 0, 0.0f))
+            * rotate(mat4(1.0f), radians(this->rotationAngleZaxis), vec3(0.0f, 0.0f, 1.0f))
             * translate(mat4(1.0f), vec3(position.x, position.y, position.z));
 
     translationMatrix = getRotatedObjectMatrix(translationMatrix);
@@ -86,11 +88,13 @@ void TranslateMatrix::setSize(float x_size, float y_size, float z_size) {
 }
 
 void TranslateMatrix::setWorldRotationAngle(float rotationAngle) {
-    this->rotationAngle = rotationAngle;
+    this->rotationAngleYaxis = rotationAngle;
 }
 
 void TranslateMatrix::setDefaultRotationAngle() {
-    this->rotationAngle = 0.0f;
+    this->rotationAngleYaxis = 0.0f;
+    this->rotationAngleXaxis = 0.0f;
+    this->rotationAngleZaxis = 0.0f;
 }
 
 void TranslateMatrix::setDefaultPosition() {

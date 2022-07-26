@@ -42,10 +42,22 @@ void handleViewKeyboardInputs(GLFWwindow *window,
         controller->cameraPosition.z += cameraSpeed * dt;
     }
     if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS) {
-        translateMatrix->setWorldRotationAngle(translateMatrix->rotationAngle + 5.0f);
+        translateMatrix->setWorldRotationAngle(translateMatrix->rotationAngleYaxis + 5.0f);
+    }
+    if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS) {
+        translateMatrix->rotationAngleXaxis -= 5.0f;
+    }
+    if (glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS) {
+        translateMatrix->rotationAngleXaxis += 5.0f;
+    }
+    if (glfwGetKey(window, GLFW_KEY_3) == GLFW_PRESS) {
+        translateMatrix->rotationAngleZaxis -= 5.0f;
+    }
+    if (glfwGetKey(window, GLFW_KEY_4) == GLFW_PRESS) {
+        translateMatrix->rotationAngleZaxis += 5.0f;
     }
     if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS) {
-        translateMatrix->setWorldRotationAngle(translateMatrix->rotationAngle - 5.0f);
+        translateMatrix->setWorldRotationAngle(translateMatrix->rotationAngleYaxis - 5.0f);
     }
     if (glfwGetKey(window, GLFW_KEY_HOME) == GLFW_PRESS) {
         controller->reset();
@@ -104,7 +116,10 @@ void handleActionInputs(
         movement->decrementRotationAngle();
     }
     if (glfwGetKey(window, GLFW_KEY_X) == GLFW_PRESS) {
-        *withTexture = !*withTexture;
+        *withTexture = false;
+    }
+    if (glfwGetKey(window, GLFW_KEY_Z) == GLFW_PRESS) {
+        *withTexture = true;
     }
     if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) {
         movement->moveForward();
