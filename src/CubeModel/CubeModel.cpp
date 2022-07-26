@@ -17,17 +17,17 @@ CubeModel::CubeModel(vec3 size) {
             //left
             {vec3(-halfSize.x, -halfSize.y, -halfSize.z), vec3(-1.0f, 0.0f, 0.0f), vec2(0, 0), vec3(1.0f, 0.0f, 0.0f)},
             {vec3(-halfSize.x, -halfSize.y, halfSize.z),  vec3(-1.0f, 0.0f, 0.0f), vec2(1, 0), vec3(1.0f, 0.0f, 0.0f)},
-            {vec3(-halfSize.x, halfSize.y, halfSize.z),   vec3(-1.0f, 0.0f, 0.0f), vec2(0, 1), vec3(1.0f, 0.0f, 0.0f)},
-            {vec3(-halfSize.x, -halfSize.y, -halfSize.z), vec3(-1.0f, 0.0f, 0.0f), vec2(1, 0), vec3(1.0f, 0.0f, 0.0f)},
-            {vec3(-halfSize.x, halfSize.y, halfSize.z),   vec3(-1.0f, 0.0f, 0.0f), vec2(0, 1), vec3(1.0f, 0.0f, 0.0f)},
-            {vec3(-halfSize.x, halfSize.y, -halfSize.z),  vec3(-1.0f, 0.0f, 0.0f), vec2(1, 1), vec3(1.0f, 0.0f, 0.0f)},
+            {vec3(-halfSize.x, halfSize.y, halfSize.z),   vec3(-1.0f, 0.0f, 0.0f), vec2(1, 1), vec3(1.0f, 0.0f, 0.0f)},
+            {vec3(-halfSize.x, -halfSize.y, -halfSize.z), vec3(-1.0f, 0.0f, 0.0f), vec2(0, 0), vec3(1.0f, 0.0f, 0.0f)},
+            {vec3(-halfSize.x, halfSize.y, halfSize.z),   vec3(-1.0f, 0.0f, 0.0f), vec2(1, 1), vec3(1.0f, 0.0f, 0.0f)},
+            {vec3(-halfSize.x, halfSize.y, -halfSize.z),  vec3(-1.0f, 0.0f, 0.0f), vec2(0, 1), vec3(1.0f, 0.0f, 0.0f)},
 
-            //front
+            //back
             {vec3(halfSize.x, halfSize.y, -halfSize.z),   vec3(0.0f, 0.0f, -1.0f), vec2(1, 1), vec3(0.0f, 0.0f, 1.0f)},
             {vec3(-halfSize.x, -halfSize.y, -halfSize.z), vec3(0.0f, 0.0f, -1.0f), vec2(0, 0), vec3(0.0f, 0.0f, 1.0f)},
-            {vec3(-halfSize.x, halfSize.y, -halfSize.z),  vec3(0.0f, 0.0f, -1.0f), vec2(1, 0), vec3(0.0f, 0.0f, 1.0f)},
-            {vec3(halfSize.x, halfSize.y, -halfSize.z),   vec3(0.0f, 0.0f, -1.0f), vec2(0, 1), vec3(0.0f, 0.0f, 1.0f)},
-            {vec3(halfSize.x, -halfSize.y, -halfSize.z),  vec3(0.0f, 0.0f, -1.0f), vec2(1, 1), vec3(0.0f, 0.0f, 1.0f)},
+            {vec3(-halfSize.x, halfSize.y, -halfSize.z),  vec3(0.0f, 0.0f, -1.0f), vec2(0, 1), vec3(0.0f, 0.0f, 1.0f)},
+            {vec3(halfSize.x, halfSize.y, -halfSize.z),   vec3(0.0f, 0.0f, -1.0f), vec2(1, 1), vec3(0.0f, 0.0f, 1.0f)},
+            {vec3(halfSize.x, -halfSize.y, -halfSize.z),  vec3(0.0f, 0.0f, -1.0f), vec2(1, 0), vec3(0.0f, 0.0f, 1.0f)},
             {vec3(-halfSize.x, -halfSize.y, -halfSize.z), vec3(0.0f, 0.0f, -1.0f), vec2(0, 0), vec3(0.0f, 0.0f, 1.0f)},
 
 
@@ -39,7 +39,7 @@ CubeModel::CubeModel(vec3 size) {
             {vec3(-halfSize.x, -halfSize.y, halfSize.z),  vec3(0.0f, -1.0f, 0.0f), vec2(1, 0), vec3(0.0f, 1.0f, 1.0f)},
             {vec3(-halfSize.x, -halfSize.y, -halfSize.z), vec3(0.0f, -1.0f, 0.0f), vec2(1, 1), vec3(0.0f, 1.0f, 1.0f)},
 
-            //back
+            //front
             {vec3(-halfSize.x, halfSize.y, halfSize.z),   vec3(0.0f, 0.0f, 1.0f),  vec2(1, 1), vec3(0.0f, 1.0f, 0.0f)},
             {vec3(-halfSize.x, -halfSize.y, halfSize.z),  vec3(0.0f, 0.0f, 1.0f),  vec2(1, 0), vec3(0.0f, 1.0f, 0.0f)},
             {vec3(halfSize.x, -halfSize.y, halfSize.z),   vec3(0.0f, 0.0f, 1.0f),  vec2(0, 0), vec3(0.0f, 1.0f, 0.0f)},
@@ -56,12 +56,11 @@ CubeModel::CubeModel(vec3 size) {
             {vec3(halfSize.x, -halfSize.y, halfSize.z),   vec3(1.0f, 0.0f, 0.0f),  vec2(0, 1), vec3(1.0f, 0.0f, 1.0f)},
 
             //top
-            {vec3(halfSize.x, halfSize.y, halfSize.z),    vec3(0.0f, 1.0f, 0.0f),  vec2(1, 1), vec3(1.0f, 1.0f,
-                                                                                                    0.0f)}, // top - yellow
-            {vec3(halfSize.x, halfSize.y, -halfSize.z),   vec3(0.0f, 1.0f, 0.0f),  vec2(1, 0), vec3(1.0f, 1.0f, 0.0f)},
-            {vec3(-halfSize.x, halfSize.y, -halfSize.z),  vec3(0.0f, 1.0f, 0.0f),  vec2(0, 1), vec3(1.0f, 1.0f, 0.0f)},
             {vec3(halfSize.x, halfSize.y, halfSize.z),    vec3(0.0f, 1.0f, 0.0f),  vec2(1, 1), vec3(1.0f, 1.0f, 0.0f)},
-            {vec3(-halfSize.x, halfSize.y, -halfSize.z),  vec3(0.0f, 1.0f, 0.0f),  vec2(0, 1), vec3(1.0f, 1.0f, 0.0f)},
+            {vec3(halfSize.x, halfSize.y, -halfSize.z),   vec3(0.0f, 1.0f, 0.0f),  vec2(0, 1), vec3(1.0f, 1.0f, 0.0f)},
+            {vec3(-halfSize.x, halfSize.y, -halfSize.z),  vec3(0.0f, 1.0f, 0.0f),  vec2(0, 0), vec3(1.0f, 1.0f, 0.0f)},
+            {vec3(halfSize.x, halfSize.y, halfSize.z),    vec3(0.0f, 1.0f, 0.0f),  vec2(1, 1), vec3(1.0f, 1.0f, 0.0f)},
+            {vec3(-halfSize.x, halfSize.y, -halfSize.z),  vec3(0.0f, 1.0f, 0.0f),  vec2(0, 0), vec3(1.0f, 1.0f, 0.0f)},
             {vec3(-halfSize.x, halfSize.y, halfSize.z),   vec3(0.0f, 1.0f, 0.0f),  vec2(1, 0), vec3(1.0f, 1.0f, 0.0f)}
     };
 
