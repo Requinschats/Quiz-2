@@ -110,7 +110,7 @@ void Olaf::Draw(
     float noseYPosition = headYPosition + 0.20f * scale;
     translateMatrix->setPosition(olafXPosition, noseYPosition, noseZPosition);
     translateMatrix->setSize(noseWidth, noseHeight, bodyDepth);
-    translateMatrix->setObjectYRotationAngle(movement->rotationAngle, vec3(0, 0, 0.5));
+    translateMatrix->setObjectYRotationAngle(movement->rotationAngle, vec3(0, 0, -0.5));
     translateMatrix->bindTranslationMatrix(shaders->bindedShader);
     noseCube->Draw();
 
@@ -118,7 +118,7 @@ void Olaf::Draw(
     Cube *eyesCube = new Cube(255.0f, 255.0f, 255.0f, renderMode);
     float eyeWidth = 0.25f * scale;
     float eyeHeight = 0.25f * scale;
-    float eyeZPosition = olafZPosition + 1.25f * scale;
+    float eyeZPosition = olafZPosition + 0.5 + scale;
     float eyeYPosition = headYPosition + 0.5f * scale;
 
     shaders->bindShaderFromWithTexture(false, controller);
@@ -126,16 +126,16 @@ void Olaf::Draw(
     //eye 1
     float eye1XPosition = olafXPosition - 0.75f * scale;
     translateMatrix->setPosition(eye1XPosition, eyeYPosition, eyeZPosition);
-    translateMatrix->setSize(eyeWidth, eyeHeight, bodyDepth);
-    translateMatrix->setObjectYRotationAngle(movement->rotationAngle, vec3(0.75, 0, 0.5));
+    translateMatrix->setSize(eyeWidth, eyeHeight, bodyDepth / 2);
+    translateMatrix->setObjectYRotationAngle(movement->rotationAngle, vec3(0.75, 0, -0.5));
     translateMatrix->bindTranslationMatrix(shaders->bindedShader);
     eyesCube->Draw();
 
     //eye 2
     float eye2XPosition = olafXPosition + 0.75f * scale;
     translateMatrix->setPosition(eye2XPosition, eyeYPosition, eyeZPosition);
-    translateMatrix->setSize(eyeWidth, eyeHeight, bodyDepth);
-    translateMatrix->setObjectYRotationAngle(movement->rotationAngle, vec3(-0.75, 0, 0.5));
+    translateMatrix->setSize(eyeWidth, eyeHeight, bodyDepth / 2);
+    translateMatrix->setObjectYRotationAngle(movement->rotationAngle, vec3(-0.75, 0, -0.5));
     translateMatrix->bindTranslationMatrix(shaders->bindedShader);
     eyesCube->Draw();
 
