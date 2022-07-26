@@ -5,11 +5,10 @@
 
 using namespace glm;
 
-//TODO: handle normal vectors
 Lighting::Lighting() {
     this->lightAngleOuter = 30.0;
     this->lightAngleInner = 20.0;
-    this->lightPosition = vec3(-40.6f, 50.0f, -50.0f);
+    this->lightPosition = vec3(0.6f, 40.0f, 5.0f);
 }
 
 void Lighting::initializeLighting(int shaderProgram) {
@@ -20,9 +19,9 @@ void Lighting::initializeLighting(int shaderProgram) {
 }
 
 void Lighting::setParameters(int shaderProgram) {
-    vec3 lightFocus(0, 0, 0);
+    vec3 lightFocus(0, 10, 0);
     vec3 lightDirection = normalize(lightFocus - lightPosition);
-    float lightNearPlane = 50.0f;
+    float lightNearPlane = 40.0f;
     float lightFarPlane = 500.0f;
     mat4 lightProjectionMatrix = frustum(-10.0f, 10.0f, -10.0f, 10.0f, lightNearPlane, lightFarPlane);
     mat4 lightViewMatrix = lookAt(lightPosition, lightFocus, vec3(0.0f, 1.0f, 0.0f));
