@@ -1,5 +1,6 @@
 #include "Olaf.h"
 #include "../sphere/Sphere.h"
+#include "../CubeModel/CubeModel.h"
 
 Olaf::Olaf(Shaders *shaders, Controller *controller, Textures *textures) {
     this->shaders = shaders;
@@ -22,7 +23,7 @@ void Olaf::Draw(
 
     shaders->bindShaderFromWithTexture(withTexture, controller);
     Sphere *sphere = new Sphere();
-    Cube *cube = new Cube(255.0f, 255.0f, 255.0f, renderMode, withTexture);
+    CubeModel *cube = new CubeModel(vec3(2, 2, 2));
     float legSize = 0.5f * scale;
     float olafYInitialPosition = 1.0f;
 
