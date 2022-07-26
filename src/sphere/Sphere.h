@@ -1,5 +1,3 @@
-
-
 #include "GL/glew.h"
 
 class Sphere {
