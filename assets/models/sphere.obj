@@ -1,5 +1,6 @@
 # Blender v2.82 (sub 7) OBJ File: ''
 # www.blender.org
+#https://raw.githubusercontent.com/ClaudiaLapalme/WoodlandWanderer/master/Assets/Models/sphere.obj
 mtllib sphere.mtl
 o Sphere
 v 0.000000 0.490393 -0.097545
