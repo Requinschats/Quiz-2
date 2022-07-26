@@ -2,6 +2,8 @@
 
 #include "GL/glew.h"
 
+void renderSphere();
+
 class Sphere {
 public:
     Sphere();

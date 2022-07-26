@@ -51,7 +51,7 @@ void Olaf::Draw(
     float bodyHeight = 1.5f * scale;
     float bodyYPosition = olafYInitialPosition + 4.0f * scale;
     translateMatrix->setPosition(olafXPosition, bodyYPosition, olafZPosition);
-    translateMatrix->setSize(bodyWidth, bodyHeight, bodyDepth);
+    translateMatrix->setSize(bodyWidth * 5, bodyHeight * 5, bodyDepth * 5);
     translateMatrix->setObjectYRotationAngle(movement->rotationAngle, vec3(0, 0, 1));
     translateMatrix->bindTranslationMatrix(shaders->bindedShader);
     sphere->draw();
@@ -92,8 +92,8 @@ void Olaf::Draw(
     cube->Draw();
 
     //head
-    float headWidth = 0.75f * scale;
-    float headHeight = 0.75f * scale;
+    float headWidth = 0.75f * scale * 5;
+    float headHeight = 0.75f * scale * 5;
     float headYPosition = neckYPosition + 2.0f * scale;
     translateMatrix->setPosition(olafXPosition, headYPosition, olafZPosition);
     translateMatrix->setSize(headWidth, headHeight, headHeight);

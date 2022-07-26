@@ -87,16 +87,16 @@ GLuint setupModelEBO(string path, int &vertexCount) {
     glGenBuffers(1, &normals_VBO);
     glBindBuffer(GL_ARRAY_BUFFER, normals_VBO);
     glBufferData(GL_ARRAY_BUFFER, normals.size() * sizeof(glm::vec3), &normals.front(), GL_STATIC_DRAW);
-    glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid *) 0);
-    glEnableVertexAttribArray(2);
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid *) 0);
+    glEnableVertexAttribArray(1);
 
     //UVs VBO setup
     GLuint uvs_VBO;
     glGenBuffers(1, &uvs_VBO);
     glBindBuffer(GL_ARRAY_BUFFER, uvs_VBO);
     glBufferData(GL_ARRAY_BUFFER, UVs.size() * sizeof(glm::vec2), &UVs.front(), GL_STATIC_DRAW);
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), (GLvoid *) 0);
-    glEnableVertexAttribArray(1);
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), (GLvoid *) 0);
+    glEnableVertexAttribArray(2);
 
     //EBO setup
     GLuint EBO;
