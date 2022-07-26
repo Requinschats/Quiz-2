@@ -69,7 +69,9 @@ public:
     Position position;
     Size size;
 
-    float rotationAngle;
+    float rotationAngleYaxis;
+    float rotationAngleXaxis;
+    float rotationAngleZaxis;
 
     ObjectRotation objectRotation;
 
