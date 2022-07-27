@@ -119,7 +119,7 @@ int main(int argc, char *argv[]) {
         }
 
         glfwSwapBuffers(window);
-        glfwPollEvents();
+        glfwWaitEvents();
     }
 
     glfwTerminate();
