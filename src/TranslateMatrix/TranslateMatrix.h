@@ -97,7 +97,5 @@ public:
 
     void resetDefault();
 
-    void setPathToRotationMatrix(vec3 pathToRotationAxis);
-
     mat4 getRotatedObjectMatrix(mat4 translationMatrix);
 };
