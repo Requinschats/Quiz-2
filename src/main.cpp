@@ -100,7 +100,7 @@ int main(int argc, char *argv[]) {
 //                          backController);
 
         if (glfwGetKey(window, GLFW_KEY_B) == GLFW_PRESS) {
-            activeControllerIndex = 2;
+            activeControllerIndex = 1;
         }
 
         glfwSwapBuffers(window);
