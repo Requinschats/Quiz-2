@@ -26,3 +26,9 @@ void handleActionInputs(
         RenderMode *renderMode,
         bool *withTexture
 );
+
+void handleControllers(GLFWwindow *window,
+                       Controller *activeController,
+                       Controller *defaultController,
+                       Controller *frontController,
+                       Controller *backController);

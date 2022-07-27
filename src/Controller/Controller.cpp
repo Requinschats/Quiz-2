@@ -175,3 +175,7 @@ void Controller::zoomInFromMouse(GLFWwindow *window) {
         setProjectionMatrix(this->shaderProgram, projectionMatrixViewField);
     }
 }
+
+Controller::~Controller() {
+
+}

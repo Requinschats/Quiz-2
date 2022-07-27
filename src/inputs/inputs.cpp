@@ -134,3 +134,13 @@ void handleActionInputs(
         movement->moveRight();
     }
 }
+
+void handleControllers(GLFWwindow *window,
+                       Controller *activeController,
+                       Controller *defaultController,
+                       Controller *frontController,
+                       Controller *backController) {
+    if (glfwGetKey(window, GLFW_KEY_B) == GLFW_PRESS) {
+        activeController = backController;
+    }
+}

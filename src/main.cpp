@@ -18,13 +18,23 @@
 
 using namespace glm;
 
+static void setActiveController(Controller *activeController, Controller *newController) {
+    activeController = newController;
+}
+
 int main(int argc, char *argv[]) {
 
     GLFWwindow *window = initializeWindow();
 
     Shaders *shaders = new Shaders();
 
-    Controller *controller = new Controller(&shaders->colorShaderProgram);
+    static Controller *defaultController = new Controller(&shaders->texturedShaderProgram);
+    static Controller *frontController = new Controller(&shaders->texturedShaderProgram);
+    static Controller *backController = new Controller(&shaders->texturedShaderProgram);
+    static Controller *controllers[] = {defaultController, frontController, backController};
+    int activeControllerIndex = 0;
+
+
     TranslateMatrix *translateMatrix = new TranslateMatrix(0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f);
     Textures *textures = new Textures(shaders->texturedShaderProgram);
     RenderMode renderMode = RenderMode::triangles;
@@ -34,16 +44,16 @@ int main(int argc, char *argv[]) {
     float lastFrameTime = glfwGetTime();
 
     Quiz2Axis *quiz2Axis = new Quiz2Axis(textures);
-    Olaf *olaf = new Olaf(shaders, controller, textures);
     Grid *grid = new Grid(shaders->texturedShaderProgram);
     WorldCube *worldCube = new WorldCube(shaders->texturedShaderProgram);
     Characters *characters = new Characters(shaders->texturedShaderProgram, textures, 2, 0);
 
     while (!glfwWindowShouldClose(window)) {
+        Olaf *olaf = new Olaf(shaders, controllers[activeControllerIndex], textures);
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-        shaders->useColorShaderProgram(controller, olaf->movement->position);
+        shaders->useColorShaderProgram(controllers[activeControllerIndex], olaf->movement->position);
 
         float dt = glfwGetTime() - lastFrameTime;
         lastFrameTime += dt;
@@ -59,7 +69,7 @@ int main(int argc, char *argv[]) {
 
         glUseProgram(shaders->texturedShaderProgram);
         shaders->lighting->setParameters(shaders->texturedShaderProgram);
-        controller->setShader(&shaders->texturedShaderProgram);
+        controllers[activeControllerIndex]->setShader(&shaders->texturedShaderProgram);
 
         textures->loadSnowTexture();
         translateMatrix->bindTranslationMatrix(shaders->texturedShaderProgram);
@@ -75,7 +85,7 @@ int main(int argc, char *argv[]) {
 
         handleViewInputs(window,
                          shaders->texturedShaderProgram,
-                         controller,
+                         controllers[activeControllerIndex],
                          translateMatrix,
                          dt);
         handleActionInputs(
@@ -85,6 +95,14 @@ int main(int argc, char *argv[]) {
                 &renderMode,
                 &withTexture
         );
+
+//        handleControllers(window, controllers[activeControllerIndex], defaultController, frontController,
+//                          backController);
+
+        if (glfwGetKey(window, GLFW_KEY_B) == GLFW_PRESS) {
+            activeControllerIndex = 2;
+        }
+
         glfwSwapBuffers(window);
         glfwWaitEvents();
     }
