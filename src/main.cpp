@@ -56,7 +56,7 @@ int main(int argc, char *argv[]) {
         olaf->Draw(
                 renderMode,
                 translateMatrix,
-                olafScale - 1,
+                olafScale - 0.5,
                 withTexture);
 
 
