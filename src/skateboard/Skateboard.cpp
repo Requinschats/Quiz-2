@@ -20,7 +20,7 @@ void Skateboard::Draw(TranslateMatrix *translateMatrix, float x_position, float 
 
     //values likes theses are shared between the draw calls to be able to move the object has a hole, i.e. that all parts move together.
     const float boardWidth = 3.0f;
-    const float boardLength = 14.0f;
+    const float boardLength = 25.0f;
     const float frontFaceZPosition = z_position + 1.0f;
     const float backFaceZPosition = z_position - 1.0f;
 
