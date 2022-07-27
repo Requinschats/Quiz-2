@@ -55,11 +55,12 @@ GLuint loadTexture(const char *filename) {
 
 Textures::Textures(int texturedShaderProgram) {
     this->texturedShaderProgram = texturedShaderProgram;
-    this->snowTextureID = loadTexture("assets/textures/snow-2.jpeg");
+    this->snowTextureID = loadTexture("assets/textures/snow.jpeg");
     this->carrotTextureID = loadTexture("assets/textures/carrot.jpeg");
     this->metalTextureID = loadTexture("assets/textures/metal.jpeg");
     this->blueTextureID = loadTexture("assets/textures/blue.jpeg");
     this->greenTextureID = loadTexture("assets/textures/green.jpeg");
+    this->skyTextureID = loadTexture("assets/textures/sky.jpeg");
 
 }
 
@@ -100,5 +101,13 @@ void Textures::loadGreenTexture() {
     glBindTexture(GL_TEXTURE_2D, greenTextureID);
     GLuint textureLocation = glGetUniformLocation(texturedShaderProgram, "textureSampler");
     glBindTexture(GL_TEXTURE_2D, greenTextureID);
+    glUniform1i(textureLocation, 0);
+}
+
+void Textures::loadSkyTexture() {
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, skyTextureID);
+    GLuint textureLocation = glGetUniformLocation(texturedShaderProgram, "textureSampler");
+    glBindTexture(GL_TEXTURE_2D, skyTextureID);
     glUniform1i(textureLocation, 0);
 }

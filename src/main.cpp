@@ -13,6 +13,7 @@
 #include "./objectLoader/ObjectLoader.h"
 #include "./sphere/Sphere.h"
 #include "./quiz2-axis/Quiz2Axis.h"
+#include "WorldCube/WorldCube.h"
 
 using namespace glm;
 
@@ -34,6 +35,7 @@ int main(int argc, char *argv[]) {
     Quiz2Axis *quiz2Axis = new Quiz2Axis(textures);
     Olaf *olaf = new Olaf(shaders, controller, textures);
     Grid *grid = new Grid(shaders->texturedShaderProgram);
+    WorldCube *worldCube = new WorldCube(shaders->texturedShaderProgram);
 
     while (!glfwWindowShouldClose(window)) {
         glEnable(GL_BLEND);
@@ -44,14 +46,7 @@ int main(int argc, char *argv[]) {
         float dt = glfwGetTime() - lastFrameTime;
         lastFrameTime += dt;
 
-        glClearColor(0.5, 0.5, 1, 1.0);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-        Sphere *sphere = new Sphere();
-        translateMatrix->setPosition(shaders->lighting->lightPosition.x, shaders->lighting->lightPosition.y,
-                                     shaders->lighting->lightPosition.z);
-        translateMatrix->bindTranslationMatrix(shaders->colorShaderProgram);
-        sphere->draw();
 
         olaf->Draw(
                 renderMode,
@@ -64,12 +59,14 @@ int main(int argc, char *argv[]) {
         shaders->lighting->setParameters(shaders->texturedShaderProgram);
         controller->setShader(&shaders->texturedShaderProgram);
 
+        textures->loadSnowTexture();
+        translateMatrix->bindTranslationMatrix(shaders->texturedShaderProgram);
+        grid->Draw(translateMatrix);
+
         quiz2Axis->draw(translateMatrix, shaders);
 
-        textures->loadSnowTexture();
-        glDepthMask(GL_FALSE);
-        grid->Draw(translateMatrix);
-        glDepthMask(GL_TRUE);
+        textures->loadSkyTexture();
+        worldCube->Draw(translateMatrix);
 
         handleViewInputs(window,
                          shaders->texturedShaderProgram,
