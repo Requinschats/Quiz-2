@@ -50,6 +50,8 @@ public:
 
     void handleZoom(GLFWwindow *window);
 
+    void applyController();
+
 private:
     void setDefaultLookAt();
 

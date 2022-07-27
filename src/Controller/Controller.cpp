@@ -179,3 +179,8 @@ void Controller::zoomInFromMouse(GLFWwindow *window) {
 Controller::~Controller() {
 
 }
+
+void Controller::applyController() {
+//    shaders
+    setCameraPosition();
+}
