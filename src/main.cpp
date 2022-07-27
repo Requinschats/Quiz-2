@@ -31,8 +31,7 @@ int main(int argc, char *argv[]) {
 
     float lastFrameTime = glfwGetTime();
 
-    ArrowAxis *arrowAxis = new ArrowAxis();
-    Quiz2Axis *quiz2Axis = new Quiz2Axis();
+    Quiz2Axis *quiz2Axis = new Quiz2Axis(textures);
     Olaf *olaf = new Olaf(shaders, controller, textures);
     Grid *grid = new Grid(shaders->texturedShaderProgram);
 
@@ -54,20 +53,20 @@ int main(int argc, char *argv[]) {
         translateMatrix->bindTranslationMatrix(shaders->colorShaderProgram);
         sphere->draw();
 
-        arrowAxis->Draw(translateMatrix, shaders->colorShaderProgram);
-        quiz2Axis->draw(translateMatrix, shaders);
-
-
         olaf->Draw(
                 renderMode,
                 translateMatrix,
-                olafScale - 1,
+                olafScale - 0.5,
                 withTexture);
 
-        glUseProgram(shaders->texturedShaderProgram);
-        controller->setShader(&shaders->texturedShaderProgram);
-        textures->loadSnowTexture();
 
+        glUseProgram(shaders->texturedShaderProgram);
+        shaders->lighting->setParameters(shaders->texturedShaderProgram);
+        controller->setShader(&shaders->texturedShaderProgram);
+
+        quiz2Axis->draw(translateMatrix, shaders);
+
+        textures->loadSnowTexture();
         glDepthMask(GL_FALSE);
         grid->Draw(translateMatrix);
         glDepthMask(GL_TRUE);

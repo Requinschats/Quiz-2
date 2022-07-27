@@ -58,6 +58,9 @@ Textures::Textures(int texturedShaderProgram) {
     this->snowTextureID = loadTexture("assets/textures/snow-2.jpeg");
     this->carrotTextureID = loadTexture("assets/textures/carrot.jpeg");
     this->metalTextureID = loadTexture("assets/textures/metal.jpeg");
+    this->blueTextureID = loadTexture("assets/textures/blue.jpeg");
+    this->greenTextureID = loadTexture("assets/textures/green.jpeg");
+
 }
 
 void Textures::loadSnowTexture() {
@@ -81,5 +84,21 @@ void Textures::loadMetalTexture() {
     glBindTexture(GL_TEXTURE_2D, metalTextureID);
     GLuint textureLocation = glGetUniformLocation(texturedShaderProgram, "textureSampler");
     glBindTexture(GL_TEXTURE_2D, metalTextureID);
+    glUniform1i(textureLocation, 0);
+}
+
+void Textures::loadBlueTexture() {
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, blueTextureID);
+    GLuint textureLocation = glGetUniformLocation(texturedShaderProgram, "textureSampler");
+    glBindTexture(GL_TEXTURE_2D, blueTextureID);
+    glUniform1i(textureLocation, 0);
+}
+
+void Textures::loadGreenTexture() {
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, greenTextureID);
+    GLuint textureLocation = glGetUniformLocation(texturedShaderProgram, "textureSampler");
+    glBindTexture(GL_TEXTURE_2D, greenTextureID);
     glUniform1i(textureLocation, 0);
 }
