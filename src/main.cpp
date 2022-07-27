@@ -15,6 +15,7 @@
 #include "./quiz2-axis/Quiz2Axis.h"
 #include "WorldCube/WorldCube.h"
 #include "characters/Characters.h"
+#include "./camera/Camera.h"
 
 using namespace glm;
 
@@ -24,8 +25,17 @@ int main(int argc, char *argv[]) {
 
     Shaders *shaders = new Shaders();
 
-    Controller *controller = new Controller(&shaders->colorShaderProgram);
     TranslateMatrix *translateMatrix = new TranslateMatrix(0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f);
+    static Controller *defaultController = new Controller(&shaders->texturedShaderProgram);
+    static Controller *frontController = new Controller(&shaders->texturedShaderProgram);
+    static Controller *backController = new Controller(&shaders->texturedShaderProgram);
+
+    Camera *defaultCamera = new Camera(defaultController, translateMatrix->rotationAngleYaxis);
+    Camera *frontCamera = new Camera(frontController, 0);
+    Camera *backCamera = new Camera(backController, 140);
+    static Camera *cameras[] = {defaultCamera, frontCamera, backCamera};
+    int activeControllerIndex = 0;
+
     Textures *textures = new Textures(shaders->texturedShaderProgram);
     RenderMode renderMode = RenderMode::triangles;
 
@@ -34,16 +44,16 @@ int main(int argc, char *argv[]) {
     float lastFrameTime = glfwGetTime();
 
     Quiz2Axis *quiz2Axis = new Quiz2Axis(textures);
-    Olaf *olaf = new Olaf(shaders, controller, textures);
     Grid *grid = new Grid(shaders->texturedShaderProgram);
     WorldCube *worldCube = new WorldCube(shaders->texturedShaderProgram);
     Characters *characters = new Characters(shaders->texturedShaderProgram, textures, 2, 0);
 
     while (!glfwWindowShouldClose(window)) {
+        Olaf *olaf = new Olaf(shaders, cameras[activeControllerIndex]->controller, textures);
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-        shaders->useColorShaderProgram(controller, olaf->movement->position);
+        shaders->useColorShaderProgram(cameras[activeControllerIndex]->controller, olaf->movement->position);
 
         float dt = glfwGetTime() - lastFrameTime;
         lastFrameTime += dt;
@@ -59,7 +69,7 @@ int main(int argc, char *argv[]) {
 
         glUseProgram(shaders->texturedShaderProgram);
         shaders->lighting->setParameters(shaders->texturedShaderProgram);
-        controller->setShader(&shaders->texturedShaderProgram);
+        cameras[activeControllerIndex]->controller->setShader(&shaders->texturedShaderProgram);
 
         textures->loadSnowTexture();
         translateMatrix->bindTranslationMatrix(shaders->texturedShaderProgram);
@@ -75,7 +85,7 @@ int main(int argc, char *argv[]) {
 
         handleViewInputs(window,
                          shaders->texturedShaderProgram,
-                         controller,
+                         cameras[activeControllerIndex]->controller,
                          translateMatrix,
                          dt);
         handleActionInputs(
@@ -85,6 +95,29 @@ int main(int argc, char *argv[]) {
                 &renderMode,
                 &withTexture
         );
+
+        if (glfwGetKey(window, GLFW_KEY_B) == GLFW_PRESS) {
+            cameras[activeControllerIndex]->worldOrientationAngle = translateMatrix->rotationAngleYaxis;
+            activeControllerIndex = 2;
+            translateMatrix->setWorldRotationAngle(cameras[activeControllerIndex]->worldOrientationAngle);
+            translateMatrix->bindTranslationMatrix(shaders->bindedShader);
+            cameras[activeControllerIndex]->controller->applyController();
+        }
+        if (glfwGetKey(window, GLFW_KEY_M) == GLFW_PRESS) {
+            cameras[activeControllerIndex]->worldOrientationAngle = translateMatrix->rotationAngleYaxis;
+            activeControllerIndex = 1;
+            translateMatrix->setWorldRotationAngle(cameras[activeControllerIndex]->worldOrientationAngle);
+            translateMatrix->bindTranslationMatrix(shaders->texturedShaderProgram);
+            cameras[activeControllerIndex]->controller->applyController();
+        }
+        if (glfwGetKey(window, GLFW_KEY_H) == GLFW_PRESS) {
+            cameras[activeControllerIndex]->worldOrientationAngle = translateMatrix->rotationAngleYaxis;
+            activeControllerIndex = 0;
+            translateMatrix->setWorldRotationAngle(cameras[activeControllerIndex]->worldOrientationAngle);
+            translateMatrix->bindTranslationMatrix(shaders->bindedShader);
+            cameras[activeControllerIndex]->controller->applyController();
+        }
+
         glfwSwapBuffers(window);
         glfwWaitEvents();
     }
