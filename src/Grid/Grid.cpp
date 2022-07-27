@@ -8,11 +8,11 @@ using namespace glm;
 const GLfloat vertices[] = {
         //bottom
         -0.5f, 0.0f, -0.5f, 0, 1.0f, 0, 0, 0,
-        -0.5f, 0.0f, 0.5f, 0, 1.0f, 0, 0, 1,
-        0.5f, 0.0f, 0.5f, 0, 1.0f, 0, 1, 1,
+        -0.5f, 0.0f, 0.5f, 0, 1.0f, 0, 0, 20,
+        0.5f, 0.0f, 0.5f, 0, 1.0f, 0, 20, 20,
 
-        0.5f, 0.0f, 0.5f, 0, 1.0f, 0, 1, 1,
-        0.5f, 0.0f, -0.5f, 0, 1.0f, 0, 1, 0,
+        0.5f, 0.0f, 0.5f, 0, 1.0f, 0, 20, 20,
+        0.5f, 0.0f, -0.5f, 0, 1.0f, 0, 20, 0,
         -0.5f, 0.0f, -0.5f, 0, 1.0f, 0, 0, 0
 };
 
@@ -47,10 +47,12 @@ Grid::Grid(int shaderProgram) {
 }
 
 void Grid::Draw(TranslateMatrix *translateMatrix) {
-    for (int i = -50; i < 50; i++) {
-        for (int j = -50; j < 50; j++) {
+    float color[] = {1.0f, 0.0f, 0.0f, 1.0f};
+    glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, color);
+    for (int i = -1; i < 1; i++) {
+        for (int j = -1; j < 1; j++) {
             translateMatrix->setPosition(i, 0.0f, j);
-            translateMatrix->setSize(5.0f, 0.5, 5.0f);
+            translateMatrix->setSize(120.0f, 0.5, 120.0f);
             translateMatrix->bindTranslationMatrix(this->shaderProgram);
 
             glBindVertexArray(this->gridVAO_);

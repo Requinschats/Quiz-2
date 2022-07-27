@@ -22,14 +22,15 @@ GLuint loadTexture(const char *filename) {
     // Step2 Set filter parameters
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     float borderColor[] = {0.9f, 0, 0.0, 1.0f};
     glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);
 
 
     // Step3 Load Textures with dimension data
     int width, height, nrChannels;
+
     unsigned char *data = stbi_load(filename, &width, &height, &nrChannels, 0);
     if (!data) {
         std::cerr << "Error::Texture could not load texture file:" << filename << std::endl;
