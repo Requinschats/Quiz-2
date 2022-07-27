@@ -14,6 +14,7 @@
 #include "./sphere/Sphere.h"
 #include "./quiz2-axis/Quiz2Axis.h"
 #include "WorldCube/WorldCube.h"
+#include "characters/Characters.h"
 
 using namespace glm;
 
@@ -36,6 +37,7 @@ int main(int argc, char *argv[]) {
     Olaf *olaf = new Olaf(shaders, controller, textures);
     Grid *grid = new Grid(shaders->texturedShaderProgram);
     WorldCube *worldCube = new WorldCube(shaders->texturedShaderProgram);
+    Characters *characters = new Characters(shaders->texturedShaderProgram, textures, 2, 0);
 
     while (!glfwWindowShouldClose(window)) {
         glEnable(GL_BLEND);
@@ -51,7 +53,7 @@ int main(int argc, char *argv[]) {
         olaf->Draw(
                 renderMode,
                 translateMatrix,
-                olafScale - 0.5,
+                olafScale - 1,
                 withTexture);
 
 
@@ -68,6 +70,9 @@ int main(int argc, char *argv[]) {
         textures->loadSkyTexture();
         worldCube->Draw(translateMatrix);
 
+        characters->Draw(translateMatrix, 0, -5);
+
+
         handleViewInputs(window,
                          shaders->texturedShaderProgram,
                          controller,
@@ -81,7 +86,7 @@ int main(int argc, char *argv[]) {
                 &withTexture
         );
         glfwSwapBuffers(window);
-        glfwPollEvents();
+        glfwWaitEvents();
     }
 
     glfwTerminate();

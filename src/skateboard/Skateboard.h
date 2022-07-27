@@ -1,8 +1,9 @@
 #include "../TranslateMatrix/TranslateMatrix.h"
+#include "../Textures/Textures.h"
 
 class Skateboard {
 public:
-    Skateboard(int shaderProgram);
+    Skateboard(int shaderProgram, Textures *textures);
 
     void Draw(
             TranslateMatrix *translateMatrix,
@@ -12,4 +13,5 @@ public:
 
     int shaderProgram;
     float height;
+    Textures *textures;
 };

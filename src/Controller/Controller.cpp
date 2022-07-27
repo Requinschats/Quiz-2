@@ -6,8 +6,8 @@
 #include "glm/ext/matrix_transform.hpp"
 #include "glm/ext/matrix_clip_space.hpp"
 
-const vec3 defaultCameraPosition = vec3(-15.6f, 10.0f, 10.0f);
-const vec3 defaultCameraLookAt = vec3(0.5f, 0.0f, -1.0f);
+const vec3 defaultCameraPosition = vec3(5.6f, 10.0f, 30.0f);
+const vec3 defaultCameraLookAt = vec3(0, 0.0f, 0);
 const vec3 defaultCameraUp = vec3(0.0f, 1.0f, 0.0f);
 
 Controller::Controller(int *shaderProgram) {
@@ -101,7 +101,7 @@ void Controller::normalizeCameraHorizontalAngle() {
 }
 
 void Controller::setDefaultLookAt() {
-    this->cameraHorizontalAngle = 30.0f;
+    this->cameraHorizontalAngle = 70.0f;
     this->cameraVerticalAngle = 0.0f;
 
     this->cameraVerticalAngle = std::max(-85.0f, std::min(85.0f, this->cameraVerticalAngle));
