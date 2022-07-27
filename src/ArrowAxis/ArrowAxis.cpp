@@ -44,7 +44,7 @@ ArrowAxis::ArrowAxis() {
 }
 
 void ArrowAxis::Draw(TranslateMatrix *translateMatrix, GLuint shaderProgram) {
-    translateMatrix->setDefaultPosition();
+    translateMatrix->setPosition(-5.0f, 0.0f, -5.0f);
     translateMatrix->setDefaultSize();
     translateMatrix->bindTranslationMatrix(shaderProgram);
     glBindVertexArray(this->arrowAxisVAO_);

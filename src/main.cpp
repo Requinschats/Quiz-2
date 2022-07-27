@@ -12,6 +12,7 @@
 #include "inputs/inputs.h"
 #include "./objectLoader/ObjectLoader.h"
 #include "./sphere/Sphere.h"
+#include "./quiz2-axis/Quiz2Axis.h"
 
 using namespace glm;
 
@@ -31,6 +32,7 @@ int main(int argc, char *argv[]) {
     float lastFrameTime = glfwGetTime();
 
     ArrowAxis *arrowAxis = new ArrowAxis();
+    Quiz2Axis *quiz2Axis = new Quiz2Axis();
     Olaf *olaf = new Olaf(shaders, controller, textures);
     Grid *grid = new Grid(shaders->texturedShaderProgram);
 
@@ -53,11 +55,13 @@ int main(int argc, char *argv[]) {
         sphere->draw();
 
         arrowAxis->Draw(translateMatrix, shaders->colorShaderProgram);
+        quiz2Axis->draw(translateMatrix, shaders);
+
 
         olaf->Draw(
                 renderMode,
                 translateMatrix,
-                olafScale,
+                olafScale - 1,
                 withTexture);
 
         glUseProgram(shaders->texturedShaderProgram);
