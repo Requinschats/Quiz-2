@@ -31,4 +31,12 @@ public:
     GLuint skyTextureID;
 
     void loadSkyTexture();
+
+    GLuint woodTextureID;
+
+    void loadWoodTexture();
+
+    void loadGlossyTexture();
+
+    GLuint glossyTextureID;
 };

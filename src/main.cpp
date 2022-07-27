@@ -37,7 +37,7 @@ int main(int argc, char *argv[]) {
     Olaf *olaf = new Olaf(shaders, controller, textures);
     Grid *grid = new Grid(shaders->texturedShaderProgram);
     WorldCube *worldCube = new WorldCube(shaders->texturedShaderProgram);
-    Characters *characters = new Characters(shaders->texturedShaderProgram, 0, 0);
+    Characters *characters = new Characters(shaders->texturedShaderProgram, textures, 2, 0);
 
     while (!glfwWindowShouldClose(window)) {
         glEnable(GL_BLEND);
@@ -53,7 +53,7 @@ int main(int argc, char *argv[]) {
         olaf->Draw(
                 renderMode,
                 translateMatrix,
-                olafScale - 0.5,
+                olafScale - 1,
                 withTexture);
 
 

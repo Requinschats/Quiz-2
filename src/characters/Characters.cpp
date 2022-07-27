@@ -14,8 +14,9 @@ using namespace std;
 // 4. call the cube's draw method
 
 //constructor that sets the default values
-Characters::Characters(int shaderProgram, float baseHeight, int selectedCharacterIndex) {
+Characters::Characters(int shaderProgram, Textures *textures, float baseHeight, int selectedCharacterIndex) {
     this->shaderProgram = shaderProgram;
+    this->textures = textures;
     //letters shared format. Decided arbitrarily.
     this->letterHeight = 8.0f;
     this->letterWidth = 3.0f;
@@ -23,7 +24,7 @@ Characters::Characters(int shaderProgram, float baseHeight, int selectedCharacte
     this->lineWidth = 1.0f;
     this->letterIndex = 0;
     //skateboard height
-    this->baseHeight = 1;
+    this->baseHeight = baseHeight;
     //allows changing the state of the character if selected by keyboard inputs
     this->selectedCharacterIndex = selectedCharacterIndex;
 }
@@ -59,13 +60,11 @@ bool Characters::isSelectedCharacter(int characterIndex) {
 //Position if passed down from the getLetterXPosition utility
 void Characters::Draw(TranslateMatrix *translateMatrix, float x_position, float z_position) {
     this->letterIndex = 0;
+    this->textures->loadCarrotTexture();
     this->DrawF(translateMatrix, getLetterXPosition(x_position), z_position, 1);
+    this->textures->loadGreenTexture();
     this->DrawA(translateMatrix, getLetterXPosition(x_position), z_position, 3);
-//    this->DrawD(translateMatrix, getLetterXPosition(x_position), z_position, 4);
-//    this->DrawE(translateMatrix, getLetterXPosition(x_position), z_position, 5);
-//    this->DrawT(translateMatrix, getLetterXPosition(x_position), z_position, 6);
-//    this->DrawT(translateMatrix, getLetterXPosition(x_position), z_position, 7);
-//    this->DrawE(translateMatrix, getLetterXPosition(x_position), z_position, 8);
+    (new Skateboard(shaderProgram, textures))->Draw(translateMatrix, x_position, z_position);
 }
 
 //Draw logic is explained at the top of this file
@@ -127,6 +126,4 @@ void Characters::DrawA(TranslateMatrix *translateMatrix, float x_position, float
     translateMatrix->setSize(letterWidth, this->lineWidth, this->lineWidth);
     translateMatrix->bindTranslationMatrix(this->shaderProgram);
     cube->Draw();
-
-    (new Skateboard(shaderProgram))->Draw(translateMatrix, x_position, z_position);
 }

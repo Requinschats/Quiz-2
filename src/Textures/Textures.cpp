@@ -62,7 +62,8 @@ Textures::Textures(int texturedShaderProgram) {
     this->blueTextureID = loadTexture("assets/textures/blue.jpeg");
     this->greenTextureID = loadTexture("assets/textures/green.jpeg");
     this->skyTextureID = loadTexture("assets/textures/sky.jpeg");
-
+    this->woodTextureID = loadTexture("assets/textures/wood.jpeg");
+    this->glossyTextureID = loadTexture("assets/textures/glossy.jpeg");
 }
 
 void Textures::loadSnowTexture() {
@@ -110,5 +111,21 @@ void Textures::loadSkyTexture() {
     glBindTexture(GL_TEXTURE_2D, skyTextureID);
     GLuint textureLocation = glGetUniformLocation(texturedShaderProgram, "textureSampler");
     glBindTexture(GL_TEXTURE_2D, skyTextureID);
+    glUniform1i(textureLocation, 0);
+}
+
+void Textures::loadWoodTexture() {
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, woodTextureID);
+    GLuint textureLocation = glGetUniformLocation(texturedShaderProgram, "textureSampler");
+    glBindTexture(GL_TEXTURE_2D, woodTextureID);
+    glUniform1i(textureLocation, 0);
+}
+
+void Textures::loadGlossyTexture() {
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, glossyTextureID);
+    GLuint textureLocation = glGetUniformLocation(texturedShaderProgram, "textureSampler");
+    glBindTexture(GL_TEXTURE_2D, glossyTextureID);
     glUniform1i(textureLocation, 0);
 }

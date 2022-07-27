@@ -1,8 +1,9 @@
 #include "../TranslateMatrix/TranslateMatrix.h"
+#include "../Textures/Textures.h"
 
 class Characters {
 public:
-    Characters(int shaderProgram, float baseHeight, int selectedCharacterIndex);
+    Characters(int shaderProgram, Textures *textures, float baseHeight, int selectedCharacterIndex);
 
     void Draw(
             TranslateMatrix *translateMatrix,
@@ -36,27 +37,6 @@ private:
             int letterIndex
     );
 
-    void DrawD(
-            TranslateMatrix *translateMatrix,
-            float x_position,
-            float z_position,
-            int letterIndex
-    );
-
-    void DrawE(
-            TranslateMatrix *translateMatrix,
-            float x_position,
-            float z_position,
-            int letterIndex
-    );
-
-    void DrawT(
-            TranslateMatrix *translateMatrix,
-            float x_position,
-            float z_position,
-            int letterIndex
-    );
-
     float baseHeight;
 
     vec3 getColorFromState(int characterIndex);
@@ -64,4 +44,6 @@ private:
     bool isSelectedCharacter(int characterIndex);
 
     int getRandomLightRGBValue();
+
+    Textures *textures;
 };
