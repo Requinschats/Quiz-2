@@ -63,7 +63,9 @@ void Characters::Draw(TranslateMatrix *translateMatrix, float x_position, float 
     this->textures->loadCarrotTexture();
     this->DrawF(translateMatrix, getLetterXPosition(x_position), z_position, 1);
     this->textures->loadGreenTexture();
-    this->DrawA(translateMatrix, getLetterXPosition(x_position), z_position, 3);
+    this->DrawA(translateMatrix, getLetterXPosition(x_position), z_position, 2);
+    this->DrawTwo(translateMatrix, getLetterXPosition(x_position), z_position);
+    this->DrawFour(translateMatrix, getLetterXPosition(x_position), z_position);
     (new Skateboard(shaderProgram, textures))->Draw(translateMatrix, x_position, z_position);
 }
 
@@ -126,4 +128,81 @@ void Characters::DrawA(TranslateMatrix *translateMatrix, float x_position, float
     translateMatrix->setSize(letterWidth, this->lineWidth, this->lineWidth);
     translateMatrix->bindTranslationMatrix(this->shaderProgram);
     cube->Draw();
+
+    this->letterIndex++;
+}
+
+void Characters::DrawTwo(TranslateMatrix *translateMatrix, float x_position, float z_position) {
+    float characterXPosition = x_position + 2;
+    this->textures->loadBlueTexture();
+    CubeModel *cube = new CubeModel();
+
+    //right column top
+    translateMatrix->setPosition(characterXPosition, baseHeight + this->letterHeight - lineWidth, z_position);
+    translateMatrix->setSize(this->lineWidth, this->lineWidth, this->lineWidth);
+    translateMatrix->bindTranslationMatrix(this->shaderProgram);
+    cube->Draw();
+
+    //left column bottom
+    int bottomLeftColumnHeight = this->letterHeight - 4 * lineWidth;
+    translateMatrix->setPosition(characterXPosition, baseHeight + bottomLeftColumnHeight / 2, z_position);
+    translateMatrix->setSize(this->lineWidth, bottomLeftColumnHeight, this->lineWidth);
+    translateMatrix->bindTranslationMatrix(this->shaderProgram);
+    cube->Draw();
+
+    //right column bottom
+    int bottomRightColumnHeight = this->letterHeight - 4 * lineWidth;
+    translateMatrix->setPosition(characterXPosition + letterWidth, baseHeight + letterHeight - 1.5 * lineWidth,
+                                 z_position);
+    translateMatrix->setSize(this->lineWidth, bottomRightColumnHeight, this->lineWidth);
+    translateMatrix->bindTranslationMatrix(this->shaderProgram);
+    cube->Draw();
+
+    //top bar
+    translateMatrix->setPosition(characterXPosition + lineWidth, baseHeight + this->letterHeight, z_position);
+    translateMatrix->setSize(this->letterWidth, this->lineWidth, this->lineWidth);
+    translateMatrix->bindTranslationMatrix(this->shaderProgram);
+    cube->Draw();
+
+    //middle bar
+    translateMatrix->setPosition(characterXPosition + letterWidth / 2, baseHeight + letterHeight / 2 + lineWidth / 2,
+                                 z_position);
+    translateMatrix->setSize(this->letterWidth + lineWidth, this->lineWidth, this->lineWidth);
+    translateMatrix->bindTranslationMatrix(this->shaderProgram);
+    cube->Draw();
+
+    //bottom bar
+    translateMatrix->setPosition(characterXPosition + letterWidth / 2, baseHeight + lineWidth, z_position);
+    translateMatrix->setSize(this->letterWidth, this->lineWidth, this->lineWidth);
+    translateMatrix->bindTranslationMatrix(this->shaderProgram);
+    cube->Draw();
+
+    this->letterIndex++;
+}
+
+void Characters::DrawFour(TranslateMatrix *translateMatrix, float x_position, float z_position) {
+    this->textures->loadGlossyTexture();
+    float characterXPosition = x_position + 2;
+    CubeModel *cube = new CubeModel();
+
+    //right column
+    translateMatrix->setPosition(characterXPosition + letterWidth, baseHeight + this->letterHeight / 2, z_position);
+    translateMatrix->setSize(this->lineWidth, this->letterHeight, this->lineWidth);
+    translateMatrix->bindTranslationMatrix(this->shaderProgram);
+    cube->Draw();
+
+    //left column
+    translateMatrix->setPosition(characterXPosition, baseHeight + this->letterHeight - 2 * lineWidth, z_position);
+    translateMatrix->setSize(this->lineWidth, this->letterHeight / 2, this->lineWidth);
+    translateMatrix->bindTranslationMatrix(this->shaderProgram);
+    cube->Draw();
+
+    //middle bar
+    translateMatrix->setPosition(characterXPosition + letterWidth / 2, baseHeight + letterHeight / 2 + lineWidth / 2,
+                                 z_position);
+    translateMatrix->setSize(this->letterWidth + lineWidth, this->lineWidth, this->lineWidth);
+    translateMatrix->bindTranslationMatrix(this->shaderProgram);
+    cube->Draw();
+
+    this->letterIndex++;
 }
