@@ -21,7 +21,5 @@
 #### Author Email (if any question): olivier.fradette.roy@gmail.com
 
 #### Student ID: 40074024
-
-<img width="815" alt="Screen Shot 2022-07-27 at 11 05 29 AM" src="https://user-images.githubusercontent.com/39419311/181282038-6304df4c-aaeb-4ef3-8736-5b4344ee7312.png">
-
-<img width="820" alt="Screen Shot 2022-07-27 at 11 05 52 AM" src="https://user-images.githubusercontent.com/39419311/181282141-fea741b8-6f45-49b8-9073-c4101a40f39c.png">
+<img width="739" alt="Screen Shot 2022-07-27 at 11 09 26 AM" src="https://user-images.githubusercontent.com/39419311/181282951-36398204-d11c-44e2-b8e3-c88ba8bf00e0.png">
+<img width="736" alt="Screen Shot 2022-07-27 at 11 09 45 AM" src="https://user-images.githubusercontent.com/39419311/181283020-0848fd01-752e-41fc-abab-feaee8bae7e8.png">
