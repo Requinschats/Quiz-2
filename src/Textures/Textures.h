@@ -27,4 +27,8 @@ public:
     void loadBlueTexture();
 
     void loadGreenTexture();
+
+    GLuint skyTextureID;
+
+    void loadSkyTexture();
 };
