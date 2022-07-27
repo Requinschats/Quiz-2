@@ -5,24 +5,27 @@
 #include "../Olaf/movement/Movement.h"
 #include "../TranslateMatrix/TranslateMatrix.h"
 
-void handleViewInputs(GLFWwindow *window,
-                      int shaderProgram,
-                      Controller *controller,
-                      TranslateMatrix *translateMatrix,
-                      float dt);
+static void handleViewInputs(GLFWwindow *window,
+                             int shaderProgram,
+                             TranslateMatrix *translateMatrix,
+                             float dt);
 
-void handleViewKeyboardInputs(GLFWwindow *window,
-                              int shaderProgram,
-                              Controller *controller,
-                              TranslateMatrix *translateMatrix,
-                              float dt);
+static void handleViewKeyboardInputs(GLFWwindow *window,
+                                     int shaderProgram,
+                                     TranslateMatrix *translateMatrix,
+                                     float dt);
 
-void handleViewMouseInputs(GLFWwindow *window, Controller *controller, TranslateMatrix *translateMatrix, float dt);
+static void handleViewMouseInputs(GLFWwindow *window, TranslateMatrix *translateMatrix, float dt);
 
-void handleActionInputs(
+static void handleActionInputs(
         GLFWwindow *window,
         Movement *movement,
         float *olafScale,
         RenderMode *renderMode,
         bool *withTexture
 );
+
+static void handleControllers(GLFWwindow *window,
+                              Controller *defaultController,
+                              Controller *frontController,
+                              Controller *backController);

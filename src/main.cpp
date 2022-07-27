@@ -24,7 +24,11 @@ int main(int argc, char *argv[]) {
 
     Shaders *shaders = new Shaders();
 
-    Controller *controller = new Controller(&shaders->colorShaderProgram);
+    Controller *defaultController = new Controller(&shaders->texturedShaderProgram);
+    Controller *frontController = new Controller(&shaders->texturedShaderProgram);
+    Controller *backController = new Controller(&shaders->texturedShaderProgram);
+    setActiveController(defaultController);
+
     TranslateMatrix *translateMatrix = new TranslateMatrix(0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f);
     Textures *textures = new Textures(shaders->texturedShaderProgram);
     RenderMode renderMode = RenderMode::triangles;
@@ -34,16 +38,16 @@ int main(int argc, char *argv[]) {
     float lastFrameTime = glfwGetTime();
 
     Quiz2Axis *quiz2Axis = new Quiz2Axis(textures);
-    Olaf *olaf = new Olaf(shaders, controller, textures);
     Grid *grid = new Grid(shaders->texturedShaderProgram);
     WorldCube *worldCube = new WorldCube(shaders->texturedShaderProgram);
     Characters *characters = new Characters(shaders->texturedShaderProgram, textures, 2, 0);
 
     while (!glfwWindowShouldClose(window)) {
+        Olaf *olaf = new Olaf(shaders, activeController, textures);
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-        shaders->useColorShaderProgram(controller, olaf->movement->position);
+        shaders->useColorShaderProgram(activeController, olaf->movement->position);
 
         float dt = glfwGetTime() - lastFrameTime;
         lastFrameTime += dt;
@@ -59,7 +63,7 @@ int main(int argc, char *argv[]) {
 
         glUseProgram(shaders->texturedShaderProgram);
         shaders->lighting->setParameters(shaders->texturedShaderProgram);
-        controller->setShader(&shaders->texturedShaderProgram);
+        activeController->setShader(&shaders->texturedShaderProgram);
 
         textures->loadSnowTexture();
         translateMatrix->bindTranslationMatrix(shaders->texturedShaderProgram);
@@ -75,7 +79,6 @@ int main(int argc, char *argv[]) {
 
         handleViewInputs(window,
                          shaders->texturedShaderProgram,
-                         controller,
                          translateMatrix,
                          dt);
         handleActionInputs(
@@ -85,6 +88,9 @@ int main(int argc, char *argv[]) {
                 &renderMode,
                 &withTexture
         );
+
+        handleControllers(window, defaultController, frontController, backController);
+
         glfwSwapBuffers(window);
         glfwWaitEvents();
     }

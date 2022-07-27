@@ -60,3 +60,9 @@ private:
     void zoomInFromMouse(GLFWwindow *window);
 
 };
+
+static Controller *activeController;
+
+static void setActiveController(Controller *controller) {
+    activeController = controller;
+}

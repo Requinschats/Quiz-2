@@ -1,24 +1,23 @@
 #include "../Grid/Grid.h"
-#include "glm/glm.hpp"
 #include "inputs.h"
+
+#include <iostream>
 
 using namespace glm;
 float cameraSpeed = 5.0f;
 
-void handleViewInputs(GLFWwindow *window,
-                      int shaderProgram,
-                      Controller *controller,
-                      TranslateMatrix *translateMatrix,
-                      float dt) {
-    handleViewKeyboardInputs(window, shaderProgram, controller, translateMatrix, dt);
-    handleViewMouseInputs(window, controller, translateMatrix, dt);
+static void handleViewInputs(GLFWwindow *window,
+                             int shaderProgram,
+                             TranslateMatrix *translateMatrix,
+                             float dt) {
+    handleViewKeyboardInputs(window, shaderProgram, translateMatrix, dt);
+    handleViewMouseInputs(window, translateMatrix, dt);
 }
 
-void handleViewKeyboardInputs(GLFWwindow *window,
-                              int shaderProgram,
-                              Controller *controller,
-                              TranslateMatrix *translateMatrix,
-                              float dt) {
+static void handleViewKeyboardInputs(GLFWwindow *window,
+                                     int shaderProgram,
+                                     TranslateMatrix *translateMatrix,
+                                     float dt) {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
 
@@ -30,16 +29,16 @@ void handleViewKeyboardInputs(GLFWwindow *window,
     }
 
     if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
-        controller->cameraPosition.x -= cameraSpeed * dt;
+        activeController->cameraPosition.x -= cameraSpeed * dt;
     }
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
-        controller->cameraPosition.x += cameraSpeed * dt;
+        activeController->cameraPosition.x += cameraSpeed * dt;
     }
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
-        controller->cameraPosition.z -= cameraSpeed * dt;
+        activeController->cameraPosition.z -= cameraSpeed * dt;
     }
     if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
-        controller->cameraPosition.z += cameraSpeed * dt;
+        activeController->cameraPosition.z += cameraSpeed * dt;
     }
     if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS) {
         translateMatrix->setWorldRotationAngle(translateMatrix->rotationAngleYaxis + 5.0f);
@@ -60,31 +59,33 @@ void handleViewKeyboardInputs(GLFWwindow *window,
         translateMatrix->setWorldRotationAngle(translateMatrix->rotationAngleYaxis - 5.0f);
     }
     if (glfwGetKey(window, GLFW_KEY_HOME) == GLFW_PRESS) {
-        controller->reset();
+        activeController->reset();
         translateMatrix->resetDefault();
     }
 }
 
-void handleViewMouseInputs(GLFWwindow *window,
-                           Controller *controller,
-                           TranslateMatrix *translateMatrix,
-                           float dt) {
-    if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS && controller->lastMouseState != "right") {
-        controller->handleMouseRightClick(window);
+static void handleViewMouseInputs(GLFWwindow *window,
+                                  TranslateMatrix *translateMatrix,
+                                  float dt) {
+    if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS &&
+        activeController->lastMouseState != "right") {
+        activeController->handleMouseRightClick(window);
     }
-    if (controller->lastMouseState == "right" && glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_RELEASE) {
-        controller->setCameraPositionFromMouse(window, dt);
+    if (activeController->lastMouseState == "right" &&
+        glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_RELEASE) {
+        activeController->setCameraPositionFromMouse(window, dt);
     }
-    if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_MIDDLE) == GLFW_PRESS && controller->lastMouseState != "middle") {
-        controller->handleMouseMiddleClick(window);
+    if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_MIDDLE) == GLFW_PRESS &&
+        activeController->lastMouseState != "middle") {
+        activeController->handleMouseMiddleClick(window);
     }
-    if (controller->lastMouseState == "middle" &&
+    if (activeController->lastMouseState == "middle" &&
         glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_MIDDLE) == GLFW_RELEASE) {
-        controller->handleZoom(window);
+        activeController->handleZoom(window);
     }
 }
 
-void handleActionInputs(
+static void handleActionInputs(
         GLFWwindow *window,
         Movement *movement,
         float *olafScale,
@@ -132,5 +133,22 @@ void handleActionInputs(
     }
     if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS) {
         movement->moveRight();
+    }
+}
+
+static void handleControllers(GLFWwindow *window,
+                              Controller *defaultController,
+                              Controller *frontController,
+                              Controller *backController) {
+    if (glfwGetKey(window, GLFW_KEY_B) == GLFW_PRESS) {
+        //print to screen "back"
+        std::cout << "back" << std::endl;
+        setActiveController(backController);
+    }
+    if (glfwGetKey(window, GLFW_KEY_M) == GLFW_PRESS) {
+        setActiveController(frontController);
+    }
+    if (glfwGetKey(window, GLFW_KEY_HOME) == GLFW_PRESS) {
+        setActiveController(defaultController);
     }
 }
