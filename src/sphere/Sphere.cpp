@@ -2,7 +2,7 @@
 #include <iostream>
 #include "../objectLoader/ObjectLoader.h"
 
-using namespace std;w
+using namespace std;
 
 Sphere::Sphere() {
     string cubePath = "assets/models/sphere.obj";

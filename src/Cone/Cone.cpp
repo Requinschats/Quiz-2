@@ -1,10 +1,10 @@
-#include "Sphere.h"
+#include "Cone.h"
 #include <iostream>
 #include "../objectLoader/ObjectLoader.h"
 
 using namespace std;
 
-Sphere::Sphere() {
+Cone::Cone() {
     string cubePath = "assets/models/sphere.obj";
 
     int cubeVertices;
@@ -14,10 +14,9 @@ Sphere::Sphere() {
     this->cubeVertices = cubeVertices;
 }
 
-Sphere::~Sphere() {
-}
+Cone::~Cone() {}
 
-void Sphere::draw() {
+void Cone::draw() {
     glBindVertexArray(this->cubeVAO);
     glDrawElements(GL_TRIANGLES, cubeVertices, GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
