@@ -30,6 +30,7 @@ in vec3 fragment_normal;
 in vec3 fragment_color;
 in vec4 gl_FragCoord;
 in vec2 vertexUV;
+in float fragment_alpha;
 
 out vec4 result;
 out vec4 FragColor;
@@ -95,5 +96,5 @@ void main()
     diffuse = scalar_1 * scalar_0 * diffuse_color(light_color, light_position_0);
     specular = scalar_1 * scalar_0 * specular_color(light_color, light_position_0);
 
-    FragColor = vec4((vec3(texture(textureSampler, vertexUV)) * (specular + diffuse + ambient)), 1.0);
+    FragColor = vec4((vec3(texture(textureSampler, vertexUV)) * (specular + diffuse + ambient)), fragment_alpha);
 }

@@ -79,7 +79,7 @@ void Characters::DrawF(TranslateMatrix *translateMatrix, float x_position, float
     bool isSelected = isSelectedCharacter(characterIndex);
     vec3 color = getColorFromState(characterIndex);
 
-    CubeModel *cube = new CubeModel();
+    CubeModel *cube = new CubeModel(vec3(1, 1, 1), 0.2);
     translateMatrix->setPosition(x_position, currentHeight + this->letterHeight / 2, z_position);
     translateMatrix->setObjectZRotationFromObjectCenter(jumpAnimation->activeFrame.boardRotationAngle, rotationCenter);
     translateMatrix->setSize(this->lineWidth, this->letterHeight, this->lineWidth);
@@ -108,7 +108,7 @@ void Characters::DrawA(TranslateMatrix *translateMatrix, float x_position, float
     bool isSelected = isSelectedCharacter(characterIndex);
     vec3 color = getColorFromState(characterIndex);
 
-    CubeModel *cube = new CubeModel();
+    CubeModel *cube = new CubeModel(vec3(1, 1, 1), 0.2);
 
     //left column
     translateMatrix->setPosition(x_position, currentHeight + this->letterHeight / 2, z_position);
@@ -146,7 +146,7 @@ void Characters::DrawA(TranslateMatrix *translateMatrix, float x_position, float
 void Characters::DrawTwo(TranslateMatrix *translateMatrix, float x_position, float z_position) {
     float characterXPosition = x_position + 2;
     this->textures->loadBlueTexture();
-    CubeModel *cube = new CubeModel();
+    CubeModel *cube = new CubeModel(vec3(1, 1, 1), 0.2);
 
     //right column top
     translateMatrix->setPosition(characterXPosition, currentHeight + this->letterHeight - lineWidth, z_position);
@@ -200,7 +200,7 @@ void Characters::DrawTwo(TranslateMatrix *translateMatrix, float x_position, flo
 void Characters::DrawFour(TranslateMatrix *translateMatrix, float x_position, float z_position) {
     this->textures->loadGlossyTexture();
     float characterXPosition = x_position + 2;
-    CubeModel *cube = new CubeModel();
+    CubeModel *cube = new CubeModel(vec3(1, 1, 1), 0.2);
 
     //right column
     translateMatrix->setPosition(characterXPosition + letterWidth, currentHeight + this->letterHeight / 2, z_position);

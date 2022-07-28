@@ -8,60 +8,60 @@ struct Vertex {
     glm::vec3 position;
     glm::vec3 normal;
     glm::vec2 UVs;
-    glm::vec3 color;
+    float alpha;
 };
 
-CubeModel::CubeModel(vec3 size) {
+CubeModel::CubeModel(vec3 size, float alpha) {
     vec3 halfSize = size * 0.5f;
     Vertex vertexBuffer[] = {  // position,                normal,                  UVs,                color,
             //left
-            {vec3(-halfSize.x, -halfSize.y, -halfSize.z), vec3(-1.0f, 0.0f, 0.0f), vec2(0, 0), vec3(1.0f, 0.0f, 0.0f)},
-            {vec3(-halfSize.x, -halfSize.y, halfSize.z),  vec3(-1.0f, 0.0f, 0.0f), vec2(1, 0), vec3(1.0f, 0.0f, 0.0f)},
-            {vec3(-halfSize.x, halfSize.y, halfSize.z),   vec3(-1.0f, 0.0f, 0.0f), vec2(1, 1), vec3(1.0f, 0.0f, 0.0f)},
-            {vec3(-halfSize.x, -halfSize.y, -halfSize.z), vec3(-1.0f, 0.0f, 0.0f), vec2(0, 0), vec3(1.0f, 0.0f, 0.0f)},
-            {vec3(-halfSize.x, halfSize.y, halfSize.z),   vec3(-1.0f, 0.0f, 0.0f), vec2(1, 1), vec3(1.0f, 0.0f, 0.0f)},
-            {vec3(-halfSize.x, halfSize.y, -halfSize.z),  vec3(-1.0f, 0.0f, 0.0f), vec2(0, 1), vec3(1.0f, 0.0f, 0.0f)},
+            {vec3(-halfSize.x, -halfSize.y, -halfSize.z), vec3(-1.0f, 0.0f, 0.0f), vec2(0, 0), 1},
+            {vec3(-halfSize.x, -halfSize.y, halfSize.z),  vec3(-1.0f, 0.0f, 0.0f), vec2(1, 0), 1},
+            {vec3(-halfSize.x, halfSize.y, halfSize.z),   vec3(-1.0f, 0.0f, 0.0f), vec2(1, 1), 1},
+            {vec3(-halfSize.x, -halfSize.y, -halfSize.z), vec3(-1.0f, 0.0f, 0.0f), vec2(0, 0), 1},
+            {vec3(-halfSize.x, halfSize.y, halfSize.z),   vec3(-1.0f, 0.0f, 0.0f), vec2(1, 1), 1},
+            {vec3(-halfSize.x, halfSize.y, -halfSize.z),  vec3(-1.0f, 0.0f, 0.0f), vec2(0, 1), 1},
 
             //back
-            {vec3(halfSize.x, halfSize.y, -halfSize.z),   vec3(0.0f, 0.0f, -1.0f), vec2(1, 1), vec3(0.0f, 0.0f, 1.0f)},
-            {vec3(-halfSize.x, -halfSize.y, -halfSize.z), vec3(0.0f, 0.0f, -1.0f), vec2(0, 0), vec3(0.0f, 0.0f, 1.0f)},
-            {vec3(-halfSize.x, halfSize.y, -halfSize.z),  vec3(0.0f, 0.0f, -1.0f), vec2(0, 1), vec3(0.0f, 0.0f, 1.0f)},
-            {vec3(halfSize.x, halfSize.y, -halfSize.z),   vec3(0.0f, 0.0f, -1.0f), vec2(1, 1), vec3(0.0f, 0.0f, 1.0f)},
-            {vec3(halfSize.x, -halfSize.y, -halfSize.z),  vec3(0.0f, 0.0f, -1.0f), vec2(1, 0), vec3(0.0f, 0.0f, 1.0f)},
-            {vec3(-halfSize.x, -halfSize.y, -halfSize.z), vec3(0.0f, 0.0f, -1.0f), vec2(0, 0), vec3(0.0f, 0.0f, 1.0f)},
+            {vec3(halfSize.x, halfSize.y, -halfSize.z),   vec3(0.0f, 0.0f, -1.0f), vec2(1, 1), 1},
+            {vec3(-halfSize.x, -halfSize.y, -halfSize.z), vec3(0.0f, 0.0f, -1.0f), vec2(0, 0), 1},
+            {vec3(-halfSize.x, halfSize.y, -halfSize.z),  vec3(0.0f, 0.0f, -1.0f), vec2(0, 1), 1},
+            {vec3(halfSize.x, halfSize.y, -halfSize.z),   vec3(0.0f, 0.0f, -1.0f), vec2(1, 1), 1},
+            {vec3(halfSize.x, -halfSize.y, -halfSize.z),  vec3(0.0f, 0.0f, -1.0f), vec2(1, 0), 1},
+            {vec3(-halfSize.x, -halfSize.y, -halfSize.z), vec3(0.0f, 0.0f, -1.0f), vec2(0, 0), 1},
 
 
             //bottom
-            {vec3(halfSize.x, -halfSize.y, halfSize.z),   vec3(0.0f, -1.0f, 0.0f), vec2(0, 0), vec3(0.0f, 1.0f, 1.0f)},
-            {vec3(-halfSize.x, -halfSize.y, -halfSize.z), vec3(0.0f, -1.0f, 0.0f), vec2(1, 1), vec3(0.0f, 1.0f, 1.0f)},
-            {vec3(halfSize.x, -halfSize.y, -halfSize.z),  vec3(0.0f, -1.0f, 0.0f), vec2(0, 1), vec3(0.0f, 1.0f, 1.0f)},
-            {vec3(halfSize.x, -halfSize.y, halfSize.z),   vec3(0.0f, -1.0f, 0.0f), vec2(0, 0), vec3(0.0f, 1.0f, 1.0f)},
-            {vec3(-halfSize.x, -halfSize.y, halfSize.z),  vec3(0.0f, -1.0f, 0.0f), vec2(1, 0), vec3(0.0f, 1.0f, 1.0f)},
-            {vec3(-halfSize.x, -halfSize.y, -halfSize.z), vec3(0.0f, -1.0f, 0.0f), vec2(1, 1), vec3(0.0f, 1.0f, 1.0f)},
+            {vec3(halfSize.x, -halfSize.y, halfSize.z),   vec3(0.0f, -1.0f, 0.0f), vec2(0, 0), 1},
+            {vec3(-halfSize.x, -halfSize.y, -halfSize.z), vec3(0.0f, -1.0f, 0.0f), vec2(1, 1), 1},
+            {vec3(halfSize.x, -halfSize.y, -halfSize.z),  vec3(0.0f, -1.0f, 0.0f), vec2(0, 1), 1},
+            {vec3(halfSize.x, -halfSize.y, halfSize.z),   vec3(0.0f, -1.0f, 0.0f), vec2(0, 0), 1},
+            {vec3(-halfSize.x, -halfSize.y, halfSize.z),  vec3(0.0f, -1.0f, 0.0f), vec2(1, 0), 1},
+            {vec3(-halfSize.x, -halfSize.y, -halfSize.z), vec3(0.0f, -1.0f, 0.0f), vec2(1, 1), 1},
 
             //front
-            {vec3(-halfSize.x, halfSize.y, halfSize.z),   vec3(0.0f, 0.0f, 1.0f),  vec2(1, 1), vec3(0.0f, 1.0f, 0.0f)},
-            {vec3(-halfSize.x, -halfSize.y, halfSize.z),  vec3(0.0f, 0.0f, 1.0f),  vec2(1, 0), vec3(0.0f, 1.0f, 0.0f)},
-            {vec3(halfSize.x, -halfSize.y, halfSize.z),   vec3(0.0f, 0.0f, 1.0f),  vec2(0, 0), vec3(0.0f, 1.0f, 0.0f)},
-            {vec3(halfSize.x, halfSize.y, halfSize.z),    vec3(0.0f, 0.0f, 1.0f),  vec2(0, 1), vec3(0.0f, 1.0f, 0.0f)},
-            {vec3(-halfSize.x, halfSize.y, halfSize.z),   vec3(0.0f, 0.0f, 1.0f),  vec2(1, 1), vec3(0.0f, 1.0f, 0.0f)},
-            {vec3(halfSize.x, -halfSize.y, halfSize.z),   vec3(0.0f, 0.0f, 1.0f),  vec2(0, 0), vec3(0.0f, 1.0f, 0.0f)},
+            {vec3(-halfSize.x, halfSize.y, halfSize.z),   vec3(0.0f, 0.0f, 1.0f),  vec2(1, 1), alpha},
+            {vec3(-halfSize.x, -halfSize.y, halfSize.z),  vec3(0.0f, 0.0f, 1.0f),  vec2(1, 0), alpha},
+            {vec3(halfSize.x, -halfSize.y, halfSize.z),   vec3(0.0f, 0.0f, 1.0f),  vec2(0, 0), alpha},
+            {vec3(halfSize.x, halfSize.y, halfSize.z),    vec3(0.0f, 0.0f, 1.0f),  vec2(0, 1), alpha},
+            {vec3(-halfSize.x, halfSize.y, halfSize.z),   vec3(0.0f, 0.0f, 1.0f),  vec2(1, 1), alpha},
+            {vec3(halfSize.x, -halfSize.y, halfSize.z),   vec3(0.0f, 0.0f, 1.0f),  vec2(0, 0), alpha},
 
             //right
-            {vec3(halfSize.x, halfSize.y, halfSize.z),    vec3(1.0f, 0.0f, 0.0f),  vec2(1, 1), vec3(1.0f, 0.0f, 1.0f)},
-            {vec3(halfSize.x, -halfSize.y, -halfSize.z),  vec3(1.0f, 0.0f, 0.0f),  vec2(0, 0), vec3(1.0f, 0.0f, 1.0f)},
-            {vec3(halfSize.x, halfSize.y, -halfSize.z),   vec3(1.0f, 0.0f, 0.0f),  vec2(1, 0), vec3(1.0f, 0.0f, 1.0f)},
-            {vec3(halfSize.x, -halfSize.y, -halfSize.z),  vec3(1.0f, 0.0f, 0.0f),  vec2(0, 0), vec3(1.0f, 0.0f, 1.0f)},
-            {vec3(halfSize.x, halfSize.y, halfSize.z),    vec3(1.0f, 0.0f, 0.0f),  vec2(1, 1), vec3(1.0f, 0.0f, 1.0f)},
-            {vec3(halfSize.x, -halfSize.y, halfSize.z),   vec3(1.0f, 0.0f, 0.0f),  vec2(0, 1), vec3(1.0f, 0.0f, 1.0f)},
+            {vec3(halfSize.x, halfSize.y, halfSize.z),    vec3(1.0f, 0.0f, 0.0f),  vec2(1, 1), 1},
+            {vec3(halfSize.x, -halfSize.y, -halfSize.z),  vec3(1.0f, 0.0f, 0.0f),  vec2(0, 0), 1},
+            {vec3(halfSize.x, halfSize.y, -halfSize.z),   vec3(1.0f, 0.0f, 0.0f),  vec2(1, 0), 1},
+            {vec3(halfSize.x, -halfSize.y, -halfSize.z),  vec3(1.0f, 0.0f, 0.0f),  vec2(0, 0), 1},
+            {vec3(halfSize.x, halfSize.y, halfSize.z),    vec3(1.0f, 0.0f, 0.0f),  vec2(1, 1), 1},
+            {vec3(halfSize.x, -halfSize.y, halfSize.z),   vec3(1.0f, 0.0f, 0.0f),  vec2(0, 1), 1},
 
             //top
-            {vec3(halfSize.x, halfSize.y, halfSize.z),    vec3(0.0f, 1.0f, 0.0f),  vec2(1, 1), vec3(1.0f, 1.0f, 0.0f)},
-            {vec3(halfSize.x, halfSize.y, -halfSize.z),   vec3(0.0f, 1.0f, 0.0f),  vec2(0, 1), vec3(1.0f, 1.0f, 0.0f)},
-            {vec3(-halfSize.x, halfSize.y, -halfSize.z),  vec3(0.0f, 1.0f, 0.0f),  vec2(0, 0), vec3(1.0f, 1.0f, 0.0f)},
-            {vec3(halfSize.x, halfSize.y, halfSize.z),    vec3(0.0f, 1.0f, 0.0f),  vec2(1, 1), vec3(1.0f, 1.0f, 0.0f)},
-            {vec3(-halfSize.x, halfSize.y, -halfSize.z),  vec3(0.0f, 1.0f, 0.0f),  vec2(0, 0), vec3(1.0f, 1.0f, 0.0f)},
-            {vec3(-halfSize.x, halfSize.y, halfSize.z),   vec3(0.0f, 1.0f, 0.0f),  vec2(1, 0), vec3(1.0f, 1.0f, 0.0f)}
+            {vec3(halfSize.x, halfSize.y, halfSize.z),    vec3(0.0f, 1.0f, 0.0f),  vec2(1, 1), 1},
+            {vec3(halfSize.x, halfSize.y, -halfSize.z),   vec3(0.0f, 1.0f, 0.0f),  vec2(0, 1), 1},
+            {vec3(-halfSize.x, halfSize.y, -halfSize.z),  vec3(0.0f, 1.0f, 0.0f),  vec2(0, 0), 1},
+            {vec3(halfSize.x, halfSize.y, halfSize.z),    vec3(0.0f, 1.0f, 0.0f),  vec2(1, 1), 1},
+            {vec3(-halfSize.x, halfSize.y, -halfSize.z),  vec3(0.0f, 1.0f, 0.0f),  vec2(0, 0), 1},
+            {vec3(-halfSize.x, halfSize.y, halfSize.z),   vec3(0.0f, 1.0f, 0.0f),  vec2(1, 0), 1}
     };
 
     glGenVertexArrays(1, &mVAO);
@@ -95,7 +95,7 @@ CubeModel::CubeModel(vec3 size) {
     glEnableVertexAttribArray(1);
 
 
-    // 3rd attribute buffer : vertex color
+    // 3rd attribute buffer : vertex uv
     glVertexAttribPointer(2,
                           3,
                           GL_FLOAT,
@@ -104,16 +104,16 @@ CubeModel::CubeModel(vec3 size) {
                           (void *) (2 * sizeof(vec3)) // Color is Offseted by 2 vec3 (see class Vertex)
     );
     glEnableVertexAttribArray(2);
+
+    // 3rd attribute buffer : alpha
     glVertexAttribPointer(3,
                           3,
                           GL_FLOAT,
                           GL_FALSE,
                           sizeof(Vertex),
-                          (void *) ((2 * sizeof(vec3)) + sizeof(vec2)) // Color is Offseted by 2 vec3 (see class Vertex)
+                          (void *) (2 * sizeof(vec3) + sizeof(vec2))
     );
     glEnableVertexAttribArray(3);
-
-
 }
 
 void CubeModel::Draw() {
