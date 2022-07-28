@@ -15,6 +15,7 @@ out vec3 fragment_color;
 out vec3 fragment_position;
 out vec4 fragment_position_light_space;
 out vec2 vertexUV;
+out float fragment_alpha;
 
 void main()
 {
@@ -24,4 +25,5 @@ void main()
     fragment_position_light_space = light_view_proj_matrix_1 * light_view_proj_matrix_0 * vec4(fragment_position, 1.0);
     gl_Position = projectionMatrix * viewMatrix * worldMatrix * vec4(position, 1.0);
     vertexUV = aUV;
+    fragment_alpha = alpha;
 }
