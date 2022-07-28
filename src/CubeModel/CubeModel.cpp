@@ -11,7 +11,7 @@ struct Vertex {
     float alpha;
 };
 
-CubeModel::CubeModel(vec3 size) {
+CubeModel::CubeModel(vec3 size, float alpha) {
     vec3 halfSize = size * 0.5f;
     Vertex vertexBuffer[] = {  // position,                normal,                  UVs,                color,
             //left
@@ -40,12 +40,12 @@ CubeModel::CubeModel(vec3 size) {
             {vec3(-halfSize.x, -halfSize.y, -halfSize.z), vec3(0.0f, -1.0f, 0.0f), vec2(1, 1), 1},
 
             //front
-            {vec3(-halfSize.x, halfSize.y, halfSize.z),   vec3(0.0f, 0.0f, 1.0f),  vec2(1, 1), 1},
-            {vec3(-halfSize.x, -halfSize.y, halfSize.z),  vec3(0.0f, 0.0f, 1.0f),  vec2(1, 0), 1},
-            {vec3(halfSize.x, -halfSize.y, halfSize.z),   vec3(0.0f, 0.0f, 1.0f),  vec2(0, 0), 1},
-            {vec3(halfSize.x, halfSize.y, halfSize.z),    vec3(0.0f, 0.0f, 1.0f),  vec2(0, 1), 1},
-            {vec3(-halfSize.x, halfSize.y, halfSize.z),   vec3(0.0f, 0.0f, 1.0f),  vec2(1, 1), 1},
-            {vec3(halfSize.x, -halfSize.y, halfSize.z),   vec3(0.0f, 0.0f, 1.0f),  vec2(0, 0), 1},
+            {vec3(-halfSize.x, halfSize.y, halfSize.z),   vec3(0.0f, 0.0f, 1.0f),  vec2(1, 1), alpha},
+            {vec3(-halfSize.x, -halfSize.y, halfSize.z),  vec3(0.0f, 0.0f, 1.0f),  vec2(1, 0), alpha},
+            {vec3(halfSize.x, -halfSize.y, halfSize.z),   vec3(0.0f, 0.0f, 1.0f),  vec2(0, 0), alpha},
+            {vec3(halfSize.x, halfSize.y, halfSize.z),    vec3(0.0f, 0.0f, 1.0f),  vec2(0, 1), alpha},
+            {vec3(-halfSize.x, halfSize.y, halfSize.z),   vec3(0.0f, 0.0f, 1.0f),  vec2(1, 1), alpha},
+            {vec3(halfSize.x, -halfSize.y, halfSize.z),   vec3(0.0f, 0.0f, 1.0f),  vec2(0, 0), alpha},
 
             //right
             {vec3(halfSize.x, halfSize.y, halfSize.z),    vec3(1.0f, 0.0f, 0.0f),  vec2(1, 1), 1},
@@ -110,10 +110,10 @@ CubeModel::CubeModel(vec3 size) {
                           3,
                           GL_FLOAT,
                           GL_FALSE,
-                          sizeof(float),
-                          (void *) (2 * sizeof(vec3) + sizeof(vec2)) // Color is Offseted by 2 vec3 (see class Vertex)
+                          sizeof(Vertex),
+                          (void *) (2 * sizeof(vec3) + sizeof(vec2))
     );
-    glEnableVertexAttribArray(2);
+    glEnableVertexAttribArray(3);
 }
 
 void CubeModel::Draw() {

@@ -3,6 +3,7 @@
 layout (location = 0) in vec3 position;
 layout (location = 1) in vec3 normals;
 layout (location = 2) in vec2 aUV;
+layout (location = 3) in float alpha;
 
 uniform mat4 worldMatrix;
 uniform mat4 viewMatrix = mat4(1.0);
@@ -25,5 +26,13 @@ void main()
     fragment_position_light_space = light_view_proj_matrix_1 * light_view_proj_matrix_0 * vec4(fragment_position, 1.0);
     gl_Position = projectionMatrix * viewMatrix * worldMatrix * vec4(position, 1.0);
     vertexUV = aUV;
-    fragment_alpha = alpha;
+
+    if (alpha > 0)
+    {
+        fragment_alpha = alpha;
+    }
+    else
+    {
+        fragment_alpha = 1;
+    }
 }
