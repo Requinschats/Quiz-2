@@ -15,7 +15,7 @@ void WorldCube::Draw(TranslateMatrix *translateMatrix) {
     //world center is (0,0,0)
     translateMatrix->setPosition(0, 0, 0);
     //same size as the grid
-    translateMatrix->setSize(100, 100, 100);
+    translateMatrix->setSize(200, 200, 200);
     //binds the translation matrix to the shader program
     translateMatrix->bindTranslationMatrix(this->shaderProgram);
     cube->Draw();

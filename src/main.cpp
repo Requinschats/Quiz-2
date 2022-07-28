@@ -17,6 +17,7 @@
 #include "WorldCube/WorldCube.h"
 #include "characters/Characters.h"
 #include "./camera/Camera.h"
+#include "board-movement/BoardMovement.h"
 
 using namespace glm;
 
@@ -49,8 +50,9 @@ int main(int argc, char *argv[]) {
     WorldCube *worldCube = new WorldCube(shaders->texturedShaderProgram);
     Characters *characters = new Characters(shaders->texturedShaderProgram, textures, 2, 0);
 
+    BoardMovement *boardMovement = new BoardMovement(vec3(0, 0, -5));
+    Controller *activeController = cameras[activeControllerIndex]->controller;
     while (!glfwWindowShouldClose(window)) {
-        Controller *activeController = cameras[activeControllerIndex]->controller;
         float dt = glfwGetTime() - lastFrameTime;
         lastFrameTime += dt;
 
@@ -101,7 +103,7 @@ int main(int argc, char *argv[]) {
         textures->loadSkyTexture();
         worldCube->Draw(translateMatrix);
 
-        characters->Draw(translateMatrix, 0, -5);
+        characters->Draw(translateMatrix, boardMovement->position.x, boardMovement->position.z);
 
 
         handleViewInputs(window,
@@ -138,13 +140,24 @@ int main(int argc, char *argv[]) {
             translateMatrix->bindTranslationMatrix(shaders->bindedShader);
             cameras[activeControllerIndex]->controller->applyController();
         }
-        if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) {
+        if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
             characters->jumpAnimation->nextFrame();
             characters->setStateFromJumpFrame();
         }
+        if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS ||
+            (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS && glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)) {
+            if (characters->jumpAnimation->activeFrame.boardHeightIncrement != 0) {
+                characters->jumpAnimation->nextFrame();
+                characters->setStateFromJumpFrame();
+            }
+            boardMovement->moveLeft();
+        }
+        if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS) {
+            boardMovement->moveRight();
+        }
 
         glfwSwapBuffers(window);
-        glfwPollEvents();
+        glfwWaitEvents();
     }
 
     glfwTerminate();
