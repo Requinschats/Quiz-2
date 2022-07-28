@@ -11,7 +11,7 @@ public:
     int colorShaderProgram;
     int texturedShaderProgram;
     int bindedShader;
-    Lighting *lighting;
+    Lighting *main_lighting;
 
     Shaders();
 
@@ -22,4 +22,6 @@ public:
     void initializeTexturedShaderProgram();
 
     void useColorShaderProgram(Controller *controller, vec3 lightFocusCoordinate);
+
+    Lighting *secondary_lighting;
 };

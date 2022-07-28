@@ -8,7 +8,7 @@ using namespace glm;
 
 class Lighting {
 public:
-    Lighting();
+    Lighting(int lightId, vec3 lightPosition);
 
     double lightAngleOuter;
     double lightAngleInner;
@@ -19,6 +19,14 @@ public:
     void setParameters(int shaderProgram);
 
     void setObjectColor(int shaderProgram, vec3 objectColor);
+
+    int lightId;
+
+    void setLightPosition(int shaderProgram, vec3 newLightPosition);
+
+    vec<3, float, defaultp> lightFocus;
+
+    void setLightFocus(int shaderProgram, vec3 newLightFocus);
 };
 
 
