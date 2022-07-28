@@ -3,7 +3,7 @@
 #include "inputs.h"
 
 using namespace glm;
-float cameraSpeed = 5.0f;
+float cameraSpeed = 10.0f;
 
 void handleViewInputs(GLFWwindow *window,
                       int shaderProgram,
@@ -120,18 +120,6 @@ void handleActionInputs(
     }
     if (glfwGetKey(window, GLFW_KEY_Z) == GLFW_PRESS) {
         *withTexture = true;
-    }
-    if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) {
-        movement->moveForward();
-    }
-    if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS) {
-        movement->moveBackward();
-    }
-    if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS) {
-        movement->moveLeft();
-    }
-    if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS) {
-        movement->moveRight();
     }
 }
 
