@@ -1,5 +1,4 @@
 #include "Characters.h"
-#include "../Cube/Cube.h"
 #include "../skateboard/Skateboard.h"
 #include "random"
 #include "../CubeModel/CubeModel.h"
@@ -25,8 +24,10 @@ Characters::Characters(int shaderProgram, Textures *textures, float baseHeight, 
     this->letterIndex = 0;
     //skateboard height
     this->baseHeight = baseHeight;
+    this->currentHeight = baseHeight;
     //allows changing the state of the character if selected by keyboard inputs
     this->selectedCharacterIndex = selectedCharacterIndex;
+    this->jumpAnimation = new Jump();
 }
 
 // calculates the x-axis space between the letters
@@ -59,6 +60,7 @@ bool Characters::isSelectedCharacter(int characterIndex) {
 //Each character is assigned an index to be able to change the state of the character if selected by keyboard inputs
 //Position if passed down from the getLetterXPosition utility
 void Characters::Draw(TranslateMatrix *translateMatrix, float x_position, float z_position) {
+    this->rotationCenter = vec3(x_position, this->currentHeight, z_position);
     this->letterIndex = 0;
     this->textures->loadCarrotTexture();
     this->DrawF(translateMatrix, getLetterXPosition(x_position), z_position, 1);
@@ -66,29 +68,34 @@ void Characters::Draw(TranslateMatrix *translateMatrix, float x_position, float 
     this->DrawA(translateMatrix, getLetterXPosition(x_position), z_position, 2);
     this->DrawTwo(translateMatrix, getLetterXPosition(x_position), z_position);
     this->DrawFour(translateMatrix, getLetterXPosition(x_position), z_position);
-    (new Skateboard(shaderProgram, textures))->Draw(translateMatrix, x_position, z_position);
+    (new Skateboard(shaderProgram, textures, currentHeight - baseHeight, jumpAnimation->activeFrame.boardRotationAngle))
+            ->Draw(translateMatrix, x_position, z_position);
 }
 
 //Draw logic is explained at the top of this file
 //Note again that simple calculations are made based on shared values for the positions and sizes.
 void Characters::DrawF(TranslateMatrix *translateMatrix, float x_position, float z_position, int characterIndex) {
+    vec3 position;
     bool isSelected = isSelectedCharacter(characterIndex);
     vec3 color = getColorFromState(characterIndex);
 
     CubeModel *cube = new CubeModel();
-    translateMatrix->setPosition(x_position, baseHeight + this->letterHeight / 2, z_position);
+    translateMatrix->setPosition(x_position, currentHeight + this->letterHeight / 2, z_position);
+    translateMatrix->setObjectZRotationFromObjectCenter(jumpAnimation->activeFrame.boardRotationAngle, rotationCenter);
     translateMatrix->setSize(this->lineWidth, this->letterHeight, this->lineWidth);
     translateMatrix->bindTranslationMatrix(this->shaderProgram);
     cube->Draw();
 
-    translateMatrix->setPosition(x_position + letterWidth - lineWidth, baseHeight + this->letterHeight / 2 + 1,
+    translateMatrix->setPosition(x_position + letterWidth - lineWidth, currentHeight + this->letterHeight / 2 + 1,
                                  z_position);
+    translateMatrix->setObjectZRotationFromObjectCenter(jumpAnimation->activeFrame.boardRotationAngle, rotationCenter);
     translateMatrix->setSize(letterWidth, this->lineWidth, this->lineWidth);
     translateMatrix->bindTranslationMatrix(this->shaderProgram);
     cube->Draw();
 
-    translateMatrix->setPosition(x_position + letterWidth - lineWidth, baseHeight + this->letterHeight / 2 + 3.5f,
+    translateMatrix->setPosition(x_position + letterWidth - lineWidth, currentHeight + this->letterHeight / 2 + 3.5f,
                                  z_position);
+    translateMatrix->setObjectZRotationFromObjectCenter(jumpAnimation->activeFrame.boardRotationAngle, rotationCenter);
     translateMatrix->setSize(letterWidth, this->lineWidth, this->lineWidth);
     translateMatrix->bindTranslationMatrix(this->shaderProgram);
     cube->Draw();
@@ -104,27 +111,31 @@ void Characters::DrawA(TranslateMatrix *translateMatrix, float x_position, float
     CubeModel *cube = new CubeModel();
 
     //left column
-    translateMatrix->setPosition(x_position, baseHeight + this->letterHeight / 2, z_position);
+    translateMatrix->setPosition(x_position, currentHeight + this->letterHeight / 2, z_position);
+    translateMatrix->setObjectZRotationFromObjectCenter(jumpAnimation->activeFrame.boardRotationAngle, rotationCenter);
     translateMatrix->setSize(this->lineWidth, this->letterHeight, this->lineWidth);
     translateMatrix->bindTranslationMatrix(this->shaderProgram);
     cube->Draw();
 
     //right column
-    translateMatrix->setPosition(x_position + letterWidth + lineWidth, baseHeight + this->letterHeight / 2,
+    translateMatrix->setPosition(x_position + letterWidth + lineWidth, currentHeight + this->letterHeight / 2,
                                  z_position);
+    translateMatrix->setObjectZRotationFromObjectCenter(jumpAnimation->activeFrame.boardRotationAngle, rotationCenter);
     translateMatrix->bindTranslationMatrix(this->shaderProgram);
     cube->Draw();
 
     //middle bar
-    translateMatrix->setPosition(x_position + letterWidth - lineWidth, baseHeight + this->letterHeight / 2 + 1,
+    translateMatrix->setPosition(x_position + letterWidth - lineWidth, currentHeight + this->letterHeight / 2 + 1,
                                  z_position);
+    translateMatrix->setObjectZRotationFromObjectCenter(jumpAnimation->activeFrame.boardRotationAngle, rotationCenter);
     translateMatrix->setSize(letterWidth, this->lineWidth, this->lineWidth);
     translateMatrix->bindTranslationMatrix(this->shaderProgram);
     cube->Draw();
 
     //top bar
-    translateMatrix->setPosition(x_position + letterWidth - lineWidth, baseHeight + this->letterHeight / 2 + 3.5f,
+    translateMatrix->setPosition(x_position + letterWidth - lineWidth, currentHeight + this->letterHeight / 2 + 3.5f,
                                  z_position);
+    translateMatrix->setObjectZRotationFromObjectCenter(jumpAnimation->activeFrame.boardRotationAngle, rotationCenter);
     translateMatrix->setSize(letterWidth, this->lineWidth, this->lineWidth);
     translateMatrix->bindTranslationMatrix(this->shaderProgram);
     cube->Draw();
@@ -138,41 +149,47 @@ void Characters::DrawTwo(TranslateMatrix *translateMatrix, float x_position, flo
     CubeModel *cube = new CubeModel();
 
     //right column top
-    translateMatrix->setPosition(characterXPosition, baseHeight + this->letterHeight - lineWidth, z_position);
+    translateMatrix->setPosition(characterXPosition, currentHeight + this->letterHeight - lineWidth, z_position);
+    translateMatrix->setObjectZRotationFromObjectCenter(jumpAnimation->activeFrame.boardRotationAngle, rotationCenter);
     translateMatrix->setSize(this->lineWidth, this->lineWidth, this->lineWidth);
     translateMatrix->bindTranslationMatrix(this->shaderProgram);
     cube->Draw();
 
     //left column bottom
     int bottomLeftColumnHeight = this->letterHeight - 4 * lineWidth;
-    translateMatrix->setPosition(characterXPosition, baseHeight + bottomLeftColumnHeight / 2, z_position);
+    translateMatrix->setPosition(characterXPosition, currentHeight + bottomLeftColumnHeight / 2, z_position);
+    translateMatrix->setObjectZRotationFromObjectCenter(jumpAnimation->activeFrame.boardRotationAngle, rotationCenter);
     translateMatrix->setSize(this->lineWidth, bottomLeftColumnHeight, this->lineWidth);
     translateMatrix->bindTranslationMatrix(this->shaderProgram);
     cube->Draw();
 
     //right column bottom
     int bottomRightColumnHeight = this->letterHeight - 4 * lineWidth;
-    translateMatrix->setPosition(characterXPosition + letterWidth, baseHeight + letterHeight - 1.5 * lineWidth,
+    translateMatrix->setPosition(characterXPosition + letterWidth, currentHeight + letterHeight - 1.5 * lineWidth,
                                  z_position);
+    translateMatrix->setObjectZRotationFromObjectCenter(jumpAnimation->activeFrame.boardRotationAngle, rotationCenter);
     translateMatrix->setSize(this->lineWidth, bottomRightColumnHeight, this->lineWidth);
     translateMatrix->bindTranslationMatrix(this->shaderProgram);
     cube->Draw();
 
     //top bar
-    translateMatrix->setPosition(characterXPosition + lineWidth, baseHeight + this->letterHeight, z_position);
+    translateMatrix->setPosition(characterXPosition + lineWidth, currentHeight + this->letterHeight, z_position);
+    translateMatrix->setObjectZRotationFromObjectCenter(jumpAnimation->activeFrame.boardRotationAngle, rotationCenter);
     translateMatrix->setSize(this->letterWidth, this->lineWidth, this->lineWidth);
     translateMatrix->bindTranslationMatrix(this->shaderProgram);
     cube->Draw();
 
     //middle bar
-    translateMatrix->setPosition(characterXPosition + letterWidth / 2, baseHeight + letterHeight / 2 + lineWidth / 2,
+    translateMatrix->setPosition(characterXPosition + letterWidth / 2, currentHeight + letterHeight / 2 + lineWidth / 2,
                                  z_position);
+    translateMatrix->setObjectZRotationFromObjectCenter(jumpAnimation->activeFrame.boardRotationAngle, rotationCenter);
     translateMatrix->setSize(this->letterWidth + lineWidth, this->lineWidth, this->lineWidth);
     translateMatrix->bindTranslationMatrix(this->shaderProgram);
     cube->Draw();
 
     //bottom bar
-    translateMatrix->setPosition(characterXPosition + letterWidth / 2, baseHeight + lineWidth, z_position);
+    translateMatrix->setPosition(characterXPosition + letterWidth / 2, currentHeight + lineWidth, z_position);
+    translateMatrix->setObjectZRotationFromObjectCenter(jumpAnimation->activeFrame.boardRotationAngle, rotationCenter);
     translateMatrix->setSize(this->letterWidth, this->lineWidth, this->lineWidth);
     translateMatrix->bindTranslationMatrix(this->shaderProgram);
     cube->Draw();
@@ -186,23 +203,30 @@ void Characters::DrawFour(TranslateMatrix *translateMatrix, float x_position, fl
     CubeModel *cube = new CubeModel();
 
     //right column
-    translateMatrix->setPosition(characterXPosition + letterWidth, baseHeight + this->letterHeight / 2, z_position);
+    translateMatrix->setPosition(characterXPosition + letterWidth, currentHeight + this->letterHeight / 2, z_position);
+    translateMatrix->setObjectZRotationFromObjectCenter(jumpAnimation->activeFrame.boardRotationAngle, rotationCenter);
     translateMatrix->setSize(this->lineWidth, this->letterHeight, this->lineWidth);
     translateMatrix->bindTranslationMatrix(this->shaderProgram);
     cube->Draw();
 
     //left column
-    translateMatrix->setPosition(characterXPosition, baseHeight + this->letterHeight - 2 * lineWidth, z_position);
+    translateMatrix->setPosition(characterXPosition, currentHeight + this->letterHeight - 2 * lineWidth, z_position);
+    translateMatrix->setObjectZRotationFromObjectCenter(jumpAnimation->activeFrame.boardRotationAngle, rotationCenter);
     translateMatrix->setSize(this->lineWidth, this->letterHeight / 2, this->lineWidth);
     translateMatrix->bindTranslationMatrix(this->shaderProgram);
     cube->Draw();
 
     //middle bar
-    translateMatrix->setPosition(characterXPosition + letterWidth / 2, baseHeight + letterHeight / 2 + lineWidth / 2,
+    translateMatrix->setPosition(characterXPosition + letterWidth / 2, currentHeight + letterHeight / 2 + lineWidth / 2,
                                  z_position);
+    translateMatrix->setObjectZRotationFromObjectCenter(jumpAnimation->activeFrame.boardRotationAngle, rotationCenter);
     translateMatrix->setSize(this->letterWidth + lineWidth, this->lineWidth, this->lineWidth);
     translateMatrix->bindTranslationMatrix(this->shaderProgram);
     cube->Draw();
 
     this->letterIndex++;
+}
+
+void Characters::setStateFromJumpFrame() {
+    this->currentHeight += jumpAnimation->activeFrame.boardHeightIncrement;
 }
