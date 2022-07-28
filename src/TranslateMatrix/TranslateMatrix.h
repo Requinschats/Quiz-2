@@ -57,6 +57,8 @@ class TranslateMatrix {
         float z;
     };
 public:
+    void setObjectZRotationFromObjectCenter(float rotationAngle, vec3 objectCenter);
+
     TranslateMatrix(float x_position,
                     float y_position,
                     float z_position,

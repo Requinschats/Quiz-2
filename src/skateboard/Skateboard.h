@@ -3,7 +3,7 @@
 
 class Skateboard {
 public:
-    Skateboard(int shaderProgram, Textures *textures, float currentHeight);
+    Skateboard(int shaderProgram, Textures *textures, float currentHeight, float rotationAngle);
 
     void Draw(
             TranslateMatrix *translateMatrix,
@@ -15,4 +15,5 @@ public:
     float height;
     Textures *textures;
     float currentHeight;
+    float rotationAngle;
 };

@@ -75,6 +75,13 @@ void TranslateMatrix::setObjectZRotationAngle(float rotationAngle, vec3 pathToRo
     this->objectRotation.zAxisRotation.pathToRotationMatrix = pathToRotationAxis;
 }
 
+void TranslateMatrix::setObjectZRotationFromObjectCenter(float rotationAngle, vec3 objectCenter) {
+    this->objectRotation.zAxisRotation.objectRotationAngle = rotationAngle;
+    this->objectRotation.zAxisRotation.pathToRotationMatrix = vec3(-position.x + objectCenter.x,
+                                                                   -position.y + objectCenter.y,
+                                                                   -position.z + objectCenter.z);
+}
+
 void TranslateMatrix::setPosition(float x_position, float y_position, float z_position) {
     this->position.x = x_position;
     this->position.y = y_position;

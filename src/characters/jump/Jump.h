@@ -5,10 +5,10 @@ struct JumpFrame {
 
 static JumpFrame jumpFrames[5] = {
         {0,   0},
-        {60,  10},
-        {180, 10},
-        {300, -10},
-        {360, -10}
+        {30,  7},
+        {0,   7},
+        {330, -7},
+        {0,   -7}
 };
 
 class Jump {
