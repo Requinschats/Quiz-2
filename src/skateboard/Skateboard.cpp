@@ -1,13 +1,13 @@
 #include "Skateboard.h"
-#include "../Cube/Cube.h"
 #include "../CubeModel/CubeModel.h"
 #include "../sphere/Sphere.h"
 
 // constructor that sets the default values
-Skateboard::Skateboard(int shaderProgram, Textures *textures) {
+Skateboard::Skateboard(int shaderProgram, Textures *textures, float currentHeight) {
     this->shaderProgram = shaderProgram;
     this->textures = textures;
     this->height = 1.0f;
+    this->currentHeight = currentHeight;
 }
 
 // draws the skateboard. The process can be resumed as followed for every cube or part of the object.
@@ -28,25 +28,25 @@ void Skateboard::Draw(TranslateMatrix *translateMatrix, float x_position, float 
     //wheels
     float wheelSize = 1.5f;
     //wheel 1
-    translateMatrix->setPosition(x_position, wheelSize, backFaceZPosition);
+    translateMatrix->setPosition(x_position, currentHeight + wheelSize, backFaceZPosition);
     translateMatrix->setSize(wheelSize, wheelSize + 0.25, wheelSize);
     translateMatrix->bindTranslationMatrix(this->shaderProgram);
     wheelCube->draw();
 
     //wheel 2
-    translateMatrix->setPosition(x_position, wheelSize, frontFaceZPosition);
+    translateMatrix->setPosition(x_position, currentHeight + wheelSize, frontFaceZPosition);
     translateMatrix->setSize(wheelSize, wheelSize + 0.25, wheelSize);
     translateMatrix->bindTranslationMatrix(this->shaderProgram);
     wheelCube->draw();
 
     //wheel 3
-    translateMatrix->setPosition(x_position + boardLength, wheelSize, frontFaceZPosition);
+    translateMatrix->setPosition(x_position + boardLength, currentHeight + wheelSize, frontFaceZPosition);
     translateMatrix->setSize(wheelSize, wheelSize + 0.25, wheelSize);
     translateMatrix->bindTranslationMatrix(this->shaderProgram);
     wheelCube->draw();
 
     //wheel 4
-    translateMatrix->setPosition(x_position + boardLength, wheelSize, backFaceZPosition);
+    translateMatrix->setPosition(x_position + boardLength, currentHeight + wheelSize, backFaceZPosition);
     translateMatrix->setSize(wheelSize, wheelSize + 0.25, wheelSize);
     translateMatrix->bindTranslationMatrix(this->shaderProgram);
     wheelCube->draw();
@@ -57,7 +57,7 @@ void Skateboard::Draw(TranslateMatrix *translateMatrix, float x_position, float 
     float plankLength = boardLength + 2 * wheelSize;
     float plankHeight = 0.25f;
     float plankYPosition = wheelSize + 0.75 + plankHeight;
-    translateMatrix->setPosition(x_position + plankLength / 2 - wheelSize, plankYPosition, z_position);
+    translateMatrix->setPosition(x_position + plankLength / 2 - wheelSize, currentHeight + plankYPosition, z_position);
     translateMatrix->setSize(plankLength, plankHeight, boardWidth * 1.25);
     translateMatrix->bindTranslationMatrix(this->shaderProgram);
     boardCube->Draw();

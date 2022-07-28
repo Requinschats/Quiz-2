@@ -1,5 +1,6 @@
 #include "../TranslateMatrix/TranslateMatrix.h"
 #include "../Textures/Textures.h"
+#include "jump/Jump.h"
 
 class Characters {
 public:
@@ -12,6 +13,10 @@ public:
     );
 
     int shaderProgram;
+
+    Jump *jumpAnimation;
+
+    void setStateFromJumpFrame();
 
 private:
     float letterHeight;
@@ -51,5 +56,5 @@ private:
 
     void DrawFour(TranslateMatrix *translateMatrix, float x_position, float z_position);
 
-    Movement *movement;
+    float currentHeight;
 };

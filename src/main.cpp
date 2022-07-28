@@ -117,6 +117,10 @@ int main(int argc, char *argv[]) {
             translateMatrix->bindTranslationMatrix(shaders->bindedShader);
             cameras[activeControllerIndex]->controller->applyController();
         }
+        if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) {
+            characters->jumpAnimation->nextFrame();
+            characters->setStateFromJumpFrame();
+        }
 
         glfwSwapBuffers(window);
         glfwWaitEvents();
