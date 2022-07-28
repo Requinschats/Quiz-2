@@ -52,13 +52,13 @@ int main(int argc, char *argv[]) {
 
     BoardMovement *boardMovement = new BoardMovement(vec3(0, 0, -5));
     Controller *activeController = cameras[activeControllerIndex]->controller;
+    float referenceTime = 0;
     while (!glfwWindowShouldClose(window)) {
         float dt = glfwGetTime() - lastFrameTime;
         lastFrameTime += dt;
 
-        if (lastFrameTime > 2) {
-            //print lastFrameTime
-            glfwSetTime(0);
+        if (lastFrameTime - referenceTime > 2) {
+            referenceTime = lastFrameTime;
             random_device randomDevice;
             std::mt19937 gen(randomDevice());
             std::uniform_int_distribution<> distribution(-20, 20);
