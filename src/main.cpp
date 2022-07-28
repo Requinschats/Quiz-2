@@ -4,6 +4,7 @@
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include <random>
 #include "./initialization/initialization.h"
 #include "Cube/Cube.h"
 #include "Olaf/Olaf.h"
@@ -52,6 +53,21 @@ int main(int argc, char *argv[]) {
         Controller *activeController = cameras[activeControllerIndex]->controller;
         float dt = glfwGetTime() - lastFrameTime;
         lastFrameTime += dt;
+
+        if (lastFrameTime > 2) {
+            //print lastFrameTime
+            glfwSetTime(0);
+            random_device randomDevice;
+            std::mt19937 gen(randomDevice());
+            std::uniform_int_distribution<> distribution(-20, 20);
+            float randomNumber = distribution(gen);
+            vec3 currentLightPosition = shaders->main_lighting->lightPosition;
+            vec updatedLightPosition = vec3(currentLightPosition.x + randomNumber,
+                                            currentLightPosition.y + randomNumber,
+                                            currentLightPosition.z + randomNumber);
+            shaders->main_lighting->setLightPosition(shaders->texturedShaderProgram, updatedLightPosition);
+            shaders->main_lighting->setParameters(shaders->texturedShaderProgram);
+        }
 
         shaders->secondary_lighting->setLightPosition(shaders->texturedShaderProgram, activeController->cameraPosition);
         shaders->secondary_lighting->setLightFocus(shaders->texturedShaderProgram, activeController->cameraLookAt);
@@ -128,7 +144,7 @@ int main(int argc, char *argv[]) {
         }
 
         glfwSwapBuffers(window);
-        glfwWaitEvents();
+        glfwPollEvents();
     }
 
     glfwTerminate();
