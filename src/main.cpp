@@ -49,14 +49,18 @@ int main(int argc, char *argv[]) {
     Characters *characters = new Characters(shaders->texturedShaderProgram, textures, 2, 0);
 
     while (!glfwWindowShouldClose(window)) {
+        Controller *activeController = cameras[activeControllerIndex]->controller;
+        float dt = glfwGetTime() - lastFrameTime;
+        lastFrameTime += dt;
+
+        shaders->secondary_lighting->setLightPosition(shaders->texturedShaderProgram, activeController->cameraPosition);
+        shaders->secondary_lighting->setLightFocus(shaders->texturedShaderProgram, activeController->cameraLookAt);
+
         Olaf *olaf = new Olaf(shaders, cameras[activeControllerIndex]->controller, textures);
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
         shaders->useColorShaderProgram(cameras[activeControllerIndex]->controller, olaf->movement->position);
-
-        float dt = glfwGetTime() - lastFrameTime;
-        lastFrameTime += dt;
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -68,7 +72,8 @@ int main(int argc, char *argv[]) {
 
 
         glUseProgram(shaders->texturedShaderProgram);
-        shaders->lighting->setParameters(shaders->texturedShaderProgram);
+        shaders->main_lighting->setParameters(shaders->texturedShaderProgram);
+        shaders->secondary_lighting->setParameters(shaders->texturedShaderProgram);
         cameras[activeControllerIndex]->controller->setShader(&shaders->texturedShaderProgram);
 
         textures->loadSnowTexture();

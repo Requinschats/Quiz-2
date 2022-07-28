@@ -4,8 +4,10 @@
 const float PI = 3.1415926535897932384626433832795;
 
 uniform vec3 light_color;
-uniform vec3 light_position;
-uniform vec3 light_direction;
+uniform vec3 light_position_0;
+uniform vec3 light_position_1;
+uniform vec3 light_direction_0;
+uniform vec3 light_direction_1;
 uniform vec3 object_color;
 
 const float shading_ambient_strength = 0.6;
@@ -14,8 +16,10 @@ const float shading_specular_strength = 0.6;
 
 uniform float light_cutoff_outer;
 uniform float light_cutoff_inner;
-uniform float light_near_plane;
-uniform float light_far_plane;
+uniform float light_near_plane_0;
+uniform float light_near_plane_1;
+uniform float light_far_plane_0;
+uniform float light_far_plane_1;
 uniform vec3 view_position;
 uniform sampler2D shadow_map;
 uniform sampler2D textureSampler;
@@ -35,14 +39,14 @@ vec3 ambient_color(vec3 light_color_arg) {
 }
 
 vec3 diffuse_color(vec3 light_color_arg, vec3 light_position_arg) {
-    vec3 light_direction = normalize(light_position_arg - fragment_position);
-    return shading_diffuse_strength * light_color_arg * max(dot(normalize(fragment_normal), light_direction), 0.0f);
+    vec3 light_direction_0 = normalize(light_position_arg - fragment_position);
+    return shading_diffuse_strength * light_color_arg * max(dot(normalize(fragment_normal), light_direction_0), 0.0f);
 }
 
 vec3 specular_color(vec3 light_color_arg, vec3 light_position_arg) {
-    vec3 light_direction = normalize(light_position_arg - fragment_position);
+    vec3 light_direction_0 = normalize(light_position_arg - fragment_position);
     vec3 view_direction = normalize(view_position - fragment_position);
-    vec3 reflect_light_direction = reflect(-light_direction, normalize(fragment_normal));
+    vec3 reflect_light_direction = reflect(-light_direction_0, normalize(fragment_normal));
     return shading_specular_strength * light_color_arg * pow(max(dot(reflect_light_direction, view_direction), 0.0f), 32);
 }
 
@@ -55,8 +59,20 @@ float shadow_scalar() {
     return ((current_depth - bias) < closest_depth) ? 1.0 : 0.0;
 }
 
-float spotlight_scalar() {
-    float theta = dot(normalize(fragment_position - light_position), light_direction);
+float spotlight_scalar_0() {
+    float theta = dot(normalize(fragment_position - light_position_0), light_direction_0);
+
+    if (theta > light_cutoff_inner) {
+        return 1.0;
+    } else if (theta > light_cutoff_outer) {
+        return (1.0 - cos(PI * (theta - light_cutoff_outer) / (light_cutoff_inner - light_cutoff_outer))) / 2.0;
+    } else {
+        return 0.0;
+    }
+}
+
+float spotlight_scalar_1() {
+    float theta = dot(normalize(fragment_position - light_position_1), light_direction_1);
 
     if (theta > light_cutoff_inner) {
         return 1.0;
@@ -73,10 +89,11 @@ void main()
     vec3 diffuse = vec3(0.0f);
     vec3 specular = vec3(0.0f);
 
-    float scalar = shadow_scalar() * spotlight_scalar();
+    float scalar_0 = shadow_scalar() * spotlight_scalar_0();
+    float scalar_1 = shadow_scalar() * spotlight_scalar_1();
     ambient = ambient_color(light_color);
-    diffuse = scalar * diffuse_color(light_color, light_position);
-    specular = scalar * specular_color(light_color, light_position);
+    diffuse = scalar_1 * scalar_0 * diffuse_color(light_color, light_position_0);
+    specular = scalar_1 * scalar_0 * specular_color(light_color, light_position_0);
 
     FragColor = vec4((vec3(texture(textureSampler, vertexUV)) * (specular + diffuse + ambient)), 1.0);
 }
