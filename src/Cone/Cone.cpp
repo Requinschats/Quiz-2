@@ -5,7 +5,7 @@
 using namespace std;
 
 Cone::Cone() {
-    string cubePath = "assets/models/sphere.obj";
+    string cubePath = "assets/models/cone.obj";
 
     int cubeVertices;
     GLuint cubeVAO = setupModelEBO(cubePath, cubeVertices);
