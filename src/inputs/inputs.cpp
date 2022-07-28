@@ -3,7 +3,7 @@
 #include "inputs.h"
 
 using namespace glm;
-float cameraSpeed = 5.0f;
+float cameraSpeed = 10.0f;
 
 void handleViewInputs(GLFWwindow *window,
                       int shaderProgram,
