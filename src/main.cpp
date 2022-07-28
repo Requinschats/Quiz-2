@@ -121,9 +121,6 @@ int main(int argc, char *argv[]) {
             characters->jumpAnimation->nextFrame();
             characters->setStateFromJumpFrame();
         }
-        if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS) {
-            characters
-        }
 
         glfwSwapBuffers(window);
         glfwWaitEvents();
