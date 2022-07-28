@@ -25,7 +25,7 @@ set(ASSETS assets)
 
 file(GLOB SRC src/*.cpp src/*/*.cpp src/*/*.h src/sources/*/*.cpp src/sources/*/*.h)
 
-add_executable(${EXEC} ${SRC} src/Olaf/movement/Movement.cpp src/Olaf/movement/Movement.h src/CubeModel/CubeModel.cpp src/CubeModel/CubeModel.h src/quiz2-axis/Quiz2Axis.cpp src/quiz2-axis/Quiz2Axis.h src/characters/Characters.cpp src/camera/Camera.h src/characters/jump/Jump.cpp src/characters/jump/Jump.h)
+add_executable(${EXEC} ${SRC} src/Olaf/movement/Movement.cpp src/Olaf/movement/Movement.h src/CubeModel/CubeModel.cpp src/CubeModel/CubeModel.h src/quiz2-axis/Quiz2Axis.cpp src/quiz2-axis/Quiz2Axis.h src/characters/Characters.cpp src/camera/Camera.h src/characters/jump/Jump.cpp src/characters/jump/Jump.h src/Cone/Cone.cpp src/Cone/Cone.h)
 target_include_directories(${EXEC} PRIVATE include)
 target_link_libraries(${EXEC} OpenGL::GL glew_s glfw glm)
 
