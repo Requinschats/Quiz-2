@@ -2,7 +2,7 @@
 #include <iostream>
 #include "../objectLoader/ObjectLoader.h"
 
-using namespace std;w
+using namespace std;
 
 Sphere::Sphere() {
     string cubePath = "assets/models/sphere.obj";
@@ -22,3 +22,4 @@ void Sphere::draw() {
     glDrawElements(GL_TRIANGLES, cubeVertices, GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
 }
+
