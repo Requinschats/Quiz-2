@@ -57,4 +57,5 @@ private:
     void DrawFour(TranslateMatrix *translateMatrix, float x_position, float z_position);
 
     float currentHeight;
+    vec<3, float, defaultp> rotationCenter;
 };
