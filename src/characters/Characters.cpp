@@ -3,6 +3,7 @@
 #include "../skateboard/Skateboard.h"
 #include "random"
 #include "../CubeModel/CubeModel.h"
+#include "movement/Movement.h"
 
 using namespace std;
 
@@ -27,6 +28,7 @@ Characters::Characters(int shaderProgram, Textures *textures, float baseHeight, 
     this->baseHeight = baseHeight;
     //allows changing the state of the character if selected by keyboard inputs
     this->selectedCharacterIndex = selectedCharacterIndex;
+    this->movement = new Movement(vec3(0, 0, 0));
 }
 
 // calculates the x-axis space between the letters

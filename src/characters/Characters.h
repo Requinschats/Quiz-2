@@ -50,4 +50,6 @@ private:
     void DrawTwo(TranslateMatrix *translateMatrix, float x_position, float z_position);
 
     void DrawFour(TranslateMatrix *translateMatrix, float x_position, float z_position);
+
+    Movement *movement;
 };
