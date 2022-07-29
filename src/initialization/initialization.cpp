@@ -37,9 +37,13 @@ GLFWwindow *initializeWindow() {
         return NULL;
     }
 
+    //enable depth testing to avoid z-fighting
     glEnable(GL_DEPTH_TEST);
+
+    //hide hidden faces (backface culling)
     glEnable(GL_CULL_FACE);
 
+    //force resize to be in a given aspect ratio
     glfwSetWindowSizeCallback(window, window_size_callback);
 
     return window;
