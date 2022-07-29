@@ -24,9 +24,11 @@ Characters::Characters(int shaderProgram, Textures *textures, float baseHeight, 
     this->letterIndex = 0;
     //skateboard height
     this->baseHeight = baseHeight;
+    //handles the height during the jump animation
     this->currentHeight = baseHeight;
     //allows changing the state of the character if selected by keyboard inputs
     this->selectedCharacterIndex = selectedCharacterIndex;
+    //initialize to the default frame of the jump animation
     this->jumpAnimation = new Jump();
 }
 
@@ -62,12 +64,15 @@ bool Characters::isSelectedCharacter(int characterIndex) {
 void Characters::Draw(TranslateMatrix *translateMatrix, float x_position, float z_position) {
     this->rotationCenter = vec3(x_position, this->currentHeight, z_position);
     this->letterIndex = 0;
+    //arbitrary texture loaded with helper class
     this->textures->loadCarrotTexture();
     this->DrawF(translateMatrix, getLetterXPosition(x_position), z_position, 1);
+    //arbitrary texture loaded with helper class
     this->textures->loadGreenTexture();
     this->DrawA(translateMatrix, getLetterXPosition(x_position), z_position, 2);
     this->DrawTwo(translateMatrix, getLetterXPosition(x_position), z_position);
     this->DrawFour(translateMatrix, getLetterXPosition(x_position), z_position);
+    //one shared for all letters. Its current height is offset and the state of the animation is passed down.
     (new Skateboard(shaderProgram, textures, currentHeight - baseHeight, jumpAnimation->activeFrame.boardRotationAngle))
             ->Draw(translateMatrix, x_position, z_position);
 }
@@ -100,12 +105,14 @@ void Characters::DrawF(TranslateMatrix *translateMatrix, float x_position, float
     translateMatrix->bindTranslationMatrix(this->shaderProgram);
     cube->Draw();
 
+    //handles the space between the letters
     this->letterIndex++;
 }
 
 //Draw logic is explained at the top of this file
 void Characters::DrawA(TranslateMatrix *translateMatrix, float x_position, float z_position, int characterIndex) {
     bool isSelected = isSelectedCharacter(characterIndex);
+    //dead code
     vec3 color = getColorFromState(characterIndex);
 
     CubeModel *cube = new CubeModel(vec3(1, 1, 1), 0.2);
@@ -140,11 +147,13 @@ void Characters::DrawA(TranslateMatrix *translateMatrix, float x_position, float
     translateMatrix->bindTranslationMatrix(this->shaderProgram);
     cube->Draw();
 
+    //handles the space between the letters
     this->letterIndex++;
 }
 
 void Characters::DrawTwo(TranslateMatrix *translateMatrix, float x_position, float z_position) {
     float characterXPosition = x_position + 2;
+    //arbitrary texture loaded with helper class
     this->textures->loadBlueTexture();
     CubeModel *cube = new CubeModel(vec3(1, 1, 1), 0.2);
 
@@ -194,10 +203,12 @@ void Characters::DrawTwo(TranslateMatrix *translateMatrix, float x_position, flo
     translateMatrix->bindTranslationMatrix(this->shaderProgram);
     cube->Draw();
 
+    //handles the space between the letters
     this->letterIndex++;
 }
 
 void Characters::DrawFour(TranslateMatrix *translateMatrix, float x_position, float z_position) {
+    //arbitrary texture loaded with helper class
     this->textures->loadGlossyTexture();
     float characterXPosition = x_position + 2;
     CubeModel *cube = new CubeModel(vec3(1, 1, 1), 0.2);
@@ -228,5 +239,6 @@ void Characters::DrawFour(TranslateMatrix *translateMatrix, float x_position, fl
 }
 
 void Characters::setStateFromJumpFrame() {
+    //increments the height from the frame dictated increment
     this->currentHeight += jumpAnimation->activeFrame.boardHeightIncrement;
 }

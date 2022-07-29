@@ -2,6 +2,7 @@
 #include "../Textures/Textures.h"
 #include "jump/Jump.h"
 
+//definitions only. Comments in other file.
 class Characters {
 public:
     Characters(int shaderProgram, Textures *textures, float baseHeight, int selectedCharacterIndex);
