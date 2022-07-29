@@ -1,5 +1,8 @@
 # COMP371-A2
 
+# Before running setup working directory to root
+
+
 ### Implemented controls:
 
 - A: Move left
