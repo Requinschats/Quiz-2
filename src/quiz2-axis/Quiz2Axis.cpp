@@ -6,17 +6,24 @@
 
 using namespace glm;
 
+//Axis specific for Quiz 2. Uses cubes and cones at the extremities of the axis.
+
 Quiz2Axis::Quiz2Axis(Textures *textures) {
     this->textures = textures;
 }
 
 void Quiz2Axis::draw(TranslateMatrix *translateMatrix, Shaders *shaders) {
+    //load default cube and cone
     CubeModel *cube = new CubeModel(vec3(2, 2, 2));
     Cone *cone = new Cone();
 
+    //shared geometry
     float axisLength = 5.0f;
     float axisWidth = 0.35f;
     float axisHeight = 0.35f;
+
+    //typical rendering logic. Translate. Rotate. Scale. Bind. Draw.
+    //Unique texture is loaded for every axis.
 
     //axis x
     this->textures->loadCarrotTexture();
