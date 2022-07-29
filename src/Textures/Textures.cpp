@@ -10,6 +10,7 @@
 
 #include <stb_image.h>
 
+//FROM LAB CODE
 GLuint loadTexture(const char *filename) {
     // Step1 Create and bind textures
     GLuint textureId = 0;
@@ -17,6 +18,7 @@ GLuint loadTexture(const char *filename) {
     assert(textureId != 0);
 
 
+    //bind the texture to the texture unit
     glBindTexture(GL_TEXTURE_2D, textureId);
 
     // Step2 Set filter parameters
@@ -32,6 +34,7 @@ GLuint loadTexture(const char *filename) {
     int width, height, nrChannels;
 
     unsigned char *data = stbi_load(filename, &width, &height, &nrChannels, 0);
+    //error handling if the load failed
     if (!data) {
         std::cerr << "Error::Texture could not load texture file:" << filename << std::endl;
         return 0;
@@ -56,6 +59,7 @@ GLuint loadTexture(const char *filename) {
 
 Textures::Textures(int texturedShaderProgram) {
     this->texturedShaderProgram = texturedShaderProgram;
+    //store all texture IDs in their attribute
     this->snowTextureID = loadTexture("assets/textures/snow.jpeg");
     this->carrotTextureID = loadTexture("assets/textures/carrot.jpeg");
     this->metalTextureID = loadTexture("assets/textures/metal.jpeg");
@@ -66,8 +70,11 @@ Textures::Textures(int texturedShaderProgram) {
     this->glossyTextureID = loadTexture("assets/textures/glossy.jpeg");
 }
 
+//all the following functions are basically the same and are used to set the texture in the shader to the desired texture through the textureID
 void Textures::loadSnowTexture() {
+    //activate the texture slot
     glActiveTexture(GL_TEXTURE0);
+    //bind the texture
     glBindTexture(GL_TEXTURE_2D, snowTextureID);
     GLuint textureLocation = glGetUniformLocation(texturedShaderProgram, "textureSampler");
     glBindTexture(GL_TEXTURE_2D, snowTextureID);

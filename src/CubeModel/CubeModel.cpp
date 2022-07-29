@@ -6,11 +6,13 @@ using namespace glm;
 
 struct Vertex {
     glm::vec3 position;
-    glm::vec3 normal;
-    glm::vec2 UVs;
-    float alpha;
+    glm::vec3 normal; // for lighting
+    glm::vec2 UVs; //for texture
+    float alpha; //for transparency
 };
 
+
+//I had to revert back to using drawElements to properly apply textures because normals of a given vertex differ based on the face it is on.
 CubeModel::CubeModel(vec3 size, float alpha) {
     vec3 halfSize = size * 0.5f;
     Vertex vertexBuffer[] = {  // position,                normal,                  UVs,                color,
@@ -116,6 +118,7 @@ CubeModel::CubeModel(vec3 size, float alpha) {
     glEnableVertexAttribArray(3);
 }
 
+//draw call
 void CubeModel::Draw() {
     glBindVertexArray(mVAO);
     glBindBuffer(GL_ARRAY_BUFFER, mVBO);

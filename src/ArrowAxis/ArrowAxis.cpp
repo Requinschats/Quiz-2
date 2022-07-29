@@ -2,6 +2,8 @@
 #include "ArrowAxis.h"
 #include "../initialization/initialization.h"
 
+////DEAD CODE//////
+
 const GLfloat axisVertices[] = {
         0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, //position, color
         5.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,

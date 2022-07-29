@@ -1,6 +1,8 @@
 #include "GL/glew.h"
 #include "../TranslateMatrix/TranslateMatrix.h"
 
+////DEAD CODE//////
+
 class ArrowAxis {
 public:
     ArrowAxis();

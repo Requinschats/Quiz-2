@@ -15,6 +15,7 @@
 
 using namespace std;
 
+//dead code
 GLuint setupModelVBO(string path, int &vertexCount) {
     std::vector<glm::vec3> vertices;
     std::vector<glm::vec3> normals;
@@ -57,6 +58,11 @@ GLuint setupModelVBO(string path, int &vertexCount) {
     vertexCount = vertices.size();
     return VAO;
 }
+
+//From lab code.
+//Parse the file
+//Map attributes to attributes pointer in the vertices
+//Stores the results in a VAO
 
 //Sets up a model using an Element Buffer Object to refer to vertex data
 GLuint setupModelEBO(string path, int &vertexCount) {
