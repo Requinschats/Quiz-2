@@ -7,6 +7,7 @@ Skateboard::Skateboard(int shaderProgram, Textures *textures, float currentHeigh
     this->shaderProgram = shaderProgram;
     this->textures = textures;
     this->height = 1.0f;
+    //keeps track of the height during the jump animation
     this->currentHeight = currentHeight;
     this->rotationAngle = rotationAngle;
 }
@@ -18,6 +19,8 @@ Skateboard::Skateboard(int shaderProgram, Textures *textures, float currentHeigh
 // 4. call the cube's draw method
 void Skateboard::Draw(TranslateMatrix *translateMatrix, float x_position, float z_position) {
     vec3 rotationCenter = vec3(x_position, this->currentHeight, z_position);
+
+    //the cube has been replaced by a sphere, for esthetics reasons.
     Sphere *wheelCube = new Sphere();
 
     //values likes theses are shared between the draw calls to be able to move the object has a hole, i.e. that all parts move together.
@@ -31,6 +34,8 @@ void Skateboard::Draw(TranslateMatrix *translateMatrix, float x_position, float 
     float wheelSize = 1.5f;
     //wheel 1
     translateMatrix->setPosition(x_position, currentHeight + wheelSize, backFaceZPosition);
+
+    //function added for the animation that allows finding the center of rotation from the center of the object without having to provide a path to rotationMatrix
     translateMatrix->setObjectZRotationFromObjectCenter(rotationAngle, rotationCenter);
     translateMatrix->setSize(wheelSize, wheelSize + 0.25, wheelSize);
     translateMatrix->bindTranslationMatrix(this->shaderProgram);
@@ -38,6 +43,7 @@ void Skateboard::Draw(TranslateMatrix *translateMatrix, float x_position, float 
 
     //wheel 2
     translateMatrix->setPosition(x_position, currentHeight + wheelSize, frontFaceZPosition);
+    //function added for the animation that allows finding the center of rotation from the center of the object without having to provide a path to rotationMatrix
     translateMatrix->setObjectZRotationFromObjectCenter(rotationAngle, rotationCenter);
     translateMatrix->setSize(wheelSize, wheelSize + 0.25, wheelSize);
     translateMatrix->bindTranslationMatrix(this->shaderProgram);
@@ -45,6 +51,7 @@ void Skateboard::Draw(TranslateMatrix *translateMatrix, float x_position, float 
 
     //wheel 3
     translateMatrix->setPosition(x_position + boardLength, currentHeight + wheelSize, frontFaceZPosition);
+    //function added for the animation that allows finding the center of rotation from the center of the object without having to provide a path to rotationMatrix
     translateMatrix->setObjectZRotationFromObjectCenter(rotationAngle, rotationCenter);
     translateMatrix->setSize(wheelSize, wheelSize + 0.25, wheelSize);
     translateMatrix->bindTranslationMatrix(this->shaderProgram);
@@ -52,6 +59,7 @@ void Skateboard::Draw(TranslateMatrix *translateMatrix, float x_position, float 
 
     //wheel 4
     translateMatrix->setPosition(x_position + boardLength, currentHeight + wheelSize, backFaceZPosition);
+    //function added for the animation that allows finding the center of rotation from the center of the object without having to provide a path to rotationMatrix
     translateMatrix->setObjectZRotationFromObjectCenter(rotationAngle, rotationCenter);
     translateMatrix->setSize(wheelSize, wheelSize + 0.25, wheelSize);
     translateMatrix->bindTranslationMatrix(this->shaderProgram);
@@ -65,6 +73,7 @@ void Skateboard::Draw(TranslateMatrix *translateMatrix, float x_position, float 
     float plankYPosition = wheelSize + 0.75 + plankHeight;
     translateMatrix->setPosition(x_position + plankLength / 2 - wheelSize, currentHeight + plankYPosition, z_position);
     translateMatrix->setSize(plankLength, plankHeight, boardWidth * 1.25);
+    //function added for the animation that allows finding the center of rotation from the center of the object without having to provide a path to rotationMatrix
     translateMatrix->setObjectZRotationFromObjectCenter(rotationAngle, rotationCenter);
     translateMatrix->bindTranslationMatrix(this->shaderProgram);
     boardCube->Draw();
